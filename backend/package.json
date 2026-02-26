@@ -2,9 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx tsx src/server.ts",
+    "build": "npx tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +30,7 @@
     "@types/express-session": "^1.18.1",
     "@types/node": "^22.0.0",
     "@types/pg": "^8.16.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
     "typescript": "^5.9.3"
   }
 }

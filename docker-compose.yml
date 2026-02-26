@@ -6,7 +6,7 @@ services:
             POSTGRES_PASSWORD: mypassword
             POSTGRES_DB: crud_db
         ports:
-            - "5432:5432"
+            - "5433:5432"   # ← host:5433 para evitar conflito
         volumes:
             - ./init.sql:/docker-entrypoint-initdb.d/init.sql
             - postgres_data:/var/lib/postgresql/data
@@ -26,7 +26,7 @@ services:
         ports:
             - "5000:5000"
         environment:
-            DATABASE_URL: postgres://myuser:mypassword@db:5432/crud_db
+            DATABASE_URL: postgres://myuser:mypassword@db:5432/crud_db  # ← continua 5432 (rede interna)
         depends_on:
             - db
 

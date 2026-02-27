@@ -51,13 +51,10 @@
 
     html {
         scroll-behavior: smooth;
-        font-size: 18px;
     }
 
     body {
         font-family: "Outfit", sans-serif;
-        background-color: var(--bg-base);
-        color: var(--text-dark);
         min-height: 100vh;
         width: 100%;
         overflow-x: hidden;
@@ -66,6 +63,13 @@
         text-rendering: optimizeLegibility;
         font-size: 1rem;
         line-height: 1.6;
+    }
+
+    /* Landing page specific base styles */
+    .app-container {
+        background-color: var(--bg-base);
+        color: var(--text-dark);
+        font-size: 18px;
         transition:
             background-color 0.3s ease,
             color 0.3s ease;
@@ -88,25 +92,18 @@
     button {
         font-family: "Outfit", sans-serif;
         cursor: pointer;
+    }
+
+    .app-container button {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    button:active {
+    .app-container button:active {
         transform: scale(0.97);
     }
 
     a {
         transition: color 0.2s ease;
-    }
-
-    /* Hide Scrollbar */
-    ::-webkit-scrollbar {
-        display: none;
-    }
-
-    * {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
     }
 }
 

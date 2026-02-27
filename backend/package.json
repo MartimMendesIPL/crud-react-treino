@@ -1,36 +1,28 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "dist/server.js",
-  "scripts": {
-    "dev": "npx tsx src/server.ts",
-    "build": "npx tsc",
-    "start": "node dist/server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@adminjs/express": "^6.1.0",
-    "@adminjs/sql": "^2.0.0",
-    "adminjs": "^7.8.13",
-    "connect-pg-simple": "^9.0.1",
-    "cors": "^2.8.6",
-    "express": "^4.21.2",
-    "express-formidable": "^1.2.0",
-    "express-session": "^1.18.1",
-    "pg": "^8.19.0"
-  },
-  "devDependencies": {
-    "@types/connect-pg-simple": "^7.0.3",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.21",
-    "@types/express-session": "^1.18.1",
-    "@types/node": "^22.0.0",
-    "@types/pg": "^8.16.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.9.3"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/server.js",
+    "scripts": {
+        "dev": "npx tsx src/server.ts",
+        "build": "npx tsc",
+        "start": "node dist/server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.6",
+        "express": "^4.21.2",
+        "pg": "^8.19.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^4.17.21",
+        "@types/node": "^22.0.0",
+        "@types/pg": "^8.16.0",
+        "tsx": "^4.19.3",
+        "typescript": "^5.9.3"
+    }
 }

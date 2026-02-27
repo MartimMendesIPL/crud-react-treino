@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft, Plus, Trash2, Pencil, X, Loader2 } from "lucide-react";
 import { api } from "../../services/api";
 import CrudPage, {
@@ -46,6 +47,7 @@ interface Product {
 /* ── Proposals list page ── */
 
 export default function ProposalsPage() {
+    const { t } = useTranslation();
     const [clients, setClients] = useState<Client[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
 
@@ -59,17 +61,17 @@ export default function ProposalsPage() {
     }, []);
 
     const columns: Column<Proposal>[] = [
-        { key: "id", label: "ID" },
-        { key: "reference", label: "Reference" },
+        { key: "id", label: t("admin.proposals.id") },
+        { key: "reference", label: t("admin.proposals.reference") },
         {
             key: "client_id",
-            label: "Client",
+            label: t("admin.proposals.client"),
             render: (v) =>
                 clients.find((c) => c.id === Number(v))?.name ?? String(v),
         },
         {
             key: "status",
-            label: "Status",
+            label: t("admin.proposals.status"),
             render: (v) => (
                 <span className={`crud-badge crud-badge-${v}`}>
                     {String(v)}
@@ -78,21 +80,25 @@ export default function ProposalsPage() {
         },
         {
             key: "created_at",
-            label: "Created",
+            label: t("admin.proposals.created"),
             render: (v) => new Date(String(v)).toLocaleDateString(),
         },
         {
             key: "id" as keyof Proposal,
-            label: "Items",
+            label: t("admin.proposals.items"),
             render: (_v, row) => <ItemsLink id={row.id} />,
         },
     ];
 
     const fields: FieldDef[] = [
-        { name: "reference", label: "Reference", required: true },
+        {
+            name: "reference",
+            label: t("admin.proposals.reference"),
+            required: true,
+        },
         {
             name: "client_id",
-            label: "Client",
+            label: t("admin.proposals.client"),
             type: "select",
             required: true,
             options: clients.map((c) => ({
@@ -102,7 +108,7 @@ export default function ProposalsPage() {
         },
         {
             name: "section_id",
-            label: "Section",
+            label: t("admin.proposals.section"),
             type: "select",
             options: sections.map((s) => ({
                 value: String(s.id),
@@ -111,22 +117,28 @@ export default function ProposalsPage() {
         },
         {
             name: "status",
-            label: "Status",
+            label: t("admin.proposals.status"),
             type: "select",
             required: true,
             options: [
-                { value: "draft", label: "Draft" },
-                { value: "pending", label: "Pending" },
-                { value: "approved", label: "Approved" },
-                { value: "rejected", label: "Rejected" },
+                { value: "draft", label: t("admin.proposals.statusDraft") },
+                { value: "pending", label: t("admin.proposals.statusPending") },
+                {
+                    value: "approved",
+                    label: t("admin.proposals.statusApproved"),
+                },
+                {
+                    value: "rejected",
+                    label: t("admin.proposals.statusRejected"),
+                },
             ],
         },
-        { name: "notes", label: "Notes", type: "textarea" },
+        { name: "notes", label: t("admin.proposals.notes"), type: "textarea" },
     ];
 
     return (
         <CrudPage<Proposal>
-            title="Proposals"
+            title={t("admin.proposals.title")}
             columns={columns}
             fields={fields}
             fetchAll={() => api.get<Proposal[]>("/proposals")}
@@ -138,6 +150,7 @@ export default function ProposalsPage() {
 }
 
 function ItemsLink({ id }: { id: number }) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     return (
         <button
@@ -147,7 +160,7 @@ function ItemsLink({ id }: { id: number }) {
                 navigate(`/admin/proposals/${id}/items`);
             }}
         >
-            View Items
+            {t("admin.proposals.viewItems")}
         </button>
     );
 }
@@ -155,6 +168,7 @@ function ItemsLink({ id }: { id: number }) {
 /* ── Proposal Items sub-page ── */
 
 export function ProposalItemsPage() {
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [items, setItems] = useState<ProposalItem[]>([]);
@@ -166,7 +180,6 @@ export function ProposalItemsPage() {
     const [saving, setSaving] = useState(false);
     const [deleteId, setDeleteId] = useState<number | null>(null);
 
-    // NEW:
     const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
@@ -245,33 +258,38 @@ export function ProposalItemsPage() {
                     >
                         <ArrowLeft size={18} />
                     </button>
-                    <h1 className="crud-title">Proposal #{id} — Items</h1>
+                    <h1 className="crud-title">
+                        {t("admin.proposals.itemsTitle", { id })}
+                    </h1>
                 </div>
                 <button
                     className="crud-btn crud-btn-primary"
                     onClick={openCreate}
                 >
-                    <Plus size={16} /> Add Item
+                    <Plus size={16} /> {t("admin.proposals.addItem")}
                 </button>
             </div>
 
             <div className="crud-table-wrap">
                 {loading ? (
                     <div className="crud-loading">
-                        <Loader2 size={24} className="crud-spin" /> Loading…
+                        <Loader2 size={24} className="crud-spin" />{" "}
+                        {t("common.loading")}
                     </div>
                 ) : items.length === 0 ? (
-                    <div className="crud-empty">No items yet.</div>
+                    <div className="crud-empty">
+                        {t("admin.proposals.noItems")}
+                    </div>
                 ) : (
                     <table className="crud-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Subtotal</th>
-                                <th>Notes</th>
+                                <th>{t("admin.proposals.product")}</th>
+                                <th>{t("admin.proposals.quantity")}</th>
+                                <th>{t("admin.proposals.unitPrice")}</th>
+                                <th>{t("admin.proposals.subtotal")}</th>
+                                <th>{t("admin.proposals.notes")}</th>
                                 <th className="crud-th-actions">Actions</th>
                             </tr>
                         </thead>
@@ -328,7 +346,11 @@ export function ProposalItemsPage() {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="crud-modal-header">
-                            <h2>{editing ? "Edit Item" : "Add Item"}</h2>
+                            <h2>
+                                {editing
+                                    ? t("admin.proposals.editItem")
+                                    : t("admin.proposals.addItem")}
+                            </h2>
                             <button
                                 className="crud-modal-close"
                                 onClick={() => setModalOpen(false)}
@@ -339,7 +361,7 @@ export function ProposalItemsPage() {
                         <div className="crud-modal-body">
                             <div className="crud-field">
                                 <label className="crud-label">
-                                    Product{" "}
+                                    {t("admin.proposals.product")}{" "}
                                     <span className="crud-required">*</span>
                                 </label>
                                 <select
@@ -369,7 +391,7 @@ export function ProposalItemsPage() {
                             </div>
                             <div className="crud-field">
                                 <label className="crud-label">
-                                    Quantity{" "}
+                                    {t("admin.proposals.quantity")}{" "}
                                     <span className="crud-required">*</span>
                                 </label>
                                 <input
@@ -386,7 +408,7 @@ export function ProposalItemsPage() {
                             </div>
                             <div className="crud-field">
                                 <label className="crud-label">
-                                    Unit Price{" "}
+                                    {t("admin.proposals.unitPrice")}{" "}
                                     <span className="crud-required">*</span>
                                 </label>
                                 <input
@@ -403,7 +425,9 @@ export function ProposalItemsPage() {
                                 />
                             </div>
                             <div className="crud-field">
-                                <label className="crud-label">Notes</label>
+                                <label className="crud-label">
+                                    {t("admin.proposals.notes")}
+                                </label>
                                 <textarea
                                     className="crud-input crud-textarea"
                                     value={String(formData.notes ?? "")}
@@ -421,7 +445,7 @@ export function ProposalItemsPage() {
                                 className="crud-btn crud-btn-secondary"
                                 onClick={() => setModalOpen(false)}
                             >
-                                Cancel
+                                {t("common.cancel")}
                             </button>
                             <button
                                 className="crud-btn crud-btn-primary"
@@ -431,7 +455,9 @@ export function ProposalItemsPage() {
                                 {saving && (
                                     <Loader2 size={14} className="crud-spin" />
                                 )}{" "}
-                                {editing ? "Update" : "Create"}
+                                {editing
+                                    ? t("common.update")
+                                    : t("common.create")}
                             </button>
                         </div>
                     </div>
@@ -449,7 +475,7 @@ export function ProposalItemsPage() {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="crud-modal-header">
-                            <h2>Confirm Delete</h2>
+                            <h2>{t("admin.crud.confirmDelete")}</h2>
                             <button
                                 className="crud-modal-close"
                                 onClick={() => setDeleteId(null)}
@@ -458,20 +484,20 @@ export function ProposalItemsPage() {
                             </button>
                         </div>
                         <div className="crud-modal-body">
-                            <p>Delete this item?</p>
+                            <p>{t("admin.proposals.deleteItem")}</p>
                         </div>
                         <div className="crud-modal-footer">
                             <button
                                 className="crud-btn crud-btn-secondary"
                                 onClick={() => setDeleteId(null)}
                             >
-                                Cancel
+                                {t("common.cancel")}
                             </button>
                             <button
                                 className="crud-btn crud-btn-danger"
                                 onClick={handleDelete}
                             >
-                                Delete
+                                {t("common.delete")}
                             </button>
                         </div>
                     </div>

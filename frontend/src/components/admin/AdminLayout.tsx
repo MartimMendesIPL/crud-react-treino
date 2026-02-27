@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
     LayoutDashboard,
     Users,
@@ -14,23 +15,53 @@ import {
     X,
     ChevronRight,
 } from "lucide-react";
+import LanguageToggle from "../LanguageToggle";
 import "../../admin.css";
 
-const NAV = [
-    { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
-    { label: "Calendar", to: "/admin/proposals/calendar", icon: CalendarDays },
-    { label: "Users", to: "/admin/users", icon: Users },
-    { label: "Clients", to: "/admin/clients", icon: UserCircle },
-    { label: "Sections", to: "/admin/sections", icon: Layers },
-    { label: "Products", to: "/admin/products", icon: Package },
-    { label: "Proposals", to: "/admin/proposals", icon: FileText },
-    { label: "Orders", to: "/admin/orders", icon: ClipboardList },
-    { label: "Audit Log", to: "/admin/audit-log", icon: History },
-];
-
 export default function AdminLayout() {
+    const { t } = useTranslation();
     const { pathname } = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const NAV = [
+        {
+            label: t("admin.nav.dashboard"),
+            to: "/admin",
+            icon: LayoutDashboard,
+        },
+        {
+            label: t("admin.nav.calendar"),
+            to: "/admin/proposals/calendar",
+            icon: CalendarDays,
+        },
+        { label: t("admin.nav.users"), to: "/admin/users", icon: Users },
+        {
+            label: t("admin.nav.clients"),
+            to: "/admin/clients",
+            icon: UserCircle,
+        },
+        { label: t("admin.nav.sections"), to: "/admin/sections", icon: Layers },
+        {
+            label: t("admin.nav.products"),
+            to: "/admin/products",
+            icon: Package,
+        },
+        {
+            label: t("admin.nav.proposals"),
+            to: "/admin/proposals",
+            icon: FileText,
+        },
+        {
+            label: t("admin.nav.orders"),
+            to: "/admin/orders",
+            icon: ClipboardList,
+        },
+        {
+            label: t("admin.nav.auditLog"),
+            to: "/admin/audit-log",
+            icon: History,
+        },
+    ];
 
     const isActive = (to: string) =>
         to === "/admin" ? pathname === "/admin" : pathname.startsWith(to);
@@ -84,7 +115,7 @@ export default function AdminLayout() {
 
                 <div className="admin-sidebar-footer">
                     <Link to="/" className="admin-nav-item">
-                        ← Back to Site
+                        {t("admin.nav.backToSite")}
                     </Link>
                 </div>
             </aside>
@@ -101,6 +132,7 @@ export default function AdminLayout() {
                     <div className="admin-topbar-breadcrumb">
                         {NAV.find((n) => isActive(n.to))?.label ?? "Admin"}
                     </div>
+                    <LanguageToggle />
                 </header>
 
                 <main className="admin-content">

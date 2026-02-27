@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import RotatingText from "./components/RotatingText";
 import AuraLogo from "./components/AuraLogo";
 import DashboardDemo from "./components/DashboardDemo";
 import SpotlightCard from "./components/SpotlightCard";
+import LanguageToggle from "./components/LanguageToggle";
 import AdminLayout from "./components/admin/AdminLayout";
 import DashboardPage from "./pages/admin/DashboardPage";
 import UsersPage from "./pages/admin/UsersPage";
@@ -15,52 +17,6 @@ import OrdersPage, { OrderItemsPage } from "./pages/admin/OrdersPage";
 import AuditLogPage from "./pages/admin/AuditLogPage";
 import ProposalCalendarPage from "./pages/admin/ProposalCalendarPage";
 
-
-const FEATURES = [
-    {
-        id: 1,
-        title: "Proposal Management",
-        icon: "fa-solid fa-file-lines",
-        description:
-            "Create, track, and convert client proposals into actionable manufacturing orders with full version history.",
-    },
-    {
-        id: 2,
-        title: "Production Tracking",
-        icon: "fa-solid fa-industry",
-        description:
-            "Monitor orders across different sections (Metalwork, Painting, Assembly) in real-time.",
-    },
-    {
-        id: 3,
-        title: "Audit Logging",
-        icon: "fa-solid fa-clock-rotate-left",
-        description:
-            "Every status change, edit, and conversion is logged. Know exactly who did what and when.",
-    },
-    {
-        id: 4,
-        title: "Role-Based Access",
-        icon: "fa-solid fa-shield-halved",
-        description:
-            "Secure your data with Admin, Sales, Production, and Viewer permission levels.",
-    },
-    {
-        id: 5,
-        title: "Client Database",
-        icon: "fa-solid fa-users",
-        description:
-            "Maintain a centralized registry of all your clients, their contact info, and VAT details.",
-    },
-    {
-        id: 6,
-        title: "Product Catalogue",
-        icon: "fa-solid fa-boxes-stacked",
-        description:
-            "Manage your raw materials and finished goods with standardized units and pricing.",
-    },
-];
-
 const THEME_COLORS = [
     { name: "Indigo", value: "#6366f1" },
     { name: "Rose", value: "#f43f5e" },
@@ -70,65 +26,16 @@ const THEME_COLORS = [
     { name: "Purple", value: "#a855f7" },
 ];
 
-const PLANS = [
-    {
-        name: "Starter",
-        price: "Free",
-        period: "",
-        description:
-            "For small teams getting started with production tracking.",
-        features: [
-            "Up to 5 users",
-            "Basic proposal management",
-            "Single workspace",
-            "Community support",
-            "7-day audit history",
-        ],
-        cta: "Get Started",
-        highlighted: false,
-    },
-    {
-        name: "Professional",
-        price: "$49",
-        period: "/mo",
-        description: "For growing teams that need full visibility and control.",
-        features: [
-            "Up to 25 users",
-            "Advanced production tracking",
-            "Role-based access control",
-            "Priority support",
-            "Unlimited audit history",
-            "Custom workflows",
-        ],
-        cta: "Start Free Trial",
-        highlighted: true,
-    },
-    {
-        name: "Enterprise",
-        price: "Custom",
-        period: "",
-        description: "For large organizations with complex requirements.",
-        features: [
-            "Unlimited users",
-            "Dedicated account manager",
-            "SSO & advanced security",
-            "Custom integrations",
-            "On-premise deployment",
-            "24/7 phone support",
-            "SLA guarantee",
-        ],
-        cta: "Contact Sales",
-        highlighted: false,
-    },
-];
-
 function App() {
     return (
         <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<DashboardPage />} />
-                <Route path="proposals/calendar" element={<ProposalCalendarPage />} />
+                <Route
+                    path="proposals/calendar"
+                    element={<ProposalCalendarPage />}
+                />
                 <Route path="users" element={<UsersPage />} />
                 <Route path="clients" element={<ClientsPage />} />
                 <Route path="sections" element={<SectionsPage />} />
@@ -147,9 +54,85 @@ function App() {
 }
 
 function LandingPage() {
+    const { t } = useTranslation();
     const [darkMode, setDarkMode] = useState(true);
     const [accentColor, setAccentColor] = useState(THEME_COLORS[0].value);
     const [scrolled, setScrolled] = useState(false);
+
+    const FEATURES = [
+        {
+            id: 1,
+            title: t("landing.features.proposalManagement.title"),
+            icon: "fa-solid fa-file-lines",
+            description: t("landing.features.proposalManagement.description"),
+        },
+        {
+            id: 2,
+            title: t("landing.features.productionTracking.title"),
+            icon: "fa-solid fa-industry",
+            description: t("landing.features.productionTracking.description"),
+        },
+        {
+            id: 3,
+            title: t("landing.features.auditLogging.title"),
+            icon: "fa-solid fa-clock-rotate-left",
+            description: t("landing.features.auditLogging.description"),
+        },
+        {
+            id: 4,
+            title: t("landing.features.roleBasedAccess.title"),
+            icon: "fa-solid fa-shield-halved",
+            description: t("landing.features.roleBasedAccess.description"),
+        },
+        {
+            id: 5,
+            title: t("landing.features.clientDatabase.title"),
+            icon: "fa-solid fa-users",
+            description: t("landing.features.clientDatabase.description"),
+        },
+        {
+            id: 6,
+            title: t("landing.features.productCatalogue.title"),
+            icon: "fa-solid fa-boxes-stacked",
+            description: t("landing.features.productCatalogue.description"),
+        },
+    ];
+
+    const PLANS = [
+        {
+            name: t("landing.pricing.starter.name"),
+            price: t("landing.pricing.starter.price"),
+            period: "",
+            description: t("landing.pricing.starter.description"),
+            features: t("landing.pricing.starter.features", {
+                returnObjects: true,
+            }) as string[],
+            cta: t("landing.pricing.starter.cta"),
+            highlighted: false,
+        },
+        {
+            name: t("landing.pricing.professional.name"),
+            price: t("landing.pricing.professional.price"),
+            period: t("landing.pricing.professional.period"),
+            description: t("landing.pricing.professional.description"),
+            features: t("landing.pricing.professional.features", {
+                returnObjects: true,
+            }) as string[],
+            cta: t("landing.pricing.professional.cta"),
+            highlighted: true,
+        },
+        {
+            name: t("landing.pricing.enterprise.name"),
+            price: t("landing.pricing.enterprise.price"),
+            period: "",
+            description: t("landing.pricing.enterprise.description"),
+            features: t("landing.pricing.enterprise.features", {
+                returnObjects: true,
+            }) as string[],
+            cta: t("landing.pricing.enterprise.cta"),
+            highlighted: false,
+        },
+    ];
 
     const applyTheme = useCallback(() => {
         const root = document.documentElement;
@@ -178,9 +161,9 @@ function LandingPage() {
                 </a>
 
                 <div className="navbar-links">
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#architecture">Stack</a>
+                    <a href="#features">{t("landing.nav.features")}</a>
+                    <a href="#pricing">{t("landing.nav.pricing")}</a>
+                    <a href="#architecture">{t("landing.nav.stack")}</a>
                 </div>
 
                 <div className="navbar-right">
@@ -196,6 +179,8 @@ function LandingPage() {
                             />
                         ))}
                     </div>
+                    <div className="navbar-divider" />
+                    <LanguageToggle />
                     <div className="navbar-divider" />
                     <button
                         className="navbar-theme-toggle"
@@ -217,7 +202,7 @@ function LandingPage() {
                     </button>
                     <a href="/admin" className="navbar-admin-btn">
                         <i className="fa-solid fa-arrow-up-right-from-square" />
-                        Admin Panel
+                        {t("landing.nav.adminPanel")}
                     </a>
                 </div>
             </nav>
@@ -232,17 +217,17 @@ function LandingPage() {
                     {/* Left: text content */}
                     <div className="hero-left animate-fade-up">
                         <div className="hero-badge">
-                            Enterprise Resource Planning
+                            {t("landing.hero.badge")}
                         </div>
                         <h1 className="hero-title">
-                            Control your <br />
+                            {t("landing.hero.title")} <br />
                             <span className="hero-title-rotating">
                                 <RotatingText
                                     texts={[
-                                        "Warehouse",
-                                        "Office",
-                                        "Business",
-                                        "Profits",
+                                        t("landing.hero.titleRotate1"),
+                                        t("landing.hero.titleRotate2"),
+                                        t("landing.hero.titleRotate3"),
+                                        t("landing.hero.titleRotate4"),
                                     ]}
                                     mainClassName="rotating-text-main"
                                     staggerFrom={"last"}
@@ -261,13 +246,12 @@ function LandingPage() {
                             </span>
                         </h1>
                         <p className="hero-desc">
-                            Track proposals, manage production orders, and audit
-                            every change — all from one dashboard.
+                            {t("landing.hero.description")}
                         </p>
                         <div className="hero-actions">
                             <a href="/admin" style={{ textDecoration: "none" }}>
                                 <button className="btn-primary">
-                                    Open Dashboard
+                                    {t("landing.hero.openDashboard")}
                                 </button>
                             </a>
                             <a
@@ -275,7 +259,7 @@ function LandingPage() {
                                 style={{ textDecoration: "none" }}
                             >
                                 <button className="btn-glass glass-dark">
-                                    View Features
+                                    {t("landing.hero.viewFeatures")}
                                 </button>
                             </a>
                         </div>
@@ -298,9 +282,18 @@ function LandingPage() {
             </section>
             <section className="stats-grid">
                 {[
-                    { value: "100%", label: "Audit Traceability" },
-                    { value: "4", label: "Permission Roles" },
-                    { value: "Real-time", label: "Order Tracking" },
+                    {
+                        value: t("landing.stats.traceability"),
+                        label: t("landing.stats.traceabilityLabel"),
+                    },
+                    {
+                        value: t("landing.stats.roles"),
+                        label: t("landing.stats.rolesLabel"),
+                    },
+                    {
+                        value: t("landing.stats.tracking"),
+                        label: t("landing.stats.trackingLabel"),
+                    },
                 ].map((s) => (
                     <div key={s.label} className="stat-item">
                         <div className="stat-value">{s.value}</div>
@@ -313,10 +306,11 @@ function LandingPage() {
             <section id="features" className="section-padding">
                 <div className="section-container">
                     <div className="section-header">
-                        <h2 className="section-title">System Capabilities.</h2>
+                        <h2 className="section-title">
+                            {t("landing.features.title")}
+                        </h2>
                         <p className="section-desc">
-                            Everything you need to run your industrial
-                            operations.
+                            {t("landing.features.subtitle")}
                         </p>
                     </div>
 
@@ -353,11 +347,10 @@ function LandingPage() {
                 <div className="section-container">
                     <div className="section-header">
                         <h2 className="section-title">
-                            Simple, transparent pricing.
+                            {t("landing.pricing.title")}
                         </h2>
                         <p className="section-desc">
-                            Choose the plan that fits your team. Upgrade
-                            anytime.
+                            {t("landing.pricing.subtitle")}
                         </p>
                     </div>
 
@@ -369,7 +362,7 @@ function LandingPage() {
                             >
                                 {plan.highlighted && (
                                     <div className="pricing-popular">
-                                        Most Popular
+                                        {t("landing.pricing.mostPopular")}
                                     </div>
                                 )}
                                 <h3 className="pricing-name">{plan.name}</h3>
@@ -417,11 +410,11 @@ function LandingPage() {
             {/* ── Architecture ── */}
             <section id="architecture" className="architecture-section">
                 <div className="architecture-container">
-                    <h2 className="section-title">Built on a modern stack.</h2>
+                    <h2 className="section-title">
+                        {t("landing.architecture.title")}
+                    </h2>
                     <p className="architecture-desc">
-                        Fully containerized with Docker, powered by a robust
-                        PostgreSQL database, and managed through a custom React
-                        admin dashboard.
+                        {t("landing.architecture.description")}
                     </p>
 
                     <div className="tech-stack">
@@ -452,14 +445,13 @@ function LandingPage() {
                 <div className="cta-card">
                     <div className="cta-bg" />
                     <div className="cta-content">
-                        <h2 className="cta-title">Access the System</h2>
+                        <h2 className="cta-title">{t("landing.cta.title")}</h2>
                         <p className="cta-desc">
-                            Log in to the dashboard to manage users, clients,
-                            proposals, and production orders.
+                            {t("landing.cta.description")}
                         </p>
                         <a href="/admin" style={{ textDecoration: "none" }}>
                             <button className="btn-cta">
-                                Launch Admin Panel
+                                {t("landing.cta.button")}
                             </button>
                         </a>
                     </div>
@@ -477,62 +469,68 @@ function LandingPage() {
                                 <span>Aura</span>
                             </div>
                             <p className="footer-brand-desc">
-                                Open-source ERP for industrial teams. Track
-                                proposals, orders, and production — all from one
-                                dashboard.
+                                {t("landing.footer.description")}
                             </p>
                         </div>
 
                         {/* Product links */}
                         <div className="footer-col">
-                            <h4 className="footer-col-title">Product</h4>
-                            <a href="#features">Features</a>
-                            <a href="#pricing">Pricing</a>
-                            <a href="#architecture">Tech Stack</a>
-                            <a href="/admin">Admin Panel</a>
+                            <h4 className="footer-col-title">
+                                {t("landing.footer.product")}
+                            </h4>
+                            <a href="#features">{t("landing.nav.features")}</a>
+                            <a href="#pricing">{t("landing.nav.pricing")}</a>
+                            <a href="#architecture">{t("landing.nav.stack")}</a>
+                            <a href="/admin">{t("landing.nav.adminPanel")}</a>
                         </div>
 
                         {/* Resources */}
                         <div className="footer-col">
-                            <h4 className="footer-col-title">Resources</h4>
+                            <h4 className="footer-col-title">
+                                {t("landing.footer.resources")}
+                            </h4>
                             <a
                                 href="https://react.dev/"
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                React Docs
+                                {t("landing.footer.reactDocs")}
                             </a>
                             <a
                                 href="https://github.com"
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                GitHub
+                                {t("landing.footer.github")}
                             </a>
-                            <a href="#architecture">API Reference</a>
-                            <a href="#features">Changelog</a>
+                            <a href="#architecture">
+                                {t("landing.footer.apiReference")}
+                            </a>
+                            <a href="#features">
+                                {t("landing.footer.changelog")}
+                            </a>
                         </div>
 
                         {/* Contact */}
                         <div className="footer-col">
-                            <h4 className="footer-col-title">Contact</h4>
+                            <h4 className="footer-col-title">
+                                {t("landing.footer.contact")}
+                            </h4>
                             <a href="mailto:hello@aura-erp.com">
                                 hello@aura-erp.com
                             </a>
                             <a href="tel:+351910000000">+351 910 000 000</a>
                             <span className="footer-address">
-                                Rua da Inovação 42
-                                <br />
-                                4000-001 Porto, Portugal
+                                {t("landing.footer.address")}
                             </span>
                         </div>
                     </div>
 
                     <div className="footer-bottom">
-                        <span>© 2026 Aura Systems. All rights reserved.</span>
+                        <span>{t("landing.footer.copyright")}</span>
                         <div className="footer-bottom-links">
-                            <a href="#">Privacy Policy</a>
-                            <a href="#">Terms of Service</a>
+                            <a href="#">{t("landing.footer.privacy")}</a>
+                            <a href="#">{t("landing.footer.terms")}</a>
                         </div>
                     </div>
                 </div>

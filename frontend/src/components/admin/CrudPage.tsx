@@ -1,4 +1,5 @@
 import { useState, useEffect, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Pencil, Trash2, Plus, X, Loader2 } from "lucide-react";
 
 /* ────────────────────────────── types ────────────────────────────── */
@@ -44,6 +45,7 @@ export default function CrudPage<T extends { id: number | string }>({
     onDelete,
     readOnly = false,
 }: CrudPageProps<T>) {
+    const { t } = useTranslation();
     const [rows, setRows] = useState<T[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -68,7 +70,9 @@ export default function CrudPage<T extends { id: number | string }>({
             .catch((e: unknown) => {
                 if (!ignore)
                     setError(
-                        e instanceof Error ? e.message : "Failed to load data",
+                        e instanceof Error
+                            ? e.message
+                            : t("admin.crud.loadFailed"),
                     );
             })
             .finally(() => {
@@ -111,7 +115,9 @@ export default function CrudPage<T extends { id: number | string }>({
             setModalOpen(false);
             load();
         } catch (e: unknown) {
-            setError(e instanceof Error ? e.message : "Save failed");
+            setError(
+                e instanceof Error ? e.message : t("admin.crud.saveFailed"),
+            );
         } finally {
             setSaving(false);
         }
@@ -124,7 +130,9 @@ export default function CrudPage<T extends { id: number | string }>({
             setDeleteId(null);
             load();
         } catch (e: unknown) {
-            setError(e instanceof Error ? e.message : "Delete failed");
+            setError(
+                e instanceof Error ? e.message : t("admin.crud.deleteFailed"),
+            );
         }
     };
 
@@ -147,7 +155,7 @@ export default function CrudPage<T extends { id: number | string }>({
                 <div className="crud-actions">
                     <input
                         type="text"
-                        placeholder="Search…"
+                        placeholder={t("common.search")}
                         className="crud-search"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -157,7 +165,7 @@ export default function CrudPage<T extends { id: number | string }>({
                             className="crud-btn crud-btn-primary"
                             onClick={openCreate}
                         >
-                            <Plus size={16} /> New
+                            <Plus size={16} /> {t("common.new")}
                         </button>
                     )}
                 </div>
@@ -169,10 +177,13 @@ export default function CrudPage<T extends { id: number | string }>({
             <div className="crud-table-wrap">
                 {loading ? (
                     <div className="crud-loading">
-                        <Loader2 size={24} className="crud-spin" /> Loading…
+                        <Loader2 size={24} className="crud-spin" />{" "}
+                        {t("common.loading")}
                     </div>
                 ) : filtered.length === 0 ? (
-                    <div className="crud-empty">No records found.</div>
+                    <div className="crud-empty">
+                        {t("admin.crud.noRecords")}
+                    </div>
                 ) : (
                     <table className="crud-table">
                         <thead>
@@ -200,7 +211,7 @@ export default function CrudPage<T extends { id: number | string }>({
                                             <button
                                                 className="crud-icon-btn crud-icon-edit"
                                                 onClick={() => openEdit(row)}
-                                                title="Edit"
+                                                title={t("common.edit")}
                                             >
                                                 <Pencil size={15} />
                                             </button>
@@ -209,7 +220,7 @@ export default function CrudPage<T extends { id: number | string }>({
                                                 onClick={() =>
                                                     setDeleteId(row.id)
                                                 }
-                                                title="Delete"
+                                                title={t("common.delete")}
                                             >
                                                 <Trash2 size={15} />
                                             </button>
@@ -234,7 +245,13 @@ export default function CrudPage<T extends { id: number | string }>({
                     >
                         <div className="crud-modal-header">
                             <h2>
-                                {editing ? `Edit ${title}` : `New ${title}`}
+                                {editing
+                                    ? t("admin.crud.editTitle", {
+                                          resource: title,
+                                      })
+                                    : t("admin.crud.newTitle", {
+                                          resource: title,
+                                      })}
                             </h2>
                             <button
                                 className="crud-modal-close"
@@ -324,7 +341,7 @@ export default function CrudPage<T extends { id: number | string }>({
                                 className="crud-btn crud-btn-secondary"
                                 onClick={() => setModalOpen(false)}
                             >
-                                Cancel
+                                {t("common.cancel")}
                             </button>
                             <button
                                 className="crud-btn crud-btn-primary"
@@ -334,7 +351,9 @@ export default function CrudPage<T extends { id: number | string }>({
                                 {saving && (
                                     <Loader2 size={14} className="crud-spin" />
                                 )}
-                                {editing ? "Update" : "Create"}
+                                {editing
+                                    ? t("common.update")
+                                    : t("common.create")}
                             </button>
                         </div>
                     </div>
@@ -352,7 +371,7 @@ export default function CrudPage<T extends { id: number | string }>({
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="crud-modal-header">
-                            <h2>Confirm Delete</h2>
+                            <h2>{t("admin.crud.confirmDelete")}</h2>
                             <button
                                 className="crud-modal-close"
                                 onClick={() => setDeleteId(null)}
@@ -361,23 +380,20 @@ export default function CrudPage<T extends { id: number | string }>({
                             </button>
                         </div>
                         <div className="crud-modal-body">
-                            <p>
-                                Are you sure you want to delete this record?
-                                This action cannot be undone.
-                            </p>
+                            <p>{t("admin.crud.deleteMessage")}</p>
                         </div>
                         <div className="crud-modal-footer">
                             <button
                                 className="crud-btn crud-btn-secondary"
                                 onClick={() => setDeleteId(null)}
                             >
-                                Cancel
+                                {t("common.cancel")}
                             </button>
                             <button
                                 className="crud-btn crud-btn-danger"
                                 onClick={handleDelete}
                             >
-                                Delete
+                                {t("common.delete")}
                             </button>
                         </div>
                     </div>

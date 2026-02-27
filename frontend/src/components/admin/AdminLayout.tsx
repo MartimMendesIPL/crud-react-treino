@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   LayoutDashboard,
   Users,
@@ -22,269 +23,82 @@ import {
   Palette,
   ShieldCheck,
 } from "lucide-react";
-import AuraLogo from "../AuraLogo";
+import LanguageToggle from "../LanguageToggle";
 import "../../admin.css";
 
-type NavItem = {
-  label: string;
-  to: string;
-  icon: React.ComponentType<{ size?: number }>;
-};
-
-type NavGroup = {
-  label: string;
-  icon: React.ComponentType<{ size?: number }>;
-  children: NavItem[];
-};
-
-type NavEntry = NavItem | NavGroup | { separator: string };
-
-function isNavGroup(entry: NavEntry): entry is NavGroup {
-  return "children" in entry;
-}
-
-function isSeparator(entry: NavEntry): entry is { separator: string } {
-  return "separator" in entry;
-}
-
-const NAV: NavEntry[] = [
-  { label: "Calendário", to: "/admin/proposals/calendar", icon: CalendarDays },
-  { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
-  { label: "Propostas", to: "/admin/proposals", icon: FileText },
-  {
-    label: "Encomendas",
-    icon: ClipboardList,
-    children: [
-      { label: "Encomendas", to: "/admin/orders", icon: ClipboardList },
-      { label: "Produtos", to: "/admin/products", icon: Package },
-    ],
-  },
-  { label: "Clientes", to: "/admin/clients", icon: UserCircle },
-  { label: "Audit Log", to: "/admin/audit-log", icon: History },
-  { separator: "Admin" },
-  { label: "Utilizadores", to: "/admin/users", icon: Users },
-];
-
-const LANGUAGES = [
-  { code: "pt", label: "Português" },
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" },
-  { code: "fr", label: "Français" },
-];
-
-const ACCENT_COLORS = [
-  { name: "Indigo", value: "#6366f1" },
-  { name: "Rose", value: "#f43f5e" },
-  { name: "Emerald", value: "#10b981" },
-  { name: "Amber", value: "#f59e0b" },
-  { name: "Cyan", value: "#06b6d4" },
-  { name: "Purple", value: "#a855f7" },
-];
-
-type Theme = "dark" | "light";
-
-/**
- * Lighten a hex color by a given amount (0-100).
- * Used to auto-generate the hover variant of any accent color.
- */
-function lightenHex(hex: string, amount: number): string {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.substring(0, 2), 16);
-  const g = parseInt(h.substring(2, 4), 16);
-  const b = parseInt(h.substring(4, 6), 16);
-
-  const lighten = (c: number) =>
-    Math.min(255, Math.round(c + (255 - c) * (amount / 100)));
-
-  const rr = lighten(r).toString(16).padStart(2, "0");
-  const gg = lighten(g).toString(16).padStart(2, "0");
-  const bb = lighten(b).toString(16).padStart(2, "0");
-
-  return `#${rr}${gg}${bb}`;
-}
-
-/**
- * Convert hex to an rgba() string at a given alpha.
- */
-function hexToRgba(hex: string, alpha: number): string {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.substring(0, 2), 16);
-  const g = parseInt(h.substring(2, 4), 16);
-  const b = parseInt(h.substring(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
-function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-  if (theme === "light") {
-    root.style.setProperty("--admin-bg", "#f1f5f9");
-    root.style.setProperty("--admin-sidebar-bg", "#ffffff");
-    root.style.setProperty("--admin-surface", "#ffffff");
-    root.style.setProperty("--admin-surface-hover", "#f8fafc");
-    root.style.setProperty("--admin-border", "#e2e8f0");
-    root.style.setProperty("--admin-text", "#0f172a");
-    root.style.setProperty("--admin-text-muted", "#64748b");
-  } else {
-    root.style.setProperty("--admin-bg", "#0b0f1a");
-    root.style.setProperty("--admin-sidebar-bg", "#0f1320");
-    root.style.setProperty("--admin-surface", "#141926");
-    root.style.setProperty("--admin-surface-hover", "#1a2035");
-    root.style.setProperty("--admin-border", "#1e293b");
-    root.style.setProperty("--admin-text", "#e2e8f0");
-    root.style.setProperty("--admin-text-muted", "#64748b");
-  }
-}
-
-function applyAccent(hex: string) {
-  const root = document.documentElement;
-  root.style.setProperty("--admin-accent", hex);
-  root.style.setProperty("--admin-accent-hover", lightenHex(hex, 25));
-  root.style.setProperty("--admin-accent-rgb-15", hexToRgba(hex, 0.15));
-  root.style.setProperty("--admin-accent-rgb-10", hexToRgba(hex, 0.1));
-  root.style.setProperty("--admin-accent-rgb-04", hexToRgba(hex, 0.04));
-}
-
 export default function AdminLayout() {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [langSubmenuOpen, setLangSubmenuOpen] = useState(false);
-  const [colorSubmenuOpen, setColorSubmenuOpen] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
-    {},
-  );
-  const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem("admin-theme") as Theme) || "dark";
-  });
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("admin-lang") || "pt";
-  });
-  const [accentColor, setAccentColor] = useState(() => {
-    return localStorage.getItem("admin-accent") || "#6366f1";
-  });
-  const dropdownRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation();
+    const { pathname } = useLocation();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const isActive = (to: string) =>
-    to === "/admin" ? pathname === "/admin" : pathname.startsWith(to);
+    const NAV = [
+        {
+            label: t("admin.nav.dashboard"),
+            to: "/admin",
+            icon: LayoutDashboard,
+        },
+        {
+            label: t("admin.nav.calendar"),
+            to: "/admin/proposals/calendar",
+            icon: CalendarDays,
+        },
+        { label: t("admin.nav.users"), to: "/admin/users", icon: Users },
+        {
+            label: t("admin.nav.clients"),
+            to: "/admin/clients",
+            icon: UserCircle,
+        },
+        { label: t("admin.nav.sections"), to: "/admin/sections", icon: Layers },
+        {
+            label: t("admin.nav.products"),
+            to: "/admin/products",
+            icon: Package,
+        },
+        {
+            label: t("admin.nav.proposals"),
+            to: "/admin/proposals",
+            icon: FileText,
+        },
+        {
+            label: t("admin.nav.orders"),
+            to: "/admin/orders",
+            icon: ClipboardList,
+        },
+        {
+            label: t("admin.nav.auditLog"),
+            to: "/admin/audit-log",
+            icon: History,
+        },
+    ];
 
-  const isGroupActive = (group: NavGroup) =>
-    group.children.some((child) => isActive(child.to));
+    const isActive = (to: string) =>
+        to === "/admin" ? pathname === "/admin" : pathname.startsWith(to);
 
-  const toggleGroup = (label: string) => {
-    setExpandedGroups((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
+    return (
+        <div className="admin-layout">
+            {/* Mobile overlay */}
+            {sidebarOpen && (
+                <div
+                    className="admin-overlay"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
 
-  // Auto-expand groups whose children are active
-  useEffect(() => {
-    NAV.forEach((entry) => {
-      if (isNavGroup(entry) && isGroupActive(entry)) {
-        setExpandedGroups((prev) => ({ ...prev, [entry.label]: true }));
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
-  // Flatten nav for breadcrumb lookup
-  const flatNav: NavItem[] = NAV.flatMap((entry) =>
-    isNavGroup(entry) ? entry.children : isSeparator(entry) ? [] : [entry],
-  );
-
-  const currentPageLabel =
-    flatNav.find((n) => isActive(n.to))?.label ?? "Admin";
-
-  // Apply theme on mount and change
-  useEffect(() => {
-    applyTheme(theme);
-    localStorage.setItem("admin-theme", theme);
-  }, [theme]);
-
-  // Apply accent on mount and change
-  useEffect(() => {
-    applyAccent(accentColor);
-    localStorage.setItem("admin-accent", accentColor);
-  }, [accentColor]);
-
-  useEffect(() => {
-    localStorage.setItem("admin-lang", language);
-  }, [language]);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setDropdownOpen(false);
-        setLangSubmenuOpen(false);
-        setColorSubmenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
-  const handleLogout = () => {
-    setDropdownOpen(false);
-    navigate("/");
-  };
-
-  const handleSettings = () => {
-    setDropdownOpen(false);
-    navigate("/admin");
-  };
-
-  const handleLanguageSelect = (code: string) => {
-    setLanguage(code);
-    setLangSubmenuOpen(false);
-  };
-
-  const handleAccentSelect = (color: string) => {
-    setAccentColor(color);
-    setColorSubmenuOpen(false);
-  };
-
-  const closeAllSubmenus = () => {
-    setLangSubmenuOpen(false);
-    setColorSubmenuOpen(false);
-  };
-
-  return (
-    <div className="admin-layout">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div className="admin-overlay" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
-        <div className="admin-sidebar-header">
-          <Link to="/admin" className="admin-sidebar-brand">
-            <AuraLogo size={32} color="var(--admin-accent)" />
-            <span className="admin-sidebar-brand-text">Aura</span>
-          </Link>
-          <button
-            className="admin-sidebar-close"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <nav className="admin-sidebar-nav">
-          {NAV.map((entry, idx) => {
-            if (isSeparator(entry)) {
-              return (
-                <div key={`sep-${idx}`} className="admin-nav-separator">
-                  <span className="admin-nav-separator-text">
-                    <ShieldCheck size={12} />
-                    {entry.separator}
-                  </span>
+            {/* Sidebar */}
+            <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
+                <div className="admin-sidebar-header">
+                    <Link to="/" className="admin-sidebar-brand">
+                        <span className="admin-sidebar-logo">A</span>
+                        <span className="admin-sidebar-brand-text">
+                            Aura Admin
+                        </span>
+                    </Link>
+                    <button
+                        className="admin-sidebar-close"
+                        onClick={() => setSidebarOpen(false)}
+                    >
+                        <X size={20} />
+                    </button>
                 </div>
               );
             }
@@ -325,11 +139,14 @@ export default function AdminLayout() {
                                 className="admin-nav-arrow"
                               />
                             )}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
+                        </Link>
+                    ))}
+                </nav>
+
+                <div className="admin-sidebar-footer">
+                    <Link to="/" className="admin-nav-item">
+                        {t("admin.nav.backToSite")}
+                    </Link>
                 </div>
               );
             }
@@ -437,9 +254,8 @@ export default function AdminLayout() {
                         </span>
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
+                    <LanguageToggle />
+                </header>
 
               {/* Language */}
               <div className="admin-dropdown-item-wrap">

@@ -1506,3 +1506,45 @@ select.crud-input {
     animation: cal-popup-modal-out 0.3s cubic-bezier(0.4, 0, 0.7, 0.2) both;
     transform-origin: center top;
 }
+
+/* ════════════════════════════════════════════════════════
+   Language Toggle
+   ════════════════════════════════════════════════════════ */
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lang-toggle:hover {
+  background: var(--admin-surface-hover);
+  border-color: var(--admin-accent);
+  color: var(--admin-accent-hover);
+}
+
+.lang-toggle-label {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Landing page version */
+.navbar .lang-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.navbar .lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent);
+}

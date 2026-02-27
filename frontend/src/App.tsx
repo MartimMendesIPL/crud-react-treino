@@ -1,8 +1,20 @@
 import { useState, useEffect, useCallback } from "react";
+import { Routes, Route } from "react-router-dom";
 import RotatingText from "./components/RotatingText";
 import AuraLogo from "./components/AuraLogo";
 import DashboardDemo from "./components/DashboardDemo";
 import SpotlightCard from "./components/SpotlightCard";
+import AdminLayout from "./components/admin/AdminLayout";
+import DashboardPage from "./pages/admin/DashboardPage";
+import UsersPage from "./pages/admin/UsersPage";
+import ClientsPage from "./pages/admin/ClientsPage";
+import SectionsPage from "./pages/admin/SectionsPage";
+import ProductsPage from "./pages/admin/ProductsPage";
+import ProposalsPage, { ProposalItemsPage } from "./pages/admin/ProposalsPage";
+import OrdersPage, { OrderItemsPage } from "./pages/admin/OrdersPage";
+import AuditLogPage from "./pages/admin/AuditLogPage";
+import ProposalCalendarPage from "./pages/admin/ProposalCalendarPage";
+
 
 const FEATURES = [
     {
@@ -111,6 +123,30 @@ const PLANS = [
 ];
 
 function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="proposals/calendar" element={<ProposalCalendarPage />} />
+                <Route path="users" element={<UsersPage />} />
+                <Route path="clients" element={<ClientsPage />} />
+                <Route path="sections" element={<SectionsPage />} />
+                <Route path="products" element={<ProductsPage />} />
+                <Route path="proposals" element={<ProposalsPage />} />
+                <Route
+                    path="proposals/:id/items"
+                    element={<ProposalItemsPage />}
+                />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="orders/:id/items" element={<OrderItemsPage />} />
+                <Route path="audit-log" element={<AuditLogPage />} />
+            </Route>
+        </Routes>
+    );
+}
+
+function LandingPage() {
     const [darkMode, setDarkMode] = useState(true);
     const [accentColor, setAccentColor] = useState(THEME_COLORS[0].value);
     const [scrolled, setScrolled] = useState(false);
@@ -179,12 +215,7 @@ function App() {
                             }
                         />
                     </button>
-                    <a
-                        href="http://localhost:5000/admin"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="navbar-admin-btn"
-                    >
+                    <a href="/admin" className="navbar-admin-btn">
                         <i className="fa-solid fa-arrow-up-right-from-square" />
                         Admin Panel
                     </a>
@@ -231,15 +262,10 @@ function App() {
                         </h1>
                         <p className="hero-desc">
                             Track proposals, manage production orders, and audit
-                            every change — powered by AdminJS.
+                            every change — all from one dashboard.
                         </p>
                         <div className="hero-actions">
-                            <a
-                                href="http://localhost:5000/admin"
-                                target="_blank"
-                                rel="noreferrer"
-                                style={{ textDecoration: "none" }}
-                            >
+                            <a href="/admin" style={{ textDecoration: "none" }}>
                                 <button className="btn-primary">
                                     Open Dashboard
                                 </button>
@@ -394,8 +420,8 @@ function App() {
                     <h2 className="section-title">Built on a modern stack.</h2>
                     <p className="architecture-desc">
                         Fully containerized with Docker, powered by a robust
-                        PostgreSQL database, and managed through an intuitive
-                        AdminJS interface.
+                        PostgreSQL database, and managed through a custom React
+                        admin dashboard.
                     </p>
 
                     <div className="tech-stack">
@@ -403,7 +429,7 @@ function App() {
                             { name: "PostgreSQL", color: "#336791" },
                             { name: "Node.js", color: "#339933" },
                             { name: "Express" },
-                            { name: "AdminJS", color: "#FF4B4B" },
+                            { name: "React", color: "#61DAFB" },
                             { name: "Docker", color: "#2496ED" },
                         ].map((tech) => (
                             <div key={tech.name} className="tech-item">
@@ -428,15 +454,10 @@ function App() {
                     <div className="cta-content">
                         <h2 className="cta-title">Access the System</h2>
                         <p className="cta-desc">
-                            Log in to the AdminJS dashboard to manage users,
-                            clients, proposals, and production orders.
+                            Log in to the dashboard to manage users, clients,
+                            proposals, and production orders.
                         </p>
-                        <a
-                            href="http://localhost:5000/admin"
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ textDecoration: "none" }}
-                        >
+                        <a href="/admin" style={{ textDecoration: "none" }}>
                             <button className="btn-cta">
                                 Launch Admin Panel
                             </button>
@@ -468,24 +489,18 @@ function App() {
                             <a href="#features">Features</a>
                             <a href="#pricing">Pricing</a>
                             <a href="#architecture">Tech Stack</a>
-                            <a
-                                href="http://localhost:5000/admin"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                Admin Panel
-                            </a>
+                            <a href="/admin">Admin Panel</a>
                         </div>
 
                         {/* Resources */}
                         <div className="footer-col">
                             <h4 className="footer-col-title">Resources</h4>
                             <a
-                                href="https://docs.adminjs.co/"
+                                href="https://react.dev/"
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                AdminJS Docs
+                                React Docs
                             </a>
                             <a
                                 href="https://github.com"

@@ -136,6 +136,7 @@ export const updateItem = async (
     res: Response,
 ): Promise<void> => {
     try {
+        const id = req.params.id as string;
         const { product_id, quantity, unit_price, notes } = req.body;
         if (!product_id || quantity == null || unit_price == null) {
             res.status(400).json({
@@ -143,7 +144,7 @@ export const updateItem = async (
             });
             return;
         }
-        const item = await proposalService.updateItem(req.params.id, {
+        const item = await proposalService.updateItem(id, {
             product_id,
             quantity,
             unit_price,
@@ -165,7 +166,8 @@ export const removeItem = async (
     res: Response,
 ): Promise<void> => {
     try {
-        const deleted = await proposalService.removeItem(req.params.id);
+        const id = req.params.id as string;
+        const deleted = await proposalService.removeItem(id);
         if (!deleted) {
             res.status(404).json({ error: "Proposal item not found" });
             return;

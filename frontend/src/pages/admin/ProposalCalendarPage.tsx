@@ -1,14 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
-  X,
   Loader2,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { api } from "../../services/api";
 
 /* ── types ── */
@@ -22,29 +19,9 @@ interface Proposal {
     updated_at: string;
 }
 
-interface ProposalItem {
-  id: number;
-  proposal_id: number;
-  product_id: number;
-  quantity: number;
-  unit_price: number;
-  notes: string;
-}
-
 interface Client {
     id: number;
     name: string;
-}
-
-interface Section {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  unit_price: number;
 }
 
 /* ── helpers ── */

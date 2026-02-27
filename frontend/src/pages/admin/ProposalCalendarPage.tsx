@@ -1,4 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  X,
+  Loader2,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
@@ -15,9 +22,29 @@ interface Proposal {
     updated_at: string;
 }
 
+interface ProposalItem {
+  id: number;
+  proposal_id: number;
+  product_id: number;
+  quantity: number;
+  unit_price: number;
+  notes: string;
+}
+
 interface Client {
     id: number;
     name: string;
+}
+
+interface Section {
+  id: number;
+  name: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  unit_price: number;
 }
 
 /* ── helpers ── */
@@ -38,7 +65,6 @@ const MONTH_NAMES = [
     "Dec",
 ];
 
-/** Get Monday of the week that contains `date` */
 function getMonday(date: Date) {
     const d = new Date(date);
     const day = d.getDay();
@@ -77,7 +103,7 @@ const STATUS_COLOR: Record<string, string> = {
     rejected: "#ef4444",
 };
 
-/* ── component ── */
+/* ── Popup Modal Component ── */
 
 export default function ProposalCalendarPage() {
     const { t } = useTranslation();

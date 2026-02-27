@@ -6,9 +6,12 @@ import productRoutes from "./productRoutes.js";
 import proposalRoutes from "./proposalRoutes.js";
 import orderRoutes from "./orderRoutes.js";
 import auditRoutes from "./auditRoutes.js";
+import authRoutes from "./authRoutes.js";
+
 
 const router = Router();
 
+router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/clients", clientRoutes);
 router.use("/sections", sectionRoutes);

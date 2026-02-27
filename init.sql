@@ -100,10 +100,15 @@ CREATE TABLE audit_log (
 
 -- ── Seed Data ─────────────────────────────────────────────────────────────────
 
+-- Users (passwords are SHA256 hashed)
+-- Main admin: email=admin@aura-erp.com, password=admin123
+-- Other users: password=changeme
 INSERT INTO users (name, email, password_hash, role) VALUES
-    ('Admin User',  'admin@company.com',      'changeme', 'admin'),
-    ('Sales User',  'sales@company.com',      'changeme', 'sales'),
-    ('Production',  'production@company.com', 'changeme', 'production');
+    ('Admin User',     'admin@aura-erp.com',     '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'admin'),
+    ('Admin User',     'admin@company.com',      '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'admin'),
+    ('Sales User',     'sales@company.com',      '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'sales'),
+    ('Production User','production@company.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'production');
+
 
 INSERT INTO clients (name, email, phone, address, vat_number) VALUES
     ('ACME Corp',   'contact@acme.com',   '+351 910 000 001', 'Rua de Lisboa 1, Porto',   'PT123456789'),

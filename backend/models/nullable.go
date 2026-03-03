@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -69,11 +70,13 @@ func (n *NullTime) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s); err != nil {
 		return err
 	}
-	t, err := time.Parse(time.RFC3339, s)
-	if err != nil {
-		return err
+	// Accept both full RFC3339 ("2026-03-03T00:00:00Z") and plain date ("2026-03-03")
+	for _, layout := range []string{time.RFC3339, "2006-01-02"} {
+		if t, err := time.Parse(layout, s); err == nil {
+			n.Valid = true
+			n.Time = t
+			return nil
+		}
 	}
-	n.Valid = true
-	n.Time = t
-	return nil
+	return fmt.Errorf("cannot parse %q as a date/time value", s)
 }

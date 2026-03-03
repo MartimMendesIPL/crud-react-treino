@@ -1259,6 +1259,81 @@ select.crud-input {
     background-position: right 12px center;
     padding-right: 32px;
 }
+
+/* ── Pagination ── */
+.crud-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 4px 4px;
+}
+
+.crud-pagination-info {
+    font-size: 12.5px;
+    color: var(--admin-text-muted);
+}
+
+.crud-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.crud-pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    background: var(--admin-surface);
+    color: var(--admin-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+}
+
+.crud-pagination-btn:hover:not(:disabled) {
+    background: var(--admin-surface-hover);
+    border-color: var(--admin-accent);
+    color: var(--admin-accent-hover);
+}
+
+.crud-pagination-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.crud-pagination-btn-active {
+    background: var(--admin-accent);
+    border-color: var(--admin-accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.crud-pagination-btn-active:hover:not(:disabled) {
+    background: var(--admin-accent-hover);
+    border-color: var(--admin-accent-hover);
+    color: #fff;
+}
+
+.crud-pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 32px;
+    color: var(--admin-text-muted);
+    font-size: 13px;
+    user-select: none;
+}
+
 /* ════════════════════════════════════════════════════════
    Orders Calendar — Week View
    ════════════════════════════════════════════════════════ */

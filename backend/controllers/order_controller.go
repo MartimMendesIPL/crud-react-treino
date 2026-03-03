@@ -91,8 +91,15 @@ func DeleteOrder(c *gin.Context) {
 
 func GetOrderItems(c *gin.Context) {
 	orderID := c.Query("order_id")
+
+	// No order_id → return all items across every order (used by calendar bulk-load)
 	if orderID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "order_id query param is required"})
+		items, err := services.GetAllOrderItems()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+			return
+		}
+		c.JSON(http.StatusOK, items)
 		return
 	}
 

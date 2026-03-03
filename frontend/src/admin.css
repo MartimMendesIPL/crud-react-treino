@@ -2033,3 +2033,31 @@ select.crud-input {
         font-size: 22px;
     }
 }
+
+/* ── Statistics page — supplemental ── */
+
+.stat-kpi-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.stat-kpi-subtitle {
+    font-size: 12px;
+    color: var(--admin-text-muted);
+}
+
+.stat-chart-icon {
+    color: var(--admin-text-muted);
+    flex-shrink: 0;
+}
+
+.stat-chart-card[data-span="2"] {
+    grid-column: span 2;
+}
+
+@media (max-width: 1024px) {
+    .stat-chart-card[data-span="2"] {
+        grid-column: span 1;
+    }
+}

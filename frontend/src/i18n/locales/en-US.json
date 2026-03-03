@@ -14,7 +14,9 @@
         "confirm": "Confirm",
         "yes": "Yes",
         "no": "No",
-        "all": "All"
+        "all": "All",
+        "noResults": "No results",
+        "typeToSearch": "Type to search…"
     },
     "landing": {
         "nav": {
@@ -255,7 +257,9 @@
             "id": "ID",
             "reference": "Reference",
             "client": "Client",
+            "searchClient": "Search client…",
             "section": "Section",
+            "searchSection": "Search section…",
             "status": "Status",
             "notes": "Notes",
             "created": "Created",
@@ -269,6 +273,7 @@
             "addItem": "Add Item",
             "noItems": "No items yet.",
             "product": "Product",
+            "searchProduct": "Search product…",
             "quantity": "Quantity",
             "unitPrice": "Unit Price",
             "subtotal": "Subtotal",
@@ -280,8 +285,11 @@
             "id": "ID",
             "reference": "Reference",
             "proposal": "Proposal",
+            "searchProposal": "Search proposal…",
             "client": "Client",
+            "searchClient": "Search client…",
             "section": "Section",
+            "searchSection": "Search section…",
             "status": "Status",
             "dueDate": "Due Date",
             "created": "Created",
@@ -295,6 +303,7 @@
             "addItem": "Add Item",
             "noItems": "No items yet.",
             "product": "Product",
+            "searchProduct": "Search product…",
             "quantity": "Quantity",
             "unitPrice": "Unit Price",
             "subtotal": "Subtotal",

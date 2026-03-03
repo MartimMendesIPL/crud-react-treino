@@ -14,46 +14,39 @@ import ProposalItemsPage from "./pages/admin/ProposalItemsPage";
 import OrdersPage from "./pages/admin/OrdersPage";
 import OrderItemsPage from "./pages/admin/OrderItemsPage";
 import AuditLogPage from "./pages/admin/AuditLogPage";
-import ProposalCalendarPage from "./pages/admin/ProposalCalendarPage";
+import OrderCalendarPage from "./pages/admin/OrderCalendarPage";
+import StatisticsPage from "./pages/admin/StatisticsPage";
 
 function App() {
-    return (
-        <AuthProvider>
-            <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route
-                    path="/admin"
-                    element={
-                        <ProtectedRoute>
-                            <AdminLayout />
-                        </ProtectedRoute>
-                    }
-                >
-                    <Route index element={<DashboardPage />} />
-                    <Route
-                        path="proposals/calendar"
-                        element={<ProposalCalendarPage />}
-                    />
-                    <Route path="users" element={<UsersPage />} />
-                    <Route path="clients" element={<ClientsPage />} />
-                    <Route path="sections" element={<SectionsPage />} />
-                    <Route path="products" element={<ProductsPage />} />
-                    <Route path="proposals" element={<ProposalsPage />} />
-                    <Route
-                        path="proposals/:id/items"
-                        element={<ProposalItemsPage />}
-                    />
-                    <Route path="orders" element={<OrdersPage />} />
-                    <Route
-                        path="orders/:id/items"
-                        element={<OrderItemsPage />}
-                    />
-                    <Route path="audit-log" element={<AuditLogPage />} />
-                </Route>
-            </Routes>
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="orders/calendar" element={<OrderCalendarPage />} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="clients" element={<ClientsPage />} />
+          <Route path="sections" element={<SectionsPage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="proposals" element={<ProposalsPage />} />
+          <Route path="proposals/:id/items" element={<ProposalItemsPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id/items" element={<OrderItemsPage />} />
+          <Route path="audit-log" element={<AuditLogPage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
+  );
 }
 
 export default App;

@@ -153,6 +153,7 @@
       "calendar": "Calendário",
       "orders": "Encomendas",
       "auditLog": "Registo de Auditoria",
+      "statistics": "Estatísticas",
       "backToSite": "← Voltar ao Site"
     },
     "dashboard": {
@@ -164,6 +165,37 @@
       "proposals": "Propostas",
       "orders": "Encomendas",
       "auditEntries": "Entradas de Auditoria"
+    },
+    "statistics": {
+      "title": "Estatísticas",
+      "subtitle": "Visão geral do desempenho e métricas do sistema.",
+      "totalRevenue": "Receita Total",
+      "fromOrders": "de {{count}} encomendas",
+      "avg": "média",
+      "proposalValue": "Valor de Propostas",
+      "totalProposals": "propostas no total",
+      "conversionRate": "taxa de conversão",
+      "activeOrders": "Encomendas Ativas",
+      "completed": "concluídas",
+      "total": "total",
+      "totalClients": "Total de Clientes",
+      "products": "produtos",
+      "ordersPerMonth": "Encomendas por Mês",
+      "proposalsPerMonth": "Propostas por Mês",
+      "ordersByStatus": "Encomendas por Estado",
+      "proposalsByStatus": "Propostas por Estado",
+      "topClientsByRevenue": "Top Clientes por Receita",
+      "ordersBySection": "Encomendas por Secção",
+      "proposalsBySection": "Propostas por Secção",
+      "topProducts": "Produtos Mais Encomendados",
+      "newClientsPerMonth": "Novos Clientes por Mês",
+      "summary": "Resumo",
+      "avgOrderValue": "Valor Médio de Encomenda",
+      "totalProducts": "Total de Produtos",
+      "totalSections": "Total de Secções",
+      "pendingOrders": "Encomendas Pendentes",
+      "inProduction": "Em Produção",
+      "noData": "Sem dados disponíveis."
     },
     "crud": {
       "noRecords": "Nenhum registo encontrado.",
@@ -282,8 +314,16 @@
     },
     "calendar": {
       "title": "Calendário de Propostas",
+      "ordersTitle": "Calendário de Encomendas",
       "thisWeek": "Esta Semana",
-      "loadingCalendar": "A carregar calendário…"
+      "loadingCalendar": "A carregar calendário…",
+      "noSection": "Sem Secção",
+      "more": "mais",
+      "noItems": "Sem itens",
+      "generalInfo": "Informação Geral",
+      "orderLines": "Linhas de Encomenda",
+      "total": "Total",
+      "address": "Morada"
     }
   },
   "status": {

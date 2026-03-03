@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
+  Globe,
   LayoutDashboard,
   Users,
   UserCircle,
@@ -10,6 +11,7 @@ import {
   CalendarDays,
   ClipboardList,
   History,
+  BarChart3,
   Menu,
   X,
   ChevronRight,
@@ -23,7 +25,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import AuraLogo from "../AuraLogo";
-import LanguageToggle from "../LanguageToggle";
 import "../../admin.css";
 
 /* ── Nav type definitions ── */
@@ -57,7 +58,7 @@ function isSeparator(entry: NavEntry): entry is NavSeparator {
 const NAV: NavEntry[] = [
   {
     labelKey: "admin.nav.calendar",
-    to: "/admin/proposals/calendar",
+    to: "/admin/orders/calendar",
     icon: CalendarDays,
   },
   {
@@ -90,6 +91,11 @@ const NAV: NavEntry[] = [
     labelKey: "admin.nav.clients",
     to: "/admin/clients",
     icon: UserCircle,
+  },
+  {
+    labelKey: "admin.nav.statistics",
+    to: "/admin/statistics",
+    icon: BarChart3,
   },
   {
     labelKey: "admin.nav.auditLog",
@@ -174,7 +180,7 @@ function applyAccent(hex: string) {
 /* ── Component ── */
 
 export default function AdminLayout() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -260,7 +266,7 @@ export default function AdminLayout() {
 
   const handleLogout = () => {
     setDropdownOpen(false);
-    navigate("/");
+    navigate("/logout");
   };
 
   const handleSettings = () => {
@@ -406,7 +412,11 @@ export default function AdminLayout() {
                 {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
                 <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
                 <span className="admin-dropdown-hint">
-                  {theme === "dark" ? "☀" : "🌙"}
+                  {theme === "dark" ? (
+                    <i className="fa-solid fa-sun" />
+                  ) : (
+                    <i className="fa-solid fa-moon" />
+                  )}
                 </span>
               </button>
 
@@ -423,51 +433,61 @@ export default function AdminLayout() {
                     {ACCENT_COLORS.find((c) => c.value === accentColor)?.name ??
                       "Custom"}
                   </span>
-                  <span
-                    className="admin-dropdown-color-preview"
-                    style={{ backgroundColor: accentColor }}
-                  />
-                  <ChevronRight
-                    size={13}
-                    className={`admin-dropdown-sub-arrow ${colorSubmenuOpen ? "open" : ""}`}
-                  />
+                  <span className="admin-dropdown-right-group">
+                    <span
+                      className="admin-dropdown-color-preview"
+                      style={{ backgroundColor: accentColor }}
+                    />
+                    <ChevronRight
+                      size={13}
+                      className={`admin-dropdown-sub-arrow ${colorSubmenuOpen ? "open" : ""}`}
+                    />
+                  </span>
                 </button>
 
                 {colorSubmenuOpen && (
                   <div className="admin-dropdown-submenu admin-color-submenu">
-                    <div className="admin-color-swatches">
-                      {ACCENT_COLORS.map((color) => (
-                        <button
-                          key={color.value}
-                          className={`admin-color-swatch ${accentColor === color.value ? "active" : ""}`}
+                    {ACCENT_COLORS.map((color) => (
+                      <button
+                        key={color.value}
+                        className={`admin-dropdown-item admin-color-list-item ${accentColor === color.value ? "active" : ""}`}
+                        onClick={() => handleAccentSelect(color.value)}
+                      >
+                        <span>{color.name}</span>
+                        <span
+                          className={`admin-color-dot ${accentColor === color.value ? "active" : ""}`}
                           style={{ backgroundColor: color.value }}
-                          onClick={() => handleAccentSelect(color.value)}
-                          title={color.name}
                         >
                           {accentColor === color.value && (
-                            <Check size={12} strokeWidth={3} />
+                            <Check size={10} strokeWidth={3} />
                           )}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="admin-color-labels">
-                      {ACCENT_COLORS.map((color) => (
-                        <span
-                          key={color.value}
-                          className={`admin-color-label ${accentColor === color.value ? "active" : ""}`}
-                        >
-                          {color.name}
                         </span>
-                      ))}
-                    </div>
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
 
-              {/* Language toggle */}
-              <div className="admin-dropdown-item-wrap">
-                <LanguageToggle />
-              </div>
+              {/* Language */}
+              <button
+                className="admin-dropdown-item"
+                onClick={() => {
+                  const newLang = i18n.language === "en-US" ? "pt-PT" : "en-US";
+                  i18n.changeLanguage(newLang);
+                }}
+              >
+                <Globe size={15} />
+                <span>
+                  {i18n.language === "en-US" ? "English" : "Português"}
+                </span>
+                <span className="admin-dropdown-hint">
+                  {i18n.language === "en-US" ? (
+                    <i className="fa-solid fa-language" />
+                  ) : (
+                    <i className="fa-solid fa-language" />
+                  )}
+                </span>
+              </button>
 
               <div className="admin-dropdown-divider" />
 

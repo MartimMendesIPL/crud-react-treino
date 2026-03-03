@@ -153,6 +153,7 @@
       "calendar": "Calendar",
       "orders": "Orders",
       "auditLog": "Audit Log",
+      "statistics": "Statistics",
       "backToSite": "← Back to Site"
     },
     "dashboard": {
@@ -164,6 +165,37 @@
       "proposals": "Proposals",
       "orders": "Orders",
       "auditEntries": "Audit Entries"
+    },
+    "statistics": {
+      "title": "Statistics",
+      "subtitle": "Overview of performance and system metrics.",
+      "totalRevenue": "Total Revenue",
+      "fromOrders": "from {{count}} orders",
+      "avg": "avg",
+      "proposalValue": "Proposal Value",
+      "totalProposals": "total proposals",
+      "conversionRate": "conversion rate",
+      "activeOrders": "Active Orders",
+      "completed": "completed",
+      "total": "total",
+      "totalClients": "Total Clients",
+      "products": "products",
+      "ordersPerMonth": "Orders per Month",
+      "proposalsPerMonth": "Proposals per Month",
+      "ordersByStatus": "Orders by Status",
+      "proposalsByStatus": "Proposals by Status",
+      "topClientsByRevenue": "Top Clients by Revenue",
+      "ordersBySection": "Orders by Section",
+      "proposalsBySection": "Proposals by Section",
+      "topProducts": "Most Ordered Products",
+      "newClientsPerMonth": "New Clients per Month",
+      "summary": "Summary",
+      "avgOrderValue": "Average Order Value",
+      "totalProducts": "Total Products",
+      "totalSections": "Total Sections",
+      "pendingOrders": "Pending Orders",
+      "inProduction": "In Production",
+      "noData": "No data available."
     },
     "crud": {
       "noRecords": "No records found.",
@@ -282,8 +314,16 @@
     },
     "calendar": {
       "title": "Proposal Calendar",
+      "ordersTitle": "Orders Calendar",
       "thisWeek": "This Week",
-      "loadingCalendar": "Loading calendar…"
+      "loadingCalendar": "Loading calendar…",
+      "noSection": "No Section",
+      "more": "more",
+      "noItems": "No items",
+      "generalInfo": "General Information",
+      "orderLines": "Order Lines",
+      "total": "Total",
+      "address": "Address"
     }
   },
   "status": {

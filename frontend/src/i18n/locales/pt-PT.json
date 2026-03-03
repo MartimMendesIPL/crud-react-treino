@@ -14,7 +14,9 @@
         "confirm": "Confirmar",
         "yes": "Sim",
         "no": "Não",
-        "all": "Todos"
+        "all": "Todos",
+        "noResults": "Sem resultados",
+        "typeToSearch": "Escreva para pesquisar…"
     },
     "landing": {
         "nav": {
@@ -255,7 +257,9 @@
             "id": "ID",
             "reference": "Referência",
             "client": "Cliente",
+            "searchClient": "Pesquisar cliente…",
             "section": "Secção",
+            "searchSection": "Pesquisar secção…",
             "status": "Estado",
             "notes": "Notas",
             "created": "Criado",
@@ -282,7 +286,9 @@
             "proposal": "Proposta",
             "searchProposal": "Pesquisar proposta…",
             "client": "Cliente",
+            "searchClient": "Pesquisar cliente…",
             "section": "Secção",
+            "searchSection": "Pesquisar secção…",
             "status": "Estado",
             "dueDate": "Data de Entrega",
             "created": "Criado",
@@ -296,6 +302,7 @@
             "addItem": "Adicionar Item",
             "noItems": "Ainda sem itens.",
             "product": "Produto",
+            "searchProduct": "Pesquisar produto…",
             "quantity": "Quantidade",
             "unitPrice": "Preço Unitário",
             "subtotal": "Subtotal",

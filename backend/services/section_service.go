@@ -1,9 +1,42 @@
 package services
 
 import (
+	"fmt"
+
 	"aura-erp/backend/config"
 	"aura-erp/backend/models"
 )
+
+func SearchSections(q string, limit int) ([]models.SectionSearchResult, error) {
+	if limit <= 0 || limit > 100 {
+		limit = 25
+	}
+	query := `
+		SELECT id, name
+		FROM sections
+		WHERE name ILIKE $1
+		ORDER BY name ASC
+		LIMIT $2
+	`
+	rows, err := config.DB.Query(query, fmt.Sprintf("%%%s%%", q), limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var results []models.SectionSearchResult
+	for rows.Next() {
+		var r models.SectionSearchResult
+		if err := rows.Scan(&r.ID, &r.Name); err != nil {
+			return nil, err
+		}
+		results = append(results, r)
+	}
+	if results == nil {
+		results = []models.SectionSearchResult{}
+	}
+	return results, nil
+}
 
 func GetAllSections() ([]models.Section, error) {
 	query := `SELECT id, name, description, created_at FROM sections ORDER BY id ASC`

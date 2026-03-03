@@ -42,6 +42,7 @@ func SetupRoutes(router *gin.Engine) {
 		clients := api.Group("/clients")
 		{
 			clients.GET("", controllers.GetAllClients)
+			clients.GET("/search", controllers.SearchClients)
 			clients.GET("/:id", controllers.GetClientByID)
 			clients.POST("", controllers.CreateClient)
 			clients.PUT("/:id", controllers.UpdateClient)
@@ -52,6 +53,7 @@ func SetupRoutes(router *gin.Engine) {
 		products := api.Group("/products")
 		{
 			products.GET("", controllers.GetAllProducts)
+			products.GET("/search", controllers.SearchProducts)
 			products.GET("/:id", controllers.GetProductByID)
 			products.POST("", controllers.CreateProduct)
 			products.PUT("/:id", controllers.UpdateProduct)
@@ -62,6 +64,7 @@ func SetupRoutes(router *gin.Engine) {
 		sections := api.Group("/sections")
 		{
 			sections.GET("", controllers.GetAllSections)
+			sections.GET("/search", controllers.SearchSections)
 			sections.GET("/:id", controllers.GetSectionByID)
 			sections.POST("", controllers.CreateSection)
 			sections.PUT("/:id", controllers.UpdateSection)

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { api } from "../../services/api";
@@ -20,38 +20,76 @@ interface Order {
     created_at: string;
     updated_at: string;
 }
-interface Client {
-    id: number;
-    name: string;
-}
-interface Section {
-    id: number;
-    name: string;
-}
+
 /* ── Orders list page ── */
 
 export default function OrdersPage() {
     const { t } = useTranslation();
-    const [clients, setClients] = useState<Client[]>([]);
-    const [sections, setSections] = useState<Section[]>([]);
-    useEffect(() => {
-        api.get<Client[]>("/clients")
-            .then(setClients)
-            .catch(() => {});
-        api.get<Section[]>("/sections")
-            .then(setSections)
-            .catch(() => {});
+
+    const loadProposalOptions = useCallback(async (inputValue: string) => {
+        const params = new URLSearchParams({ q: inputValue, limit: "25" });
+        const results = await api.get<{ id: number; reference: string }[]>(
+            `/proposals/search?${params}`,
+        );
+        return results.map((p) => ({
+            value: String(p.id),
+            label: p.reference,
+        }));
+    }, []);
+
+    const loadSingleProposal = useCallback(async (value: string) => {
+        try {
+            const p = await api.get<{ id: number; reference: string }>(
+                `/proposals/${value}`,
+            );
+            return { value: String(p.id), label: p.reference };
+        } catch {
+            return null;
+        }
+    }, []);
+
+    const loadClientOptions = useCallback(async (inputValue: string) => {
+        const params = new URLSearchParams({ q: inputValue, limit: "25" });
+        const results = await api.get<{ id: number; name: string }[]>(
+            `/clients/search?${params}`,
+        );
+        return results.map((c) => ({ value: String(c.id), label: c.name }));
+    }, []);
+
+    const loadSingleClient = useCallback(async (value: string) => {
+        try {
+            const c = await api.get<{ id: number; name: string }>(
+                `/clients/${value}`,
+            );
+            return { value: String(c.id), label: c.name };
+        } catch {
+            return null;
+        }
+    }, []);
+
+    const loadSectionOptions = useCallback(async (inputValue: string) => {
+        const params = new URLSearchParams({ q: inputValue, limit: "25" });
+        const results = await api.get<{ id: number; name: string }[]>(
+            `/sections/search?${params}`,
+        );
+        return results.map((s) => ({ value: String(s.id), label: s.name }));
+    }, []);
+
+    const loadSingleSection = useCallback(async (value: string) => {
+        try {
+            const s = await api.get<{ id: number; name: string }>(
+                `/sections/${value}`,
+            );
+            return { value: String(s.id), label: s.name };
+        } catch {
+            return null;
+        }
     }, []);
 
     const columns: Column<Order>[] = [
         { key: "id", label: t("admin.orders.id") },
         { key: "reference", label: t("admin.orders.reference") },
-        {
-            key: "client_id",
-            label: t("admin.orders.client"),
-            render: (v) =>
-                clients.find((c) => c.id === Number(v))?.name ?? String(v),
-        },
+        { key: "client_id", label: t("admin.orders.client") },
         {
             key: "status",
             label: t("admin.orders.status"),
@@ -84,48 +122,25 @@ export default function OrdersPage() {
             label: t("admin.orders.proposal"),
             type: "async-select",
             placeholder: t("admin.orders.searchProposal"),
-            loadOptions: useCallback(async (inputValue: string) => {
-                const params = new URLSearchParams({
-                    q: inputValue,
-                    limit: "25",
-                });
-                const results = await api.get<
-                    { id: number; reference: string }[]
-                >(`/proposals/search?${params}`);
-                return results.map((p) => ({
-                    value: String(p.id),
-                    label: p.reference,
-                }));
-            }, []),
-            loadSingleOption: useCallback(async (value: string) => {
-                try {
-                    const p = await api.get<{ id: number; reference: string }>(
-                        `/proposals/${value}`,
-                    );
-                    return { value: String(p.id), label: p.reference };
-                } catch {
-                    return null;
-                }
-            }, []),
+            loadOptions: loadProposalOptions,
+            loadSingleOption: loadSingleProposal,
         },
         {
             name: "client_id",
             label: t("admin.orders.client"),
-            type: "select",
+            type: "async-select",
             required: true,
-            options: clients.map((c) => ({
-                value: String(c.id),
-                label: c.name,
-            })),
+            placeholder: t("admin.orders.searchClient"),
+            loadOptions: loadClientOptions,
+            loadSingleOption: loadSingleClient,
         },
         {
             name: "section_id",
             label: t("admin.orders.section"),
-            type: "select",
-            options: sections.map((s) => ({
-                value: String(s.id),
-                label: s.name,
-            })),
+            type: "async-select",
+            placeholder: t("admin.orders.searchSection"),
+            loadOptions: loadSectionOptions,
+            loadSingleOption: loadSingleSection,
         },
         {
             name: "status",

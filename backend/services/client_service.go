@@ -1,9 +1,42 @@
 package services
 
 import (
+	"fmt"
+
 	"aura-erp/backend/config"
 	"aura-erp/backend/models"
 )
+
+func SearchClients(q string, limit int) ([]models.ClientSearchResult, error) {
+	if limit <= 0 || limit > 100 {
+		limit = 25
+	}
+	query := `
+		SELECT id, name
+		FROM clients
+		WHERE name ILIKE $1
+		ORDER BY name ASC
+		LIMIT $2
+	`
+	rows, err := config.DB.Query(query, fmt.Sprintf("%%%s%%", q), limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var results []models.ClientSearchResult
+	for rows.Next() {
+		var r models.ClientSearchResult
+		if err := rows.Scan(&r.ID, &r.Name); err != nil {
+			return nil, err
+		}
+		results = append(results, r)
+	}
+	if results == nil {
+		results = []models.ClientSearchResult{}
+	}
+	return results, nil
+}
 
 func GetAllClients() ([]models.Client, error) {
 	query := `SELECT id, name, email, phone, address, vat_number, notes, created_at, updated_at FROM clients ORDER BY id ASC`

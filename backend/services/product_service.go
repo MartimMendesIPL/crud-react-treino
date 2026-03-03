@@ -1,9 +1,42 @@
 package services
 
 import (
+	"fmt"
+
 	"aura-erp/backend/config"
 	"aura-erp/backend/models"
 )
+
+func SearchProducts(q string, limit int) ([]models.ProductSearchResult, error) {
+	if limit <= 0 || limit > 100 {
+		limit = 25
+	}
+	query := `
+		SELECT id, name
+		FROM products
+		WHERE name ILIKE $1
+		ORDER BY name ASC
+		LIMIT $2
+	`
+	rows, err := config.DB.Query(query, fmt.Sprintf("%%%s%%", q), limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var results []models.ProductSearchResult
+	for rows.Next() {
+		var r models.ProductSearchResult
+		if err := rows.Scan(&r.ID, &r.Name); err != nil {
+			return nil, err
+		}
+		results = append(results, r)
+	}
+	if results == nil {
+		results = []models.ProductSearchResult{}
+	}
+	return results, nil
+}
 
 func GetAllProducts() ([]models.Product, error) {
 	query := `SELECT id, name, description, unit_price, unit, created_at FROM products ORDER BY id ASC`

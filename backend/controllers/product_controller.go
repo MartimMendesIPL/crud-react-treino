@@ -2,12 +2,30 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"aura-erp/backend/models"
 	"aura-erp/backend/services"
 
 	"github.com/gin-gonic/gin"
 )
+
+func SearchProducts(c *gin.Context) {
+	q := c.Query("q")
+	limitStr := c.DefaultQuery("limit", "25")
+	limit := 25
+	if n, err := strconv.Atoi(limitStr); err == nil {
+		limit = n
+	}
+
+	results, err := services.SearchProducts(q, limit)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, results)
+}
 
 func GetAllProducts(c *gin.Context) {
 	products, err := services.GetAllProducts()

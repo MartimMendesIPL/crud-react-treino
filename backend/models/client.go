@@ -2,6 +2,11 @@ package models
 
 import "time"
 
+type ClientSearchResult struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 type Client struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`

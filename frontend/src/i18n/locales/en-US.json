@@ -1,350 +1,356 @@
 {
-    "common": {
-        "loading": "Loading…",
-        "error": "Error",
-        "save": "Save",
-        "cancel": "Cancel",
-        "delete": "Delete",
-        "edit": "Edit",
-        "create": "Create",
-        "update": "Update",
-        "search": "Search…",
-        "new": "New",
-        "back": "Back",
-        "confirm": "Confirm",
-        "yes": "Yes",
-        "no": "No",
-        "all": "All",
-        "noResults": "No results",
-        "typeToSearch": "Type to search…"
+  "common": {
+    "loading": "Loading…",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "search": "Search…",
+    "new": "New",
+    "back": "Back",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "noResults": "No results",
+    "typeToSearch": "Type to search…"
+  },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "stack": "Stack",
+      "adminPanel": "Admin Panel"
     },
-    "landing": {
-        "nav": {
-            "features": "Features",
-            "pricing": "Pricing",
-            "stack": "Stack",
-            "adminPanel": "Admin Panel"
-        },
-        "hero": {
-            "badge": "Enterprise Resource Planning",
-            "title": "Control your",
-            "titleRotate1": "Warehouse",
-            "titleRotate2": "Office",
-            "titleRotate3": "Business",
-            "titleRotate4": "Profits",
-            "description": "Track proposals, manage production orders, and audit every change — all from one dashboard.",
-            "openDashboard": "Open Dashboard",
-            "viewFeatures": "View Features"
-        },
-        "stats": {
-            "traceability": "100%",
-            "traceabilityLabel": "Audit Traceability",
-            "roles": "4",
-            "rolesLabel": "Permission Roles",
-            "tracking": "Real-time",
-            "trackingLabel": "Order Tracking"
-        },
-        "features": {
-            "title": "System Capabilities.",
-            "subtitle": "Everything you need to run your industrial operations.",
-            "proposalManagement": {
-                "title": "Proposal Management",
-                "description": "Create, track, and convert client proposals into actionable manufacturing orders with full version history."
-            },
-            "productionTracking": {
-                "title": "Production Tracking",
-                "description": "Monitor orders across different sections (Metalwork, Painting, Assembly) in real-time."
-            },
-            "auditLogging": {
-                "title": "Audit Logging",
-                "description": "Every status change, edit, and conversion is logged. Know exactly who did what and when."
-            },
-            "roleBasedAccess": {
-                "title": "Role-Based Access",
-                "description": "Secure your data with Admin, Sales, Production, and Viewer permission levels."
-            },
-            "clientDatabase": {
-                "title": "Client Database",
-                "description": "Maintain a centralized registry of all your clients, their contact info, and VAT details."
-            },
-            "productCatalogue": {
-                "title": "Product Catalogue",
-                "description": "Manage your raw materials and finished goods with standardized units and pricing."
-            }
-        },
-        "pricing": {
-            "title": "Simple, transparent pricing.",
-            "subtitle": "Choose the plan that fits your team. Upgrade anytime.",
-            "starter": {
-                "name": "Starter",
-                "price": "Free",
-                "description": "For small teams getting started with production tracking.",
-                "cta": "Get Started",
-                "features": [
-                    "Up to 5 users",
-                    "Basic proposal management",
-                    "Single workspace",
-                    "Community support",
-                    "7-day audit history"
-                ]
-            },
-            "professional": {
-                "name": "Professional",
-                "price": "$49",
-                "period": "/mo",
-                "description": "For growing teams that need full visibility and control.",
-                "cta": "Start Free Trial",
-                "features": [
-                    "Up to 25 users",
-                    "Advanced production tracking",
-                    "Role-based access control",
-                    "Priority support",
-                    "Unlimited audit history",
-                    "Custom workflows"
-                ]
-            },
-            "enterprise": {
-                "name": "Enterprise",
-                "price": "Custom",
-                "description": "For large organizations with complex requirements.",
-                "cta": "Contact Sales",
-                "features": [
-                    "Unlimited users",
-                    "Dedicated account manager",
-                    "SSO & advanced security",
-                    "Custom integrations",
-                    "On-premise deployment",
-                    "24/7 phone support",
-                    "SLA guarantee"
-                ]
-            },
-            "mostPopular": "Most Popular"
-        },
-        "architecture": {
-            "title": "Built on a modern stack.",
-            "description": "Fully containerized with Docker, powered by a robust PostgreSQL database, and managed through a custom React admin dashboard."
-        },
-        "cta": {
-            "title": "Access the System",
-            "description": "Log in to the dashboard to manage users, clients, proposals, and production orders.",
-            "button": "Launch Admin Panel"
-        },
-        "footer": {
-            "description": "Open-source ERP for industrial teams. Track proposals, orders, and production — all from one dashboard.",
-            "product": "Product",
-            "resources": "Resources",
-            "contact": "Contact",
-            "reactDocs": "React Docs",
-            "github": "GitHub",
-            "apiReference": "API Reference",
-            "changelog": "Changelog",
-            "address": "Rua da Inovação 42, 4000-001 Porto, Portugal",
-            "copyright": "© 2026 Aura Systems. All rights reserved.",
-            "privacy": "Privacy Policy",
-            "terms": "Terms of Service"
-        }
+    "hero": {
+      "badge": "Enterprise Resource Planning",
+      "title": "Take control of your",
+      "titleRotate1": "Warehouse",
+      "titleRotate2": "Office",
+      "titleRotate3": "Business",
+      "titleRotate4": "Profits",
+      "description": "Track proposals, manage production orders and audit every change — all in one dashboard.",
+      "openDashboard": "Open Dashboard",
+      "viewFeatures": "View Features"
     },
-    "admin": {
-        "nav": {
-            "dashboard": "Dashboard",
-            "users": "Users",
-            "clients": "Clients",
-            "sections": "Sections",
-            "products": "Products",
-            "proposals": "Proposals",
-            "calendar": "Calendar",
-            "orders": "Orders",
-            "auditLog": "Audit Log",
-            "statistics": "Statistics",
-            "backToSite": "← Back to Site"
-        },
-        "dashboard": {
-            "title": "Dashboard",
-            "subtitle": "Overview of your system data.",
-            "users": "Users",
-            "clients": "Clients",
-            "products": "Products",
-            "proposals": "Proposals",
-            "orders": "Orders",
-            "auditEntries": "Audit Entries"
-        },
-        "statistics": {
-            "title": "Statistics",
-            "subtitle": "Overview of performance and system metrics.",
-            "totalRevenue": "Total Revenue",
-            "fromOrders": "from {{count}} orders",
-            "avg": "avg",
-            "proposalValue": "Proposal Value",
-            "totalProposals": "total proposals",
-            "conversionRate": "conversion rate",
-            "activeOrders": "Active Orders",
-            "completed": "completed",
-            "total": "total",
-            "totalClients": "Total Clients",
-            "products": "products",
-            "ordersPerMonth": "Orders per Month",
-            "proposalsPerMonth": "Proposals per Month",
-            "ordersByStatus": "Orders by Status",
-            "proposalsByStatus": "Proposals by Status",
-            "topClientsByRevenue": "Top Clients by Revenue",
-            "ordersBySection": "Orders by Section",
-            "proposalsBySection": "Proposals by Section",
-            "topProducts": "Most Ordered Products",
-            "newClientsPerMonth": "New Clients per Month",
-            "summary": "Summary",
-            "avgOrderValue": "Average Order Value",
-            "totalProducts": "Total Products",
-            "totalSections": "Total Sections",
-            "pendingOrders": "Pending Orders",
-            "inProduction": "In Production",
-            "noData": "No data available."
-        },
-        "crud": {
-            "noRecords": "No records found.",
-            "confirmDelete": "Confirm Delete",
-            "deleteMessage": "Are you sure you want to delete this record? This action cannot be undone.",
-            "editTitle": "Edit {{resource}}",
-            "newTitle": "New {{resource}}",
-            "saveFailed": "Save failed",
-            "deleteFailed": "Delete failed",
-            "loadFailed": "Failed to load data",
-            "paginationInfo": "Showing {{from}}–{{to}} of {{total}}",
-            "prevPage": "Previous page",
-            "nextPage": "Next page"
-        },
-        "users": {
-            "title": "Users",
-            "id": "ID",
-            "name": "Name",
-            "email": "Email",
-            "role": "Role",
-            "created": "Created",
-            "password": "Password",
-            "roleAdmin": "Admin",
-            "roleSales": "Sales",
-            "roleProduction": "Production",
-            "roleViewer": "Viewer"
-        },
-        "clients": {
-            "title": "Clients",
-            "id": "ID",
-            "name": "Name",
-            "email": "Email",
-            "phone": "Phone",
-            "vat": "VAT",
-            "address": "Address",
-            "vatNumber": "VAT Number",
-            "notes": "Notes",
-            "created": "Created"
-        },
-        "sections": {
-            "title": "Sections",
-            "id": "ID",
-            "name": "Name",
-            "description": "Description",
-            "created": "Created"
-        },
-        "products": {
-            "title": "Products",
-            "id": "ID",
-            "name": "Name",
-            "description": "Description",
-            "unitPrice": "Unit Price",
-            "unit": "Unit"
-        },
-        "proposals": {
-            "title": "Proposals",
-            "id": "ID",
-            "reference": "Reference",
-            "client": "Client",
-            "searchClient": "Search client…",
-            "section": "Section",
-            "searchSection": "Search section…",
-            "status": "Status",
-            "notes": "Notes",
-            "created": "Created",
-            "items": "Items",
-            "viewItems": "View Items",
-            "statusDraft": "Draft",
-            "statusPending": "Pending",
-            "statusApproved": "Approved",
-            "statusRejected": "Rejected",
-            "itemsTitle": "Proposal #{{id}} — Items",
-            "addItem": "Add Item",
-            "noItems": "No items yet.",
-            "product": "Product",
-            "searchProduct": "Search product…",
-            "quantity": "Quantity",
-            "unitPrice": "Unit Price",
-            "subtotal": "Subtotal",
-            "editItem": "Edit Item",
-            "deleteItem": "Delete this item?"
-        },
-        "orders": {
-            "title": "Orders",
-            "id": "ID",
-            "reference": "Reference",
-            "proposal": "Proposal",
-            "searchProposal": "Search proposal…",
-            "client": "Client",
-            "searchClient": "Search client…",
-            "section": "Section",
-            "searchSection": "Search section…",
-            "status": "Status",
-            "dueDate": "Due Date",
-            "created": "Created",
-            "items": "Items",
-            "viewItems": "View Items",
-            "statusPending": "Pending",
-            "statusInProduction": "In Production",
-            "statusCompleted": "Completed",
-            "statusDelivered": "Delivered",
-            "itemsTitle": "Order #{{id}} — Items",
-            "addItem": "Add Item",
-            "noItems": "No items yet.",
-            "product": "Product",
-            "searchProduct": "Search product…",
-            "quantity": "Quantity",
-            "unitPrice": "Unit Price",
-            "subtotal": "Subtotal",
-            "notes": "Notes",
-            "editItem": "Edit Item",
-            "deleteItem": "Delete this item?"
-        },
-        "auditLog": {
-            "title": "Audit Log",
-            "filter": "Filter by entity or action…",
-            "noEntries": "No audit entries found.",
-            "id": "ID",
-            "userId": "User ID",
-            "entity": "Entity",
-            "entityId": "Entity ID",
-            "action": "Action",
-            "oldValue": "Old Value",
-            "newValue": "New Value",
-            "date": "Date"
-        },
-        "calendar": {
-            "title": "Proposal Calendar",
-            "ordersTitle": "Orders Calendar",
-            "thisWeek": "This Week",
-            "loadingCalendar": "Loading calendar…",
-            "noSection": "No Section",
-            "more": "more",
-            "noItems": "No items",
-            "generalInfo": "General Information",
-            "orderLines": "Order Lines",
-            "total": "Total",
-            "address": "Address"
-        }
+    "stats": {
+      "traceability": "100%",
+      "traceabilityLabel": "Full Traceability",
+      "roles": "4",
+      "rolesLabel": "Permission Roles",
+      "tracking": "Real-time",
+      "trackingLabel": "Production Tracking"
     },
-    "status": {
-        "draft": "Draft",
-        "pending": "Pending",
-        "approved": "Approved",
-        "rejected": "Rejected",
-        "in_production": "In Production",
-        "completed": "Completed",
-        "delivered": "Delivered"
+    "features": {
+      "title": "System Capabilities.",
+      "subtitle": "Everything you need to manage your industrial operations.",
+      "proposalManagement": {
+        "title": "Proposal Management",
+        "description": "Create, track and convert client proposals into actionable manufacturing orders with full history."
+      },
+      "productionTracking": {
+        "title": "Production Tracking",
+        "description": "Monitor orders across different sections (Metalwork, Painting, Assembly) in real time."
+      },
+      "auditLogging": {
+        "title": "Audit Logging",
+        "description": "Every status change, edit and conversion is recorded. Know exactly who did what and when."
+      },
+      "roleBasedAccess": {
+        "title": "Role-Based Access",
+        "description": "Protect your data with Admin, Sales, Production and Viewer permission levels."
+      },
+      "clientDatabase": {
+        "title": "Client Database",
+        "description": "Keep a centralised record of all your clients, contact information and VAT details."
+      },
+      "productCatalogue": {
+        "title": "Product Catalogue",
+        "description": "Manage your raw materials and finished products with standardised units and prices."
+      }
+    },
+    "pricing": {
+      "title": "Simple, transparent pricing.",
+      "subtitle": "Choose the plan that fits your team. Upgrade at any time.",
+      "mostPopular": "Most Popular",
+      "starter": {
+        "name": "Starter",
+        "price": "Free",
+        "description": "For small teams getting started with production tracking.",
+        "cta": "Get Started",
+        "features": [
+          "Up to 5 users",
+          "Basic proposal management",
+          "Single workspace",
+          "Community support",
+          "7-day history"
+        ]
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "€49",
+        "period": "/month",
+        "description": "For growing teams that need full visibility and control.",
+        "cta": "Start Free Trial",
+        "features": [
+          "Up to 25 users",
+          "Advanced tracking",
+          "Role-based control",
+          "Priority support",
+          "Unlimited history",
+          "Custom workflows"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "description": "For large organisations with complex requirements.",
+        "cta": "Contact Sales",
+        "features": [
+          "Unlimited users",
+          "Dedicated account manager",
+          "SSO & advanced security",
+          "Custom integrations",
+          "On-premise deployment",
+          "24/7 support",
+          "SLA guarantee"
+        ]
+      }
+    },
+    "architecture": {
+      "title": "Built with modern technology.",
+      "description": "Fully containerised with Docker, powered by a robust PostgreSQL database and managed through a custom React dashboard."
+    },
+    "cta": {
+      "title": "Access the System",
+      "description": "Log into the dashboard to manage users, clients, proposals and production orders.",
+      "button": "Open Admin Dashboard"
+    },
+    "footer": {
+      "description": "Open-source ERP for industrial teams. Track proposals, orders and production — all in one dashboard.",
+      "product": "Product",
+      "resources": "Resources",
+      "contact": "Contact",
+      "reactDocs": "React Documentation",
+      "github": "GitHub",
+      "apiReference": "API Reference",
+      "changelog": "Changelog",
+      "address": "Rua da Inovação 42, 4000-001 Porto, Portugal",
+      "copyright": "© 2026 Aura Systems. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
     }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "clients": "Clients",
+      "sections": "Sections",
+      "products": "Products",
+      "proposals": "Proposals",
+      "calendar": "Calendar",
+      "orders": "Orders",
+      "auditLog": "Audit Log",
+      "statistics": "Statistics",
+      "backToSite": "← Back to Site"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your system data.",
+      "users": "Users",
+      "clients": "Clients",
+      "products": "Products",
+      "proposals": "Proposals",
+      "orders": "Orders",
+      "auditEntries": "Audit Entries"
+    },
+    "statistics": {
+      "title": "Statistics",
+      "subtitle": "Overview of performance and system metrics.",
+      "totalRevenue": "Total Revenue",
+      "fromOrders": "from {{count}} orders",
+      "avg": "avg",
+      "proposalValue": "Proposal Value",
+      "totalProposals": "total proposals",
+      "conversionRate": "conversion rate",
+      "activeOrders": "Active Orders",
+      "completed": "completed",
+      "total": "total",
+      "totalClients": "Total Clients",
+      "products": "products",
+      "ordersPerMonth": "Orders per Month",
+      "proposalsPerMonth": "Proposals per Month",
+      "ordersByStatus": "Orders by Status",
+      "proposalsByStatus": "Proposals by Status",
+      "topClientsByRevenue": "Top Clients by Revenue",
+      "ordersBySection": "Orders by Section",
+      "proposalsBySection": "Proposals by Section",
+      "topProducts": "Most Ordered Products",
+      "newClientsPerMonth": "New Clients per Month",
+      "summary": "Summary",
+      "avgOrderValue": "Average Order Value",
+      "totalProducts": "Total Products",
+      "totalSections": "Total Sections",
+      "pendingOrders": "Pending Orders",
+      "inProduction": "In Production",
+      "noData": "No data available."
+    },
+    "crud": {
+      "successTitle": "Changes Saved!",
+      "createDescription": "Record created successfully.",
+      "updateDescription": "Record updated successfully.",
+      "noRecords": "No records found.",
+      "confirmDelete": "Confirm Delete",
+      "deleteMessage": "Are you sure you want to delete this record? This action cannot be undone.",
+      "editTitle": "Edit {{resource}}",
+      "newTitle": "New {{resource}}",
+      "saveFailed": "Save failed",
+      "deleteFailed": "Delete failed",
+      "loadFailed": "Failed to load data",
+      "createSuccess": "Record created successfully",
+      "updateSuccess": "Record updated successfully",
+      "deleteSuccess": "Record deleted successfully",
+      "paginationInfo": "Showing {{from}}–{{to}} of {{total}}",
+      "prevPage": "Previous page",
+      "nextPage": "Next page"
+    },
+    "users": {
+      "title": "Users",
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "created": "Created",
+      "password": "Password",
+      "roleAdmin": "Admin",
+      "roleSales": "Sales",
+      "roleProduction": "Production",
+      "roleViewer": "Viewer"
+    },
+    "clients": {
+      "title": "Clients",
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "vat": "VAT",
+      "address": "Address",
+      "vatNumber": "VAT Number",
+      "notes": "Notes",
+      "created": "Created"
+    },
+    "sections": {
+      "title": "Sections",
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "created": "Created"
+    },
+    "products": {
+      "title": "Products",
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "unitPrice": "Unit Price",
+      "unit": "Unit"
+    },
+    "proposals": {
+      "title": "Proposals",
+      "id": "ID",
+      "reference": "Reference",
+      "client": "Client",
+      "searchClient": "Search client…",
+      "section": "Section",
+      "searchSection": "Search section…",
+      "status": "Status",
+      "notes": "Notes",
+      "created": "Created",
+      "items": "Items",
+      "viewItems": "View Items",
+      "statusDraft": "Draft",
+      "statusPending": "Pending",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected",
+      "itemsTitle": "Proposal #{{id}} — Items",
+      "addItem": "Add Item",
+      "noItems": "No items yet.",
+      "product": "Product",
+      "searchProduct": "Search product…",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "subtotal": "Subtotal",
+      "editItem": "Edit Item",
+      "deleteItem": "Delete this item?"
+    },
+    "orders": {
+      "title": "Orders",
+      "id": "ID",
+      "reference": "Reference",
+      "proposal": "Proposal",
+      "searchProposal": "Search proposal…",
+      "client": "Client",
+      "searchClient": "Search client…",
+      "section": "Section",
+      "searchSection": "Search section…",
+      "status": "Status",
+      "dueDate": "Due Date",
+      "created": "Created",
+      "items": "Items",
+      "viewItems": "View Items",
+      "statusPending": "Pending",
+      "statusInProduction": "In Production",
+      "statusCompleted": "Completed",
+      "statusDelivered": "Delivered",
+      "itemsTitle": "Order #{{id}} — Items",
+      "addItem": "Add Item",
+      "noItems": "No items yet.",
+      "product": "Product",
+      "searchProduct": "Search product…",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "subtotal": "Subtotal",
+      "notes": "Notes",
+      "editItem": "Edit Item",
+      "deleteItem": "Delete this item?"
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "filter": "Filter by entity or action…",
+      "noEntries": "No audit entries found.",
+      "id": "ID",
+      "userId": "User ID",
+      "entity": "Entity",
+      "entityId": "Entity ID",
+      "action": "Action",
+      "oldValue": "Old Value",
+      "newValue": "New Value",
+      "date": "Date"
+    },
+    "calendar": {
+      "title": "Proposal Calendar",
+      "ordersTitle": "Orders Calendar",
+      "thisWeek": "This Week",
+      "loadingCalendar": "Loading calendar…",
+      "noSection": "No Section",
+      "more": "more",
+      "noItems": "No items",
+      "generalInfo": "General Information",
+      "orderLines": "Order Lines",
+      "total": "Total",
+      "address": "Address"
+    }
+  },
+  "status": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "in_production": "In Production",
+    "completed": "Completed",
+    "delivered": "Delivered"
+  }
 }

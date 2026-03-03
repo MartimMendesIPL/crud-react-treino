@@ -1,349 +1,356 @@
 {
-    "common": {
-        "loading": "A carregar…",
-        "error": "Erro",
-        "save": "Guardar",
-        "cancel": "Cancelar",
-        "delete": "Eliminar",
-        "edit": "Editar",
-        "create": "Criar",
-        "update": "Atualizar",
-        "search": "Pesquisar…",
-        "new": "Novo",
-        "back": "Voltar",
-        "confirm": "Confirmar",
-        "yes": "Sim",
-        "no": "Não",
-        "all": "Todos",
-        "noResults": "Sem resultados",
-        "typeToSearch": "Escreva para pesquisar…"
+  "common": {
+    "loading": "A carregar…",
+    "error": "Erro",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Criar",
+    "update": "Atualizar",
+    "search": "Pesquisar…",
+    "new": "Novo",
+    "back": "Voltar",
+    "confirm": "Confirmar",
+    "yes": "Sim",
+    "no": "Não",
+    "all": "Todos",
+    "noResults": "Sem resultados",
+    "typeToSearch": "Escreva para pesquisar…"
+  },
+  "landing": {
+    "nav": {
+      "features": "Funcionalidades",
+      "pricing": "Preços",
+      "stack": "Tecnologia",
+      "adminPanel": "Painel Admin"
     },
-    "landing": {
-        "nav": {
-            "features": "Funcionalidades",
-            "pricing": "Preços",
-            "stack": "Tecnologia",
-            "adminPanel": "Painel Admin"
-        },
-        "hero": {
-            "badge": "Planeamento de Recursos Empresariais",
-            "title": "Controle o seu",
-            "titleRotate1": "Armazém",
-            "titleRotate2": "Escritório",
-            "titleRotate3": "Negócio",
-            "titleRotate4": "Lucros",
-            "description": "Acompanhe propostas, gira encomendas de produção e audite todas as alterações — tudo num único painel.",
-            "openDashboard": "Abrir Painel",
-            "viewFeatures": "Ver Funcionalidades"
-        },
-        "stats": {
-            "traceability": "100%",
-            "traceabilityLabel": "Rastreabilidade de Auditoria",
-            "roles": "4",
-            "rolesLabel": "Níveis de Permissão",
-            "tracking": "Tempo real",
-            "trackingLabel": "Rastreamento de Encomendas"
-        },
-        "features": {
-            "title": "Capacidades do Sistema.",
-            "subtitle": "Tudo o que precisa para gerir as suas operações industriais.",
-            "proposalManagement": {
-                "title": "Gestão de Propostas",
-                "description": "Crie, acompanhe e converta propostas de clientes em ordens de fabrico acionáveis com histórico completo."
-            },
-            "productionTracking": {
-                "title": "Rastreamento de Produção",
-                "description": "Monitorize encomendas em diferentes secções (Serralharia, Pintura, Montagem) em tempo real."
-            },
-            "auditLogging": {
-                "title": "Registo de Auditoria",
-                "description": "Cada mudança de estado, edição e conversão é registada. Saiba exatamente quem fez o quê e quando."
-            },
-            "roleBasedAccess": {
-                "title": "Acesso Baseado em Funções",
-                "description": "Proteja os seus dados com níveis de permissão Admin, Vendas, Produção e Visualizador."
-            },
-            "clientDatabase": {
-                "title": "Base de Dados de Clientes",
-                "description": "Mantenha um registo centralizado de todos os seus clientes, informações de contacto e detalhes de NIF."
-            },
-            "productCatalogue": {
-                "title": "Catálogo de Produtos",
-                "description": "Gira as suas matérias-primas e produtos acabados com unidades e preços padronizados."
-            }
-        },
-        "pricing": {
-            "title": "Preços simples e transparentes.",
-            "subtitle": "Escolha o plano que se adequa à sua equipa. Atualize a qualquer momento.",
-            "starter": {
-                "name": "Inicial",
-                "price": "Grátis",
-                "description": "Para pequenas equipas a começar com rastreamento de produção.",
-                "cta": "Começar",
-                "features": [
-                    "Até 5 utilizadores",
-                    "Gestão básica de propostas",
-                    "Espaço único",
-                    "Suporte comunitário",
-                    "Histórico de 7 dias"
-                ]
-            },
-            "professional": {
-                "name": "Profissional",
-                "price": "49€",
-                "period": "/mês",
-                "description": "Para equipas em crescimento que precisam de visibilidade e controlo total.",
-                "cta": "Iniciar Teste Grátis",
-                "features": [
-                    "Até 25 utilizadores",
-                    "Rastreamento avançado",
-                    "Controlo baseado em funções",
-                    "Suporte prioritário",
-                    "Histórico ilimitado",
-                    "Fluxos personalizados"
-                ]
-            },
-            "enterprise": {
-                "name": "Empresarial",
-                "price": "Personalizado",
-                "description": "Para grandes organizações com requisitos complexos.",
-                "cta": "Contactar Vendas",
-                "features": [
-                    "Utilizadores ilimitados",
-                    "Gestor de conta dedicado",
-                    "SSO e segurança avançada",
-                    "Integrações personalizadas",
-                    "Implementação local",
-                    "Suporte 24/7",
-                    "Garantia SLA"
-                ]
-            },
-            "mostPopular": "Mais Popular"
-        },
-        "architecture": {
-            "title": "Construído com tecnologia moderna.",
-            "description": "Totalmente containerizado com Docker, alimentado por uma robusta base de dados PostgreSQL e gerido através de um painel React personalizado."
-        },
-        "cta": {
-            "title": "Aceder ao Sistema",
-            "description": "Entre no painel para gerir utilizadores, clientes, propostas e ordens de produção.",
-            "button": "Abrir Painel Admin"
-        },
-        "footer": {
-            "description": "ERP open-source para equipas industriais. Acompanhe propostas, encomendas e produção — tudo num painel.",
-            "product": "Produto",
-            "resources": "Recursos",
-            "contact": "Contacto",
-            "reactDocs": "Documentação React",
-            "github": "GitHub",
-            "apiReference": "Referência da API",
-            "changelog": "Registo de Alterações",
-            "address": "Rua da Inovação 42, 4000-001 Porto, Portugal",
-            "copyright": "© 2026 Aura Systems. Todos os direitos reservados.",
-            "privacy": "Política de Privacidade",
-            "terms": "Termos de Serviço"
-        }
+    "hero": {
+      "badge": "Planeamento de Recursos Empresariais",
+      "title": "Controle o seu",
+      "titleRotate1": "Armazém",
+      "titleRotate2": "Escritório",
+      "titleRotate3": "Negócio",
+      "titleRotate4": "Lucros",
+      "description": "Acompanhe propostas, gira encomendas de produção e audite todas as alterações — tudo num único painel.",
+      "openDashboard": "Abrir Painel",
+      "viewFeatures": "Ver Funcionalidades"
     },
-    "admin": {
-        "nav": {
-            "dashboard": "Painel",
-            "users": "Utilizadores",
-            "clients": "Clientes",
-            "sections": "Secções",
-            "products": "Produtos",
-            "proposals": "Propostas",
-            "calendar": "Calendário",
-            "orders": "Encomendas",
-            "auditLog": "Registo de Auditoria",
-            "statistics": "Estatísticas",
-            "backToSite": "← Voltar ao Site"
-        },
-        "dashboard": {
-            "title": "Painel",
-            "subtitle": "Resumo dos dados do sistema.",
-            "users": "Utilizadores",
-            "clients": "Clientes",
-            "products": "Produtos",
-            "proposals": "Propostas",
-            "orders": "Encomendas",
-            "auditEntries": "Entradas de Auditoria"
-        },
-        "statistics": {
-            "title": "Estatísticas",
-            "subtitle": "Visão geral do desempenho e métricas do sistema.",
-            "totalRevenue": "Receita Total",
-            "fromOrders": "de {{count}} encomendas",
-            "avg": "média",
-            "proposalValue": "Valor de Propostas",
-            "totalProposals": "propostas no total",
-            "conversionRate": "taxa de conversão",
-            "activeOrders": "Encomendas Ativas",
-            "completed": "concluídas",
-            "total": "total",
-            "totalClients": "Total de Clientes",
-            "products": "produtos",
-            "ordersPerMonth": "Encomendas por Mês",
-            "proposalsPerMonth": "Propostas por Mês",
-            "ordersByStatus": "Encomendas por Estado",
-            "proposalsByStatus": "Propostas por Estado",
-            "topClientsByRevenue": "Top Clientes por Receita",
-            "ordersBySection": "Encomendas por Secção",
-            "proposalsBySection": "Propostas por Secção",
-            "topProducts": "Produtos Mais Encomendados",
-            "newClientsPerMonth": "Novos Clientes por Mês",
-            "summary": "Resumo",
-            "avgOrderValue": "Valor Médio de Encomenda",
-            "totalProducts": "Total de Produtos",
-            "totalSections": "Total de Secções",
-            "pendingOrders": "Encomendas Pendentes",
-            "inProduction": "Em Produção",
-            "noData": "Sem dados disponíveis."
-        },
-        "crud": {
-            "noRecords": "Nenhum registo encontrado.",
-            "confirmDelete": "Confirmar Eliminação",
-            "deleteMessage": "Tem a certeza que pretende eliminar este registo? Esta ação não pode ser revertida.",
-            "editTitle": "Editar {{resource}}",
-            "newTitle": "Novo {{resource}}",
-            "saveFailed": "Falha ao guardar",
-            "deleteFailed": "Falha ao eliminar",
-            "loadFailed": "Falha ao carregar dados",
-            "paginationInfo": "A mostrar {{from}}–{{to}} de {{total}}",
-            "prevPage": "Página anterior",
-            "nextPage": "Próxima página"
-        },
-        "users": {
-            "title": "Utilizadores",
-            "id": "ID",
-            "name": "Nome",
-            "email": "Email",
-            "role": "Função",
-            "created": "Criado",
-            "password": "Palavra-passe",
-            "roleAdmin": "Admin",
-            "roleSales": "Vendas",
-            "roleProduction": "Produção",
-            "roleViewer": "Visualizador"
-        },
-        "clients": {
-            "title": "Clientes",
-            "id": "ID",
-            "name": "Nome",
-            "email": "Email",
-            "phone": "Telefone",
-            "vat": "NIF",
-            "address": "Morada",
-            "vatNumber": "Número de NIF",
-            "notes": "Notas",
-            "created": "Criado"
-        },
-        "sections": {
-            "title": "Secções",
-            "id": "ID",
-            "name": "Nome",
-            "description": "Descrição",
-            "created": "Criado"
-        },
-        "products": {
-            "title": "Produtos",
-            "id": "ID",
-            "name": "Nome",
-            "description": "Descrição",
-            "unitPrice": "Preço Unitário",
-            "unit": "Unidade"
-        },
-        "proposals": {
-            "title": "Propostas",
-            "id": "ID",
-            "reference": "Referência",
-            "client": "Cliente",
-            "searchClient": "Pesquisar cliente…",
-            "section": "Secção",
-            "searchSection": "Pesquisar secção…",
-            "status": "Estado",
-            "notes": "Notas",
-            "created": "Criado",
-            "items": "Itens",
-            "viewItems": "Ver Itens",
-            "statusDraft": "Rascunho",
-            "statusPending": "Pendente",
-            "statusApproved": "Aprovado",
-            "statusRejected": "Rejeitado",
-            "itemsTitle": "Proposta #{{id}} — Itens",
-            "addItem": "Adicionar Item",
-            "noItems": "Ainda sem itens.",
-            "product": "Produto",
-            "quantity": "Quantidade",
-            "unitPrice": "Preço Unitário",
-            "subtotal": "Subtotal",
-            "editItem": "Editar Item",
-            "deleteItem": "Eliminar este item?"
-        },
-        "orders": {
-            "title": "Encomendas",
-            "id": "ID",
-            "reference": "Referência",
-            "proposal": "Proposta",
-            "searchProposal": "Pesquisar proposta…",
-            "client": "Cliente",
-            "searchClient": "Pesquisar cliente…",
-            "section": "Secção",
-            "searchSection": "Pesquisar secção…",
-            "status": "Estado",
-            "dueDate": "Data de Entrega",
-            "created": "Criado",
-            "items": "Itens",
-            "viewItems": "Ver Itens",
-            "statusPending": "Pendente",
-            "statusInProduction": "Em Produção",
-            "statusCompleted": "Concluído",
-            "statusDelivered": "Entregue",
-            "itemsTitle": "Encomenda #{{id}} — Itens",
-            "addItem": "Adicionar Item",
-            "noItems": "Ainda sem itens.",
-            "product": "Produto",
-            "searchProduct": "Pesquisar produto…",
-            "quantity": "Quantidade",
-            "unitPrice": "Preço Unitário",
-            "subtotal": "Subtotal",
-            "notes": "Notas",
-            "editItem": "Editar Item",
-            "deleteItem": "Eliminar este item?"
-        },
-        "auditLog": {
-            "title": "Registo de Auditoria",
-            "filter": "Filtrar por entidade ou ação…",
-            "noEntries": "Nenhuma entrada de auditoria encontrada.",
-            "id": "ID",
-            "userId": "ID Utilizador",
-            "entity": "Entidade",
-            "entityId": "ID Entidade",
-            "action": "Ação",
-            "oldValue": "Valor Antigo",
-            "newValue": "Valor Novo",
-            "date": "Data"
-        },
-        "calendar": {
-            "title": "Calendário de Propostas",
-            "ordersTitle": "Calendário de Encomendas",
-            "thisWeek": "Esta Semana",
-            "loadingCalendar": "A carregar calendário…",
-            "noSection": "Sem Secção",
-            "more": "mais",
-            "noItems": "Sem itens",
-            "generalInfo": "Informação Geral",
-            "orderLines": "Linhas de Encomenda",
-            "total": "Total",
-            "address": "Morada"
-        }
+    "stats": {
+      "traceability": "100%",
+      "traceabilityLabel": "Rastreabilidade Total",
+      "roles": "4",
+      "rolesLabel": "Níveis de Permissão",
+      "tracking": "Tempo Real",
+      "trackingLabel": "Rastreamento de Produção"
     },
-    "status": {
-        "draft": "Rascunho",
-        "pending": "Pendente",
-        "approved": "Aprovado",
-        "rejected": "Rejeitado",
-        "in_production": "Em Produção",
-        "completed": "Concluído",
-        "delivered": "Entregue"
+    "features": {
+      "title": "Capacidades do Sistema.",
+      "subtitle": "Tudo o que precisa para gerir as suas operações industriais.",
+      "proposalManagement": {
+        "title": "Gestão de Propostas",
+        "description": "Crie, acompanhe e converta propostas de clientes em ordens de fabrico acionáveis com histórico completo."
+      },
+      "productionTracking": {
+        "title": "Rastreamento de Produção",
+        "description": "Monitorize encomendas em diferentes secções (Serralharia, Pintura, Montagem) em tempo real."
+      },
+      "auditLogging": {
+        "title": "Registo de Auditoria",
+        "description": "Cada mudança de estado, edição e conversão é registada. Saiba exatamente quem fez o quê e quando."
+      },
+      "roleBasedAccess": {
+        "title": "Acesso Baseado em Funções",
+        "description": "Proteja os seus dados com níveis de permissão Admin, Vendas, Produção e Visualizador."
+      },
+      "clientDatabase": {
+        "title": "Base de Dados de Clientes",
+        "description": "Mantenha um registo centralizado de todos os seus clientes, informações de contacto e detalhes de NIF."
+      },
+      "productCatalogue": {
+        "title": "Catálogo de Produtos",
+        "description": "Gira as suas matérias-primas e produtos acabados com unidades e preços padronizados."
+      }
+    },
+    "pricing": {
+      "title": "Preços simples e transparentes.",
+      "subtitle": "Escolha o plano que se adequa à sua equipa. Atualize a qualquer momento.",
+      "mostPopular": "Mais Popular",
+      "starter": {
+        "name": "Inicial",
+        "price": "Grátis",
+        "description": "Para pequenas equipas a começar com rastreamento de produção.",
+        "cta": "Começar",
+        "features": [
+          "Até 5 utilizadores",
+          "Gestão básica de propostas",
+          "Espaço único",
+          "Suporte comunitário",
+          "Histórico de 7 dias"
+        ]
+      },
+      "professional": {
+        "name": "Profissional",
+        "price": "49€",
+        "period": "/mês",
+        "description": "Para equipas em crescimento que precisam de visibilidade e controlo total.",
+        "cta": "Iniciar Teste Grátis",
+        "features": [
+          "Até 25 utilizadores",
+          "Rastreamento avançado",
+          "Controlo baseado em funções",
+          "Suporte prioritário",
+          "Histórico ilimitado",
+          "Fluxos personalizados"
+        ]
+      },
+      "enterprise": {
+        "name": "Empresarial",
+        "price": "Personalizado",
+        "description": "Para grandes organizações com requisitos complexos.",
+        "cta": "Contactar Vendas",
+        "features": [
+          "Utilizadores ilimitados",
+          "Gestor de conta dedicado",
+          "SSO e segurança avançada",
+          "Integrações personalizadas",
+          "Implementação local",
+          "Suporte 24/7",
+          "Garantia SLA"
+        ]
+      }
+    },
+    "architecture": {
+      "title": "Construído com tecnologia moderna.",
+      "description": "Totalmente containerizado com Docker, alimentado por uma robusta base de dados PostgreSQL e gerido através de um painel React personalizado."
+    },
+    "cta": {
+      "title": "Aceder ao Sistema",
+      "description": "Entre no painel para gerir utilizadores, clientes, propostas e ordens de produção.",
+      "button": "Abrir Painel Admin"
+    },
+    "footer": {
+      "description": "ERP open-source para equipas industriais. Acompanhe propostas, encomendas e produção — tudo num painel.",
+      "product": "Produto",
+      "resources": "Recursos",
+      "contact": "Contacto",
+      "reactDocs": "Documentação React",
+      "github": "GitHub",
+      "apiReference": "Referência da API",
+      "changelog": "Registo de Alterações",
+      "address": "Rua da Inovação 42, 4000-001 Porto, Portugal",
+      "copyright": "© 2026 Aura Systems. Todos os direitos reservados.",
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço"
     }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Painel",
+      "users": "Utilizadores",
+      "clients": "Clientes",
+      "sections": "Secções",
+      "products": "Produtos",
+      "proposals": "Propostas",
+      "calendar": "Calendário",
+      "orders": "Encomendas",
+      "auditLog": "Registo de Auditoria",
+      "statistics": "Estatísticas",
+      "backToSite": "← Voltar ao Site"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "subtitle": "Resumo dos dados do sistema.",
+      "users": "Utilizadores",
+      "clients": "Clientes",
+      "products": "Produtos",
+      "proposals": "Propostas",
+      "orders": "Encomendas",
+      "auditEntries": "Entradas de Auditoria"
+    },
+    "statistics": {
+      "title": "Estatísticas",
+      "subtitle": "Visão geral do desempenho e métricas do sistema.",
+      "totalRevenue": "Receita Total",
+      "fromOrders": "de {{count}} encomendas",
+      "avg": "média",
+      "proposalValue": "Valor de Propostas",
+      "totalProposals": "propostas no total",
+      "conversionRate": "taxa de conversão",
+      "activeOrders": "Encomendas Ativas",
+      "completed": "concluídas",
+      "total": "total",
+      "totalClients": "Total de Clientes",
+      "products": "produtos",
+      "ordersPerMonth": "Encomendas por Mês",
+      "proposalsPerMonth": "Propostas por Mês",
+      "ordersByStatus": "Encomendas por Estado",
+      "proposalsByStatus": "Propostas por Estado",
+      "topClientsByRevenue": "Top Clientes por Receita",
+      "ordersBySection": "Encomendas por Secção",
+      "proposalsBySection": "Propostas por Secção",
+      "topProducts": "Produtos Mais Encomendados",
+      "newClientsPerMonth": "Novos Clientes por Mês",
+      "summary": "Resumo",
+      "avgOrderValue": "Valor Médio de Encomenda",
+      "totalProducts": "Total de Produtos",
+      "totalSections": "Total de Secções",
+      "pendingOrders": "Encomendas Pendentes",
+      "inProduction": "Em Produção",
+      "noData": "Sem dados disponíveis."
+    },
+    "crud": {
+      "successTitle": "Alterações Guardadas!",
+      "createDescription": "Registo criado com sucesso.",
+      "updateDescription": "Registo atualizado com sucesso.",
+      "noRecords": "Nenhum registo encontrado.",
+      "confirmDelete": "Confirmar Eliminação",
+      "deleteMessage": "Tem a certeza que pretende eliminar este registo? Esta ação não pode ser revertida.",
+      "editTitle": "Editar {{resource}}",
+      "newTitle": "Novo {{resource}}",
+      "saveFailed": "Falha ao guardar",
+      "deleteFailed": "Falha ao eliminar",
+      "loadFailed": "Falha ao carregar dados",
+      "createSuccess": "Registo criado com sucesso",
+      "updateSuccess": "Registo atualizado com sucesso",
+      "deleteSuccess": "Registo eliminado com sucesso",
+      "paginationInfo": "A mostrar {{from}}–{{to}} de {{total}}",
+      "prevPage": "Página anterior",
+      "nextPage": "Próxima página"
+    },
+    "users": {
+      "title": "Utilizadores",
+      "id": "ID",
+      "name": "Nome",
+      "email": "Email",
+      "role": "Função",
+      "created": "Criado",
+      "password": "Palavra-passe",
+      "roleAdmin": "Admin",
+      "roleSales": "Vendas",
+      "roleProduction": "Produção",
+      "roleViewer": "Visualizador"
+    },
+    "clients": {
+      "title": "Clientes",
+      "id": "ID",
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefone",
+      "vat": "NIF",
+      "address": "Morada",
+      "vatNumber": "Número de NIF",
+      "notes": "Notas",
+      "created": "Criado"
+    },
+    "sections": {
+      "title": "Secções",
+      "id": "ID",
+      "name": "Nome",
+      "description": "Descrição",
+      "created": "Criado"
+    },
+    "products": {
+      "title": "Produtos",
+      "id": "ID",
+      "name": "Nome",
+      "description": "Descrição",
+      "unitPrice": "Preço Unitário",
+      "unit": "Unidade"
+    },
+    "proposals": {
+      "title": "Propostas",
+      "id": "ID",
+      "reference": "Referência",
+      "client": "Cliente",
+      "searchClient": "Pesquisar cliente…",
+      "section": "Secção",
+      "searchSection": "Pesquisar secção…",
+      "status": "Estado",
+      "notes": "Notas",
+      "created": "Criado",
+      "items": "Itens",
+      "viewItems": "Ver Itens",
+      "statusDraft": "Rascunho",
+      "statusPending": "Pendente",
+      "statusApproved": "Aprovado",
+      "statusRejected": "Rejeitado",
+      "itemsTitle": "Proposta #{{id}} — Itens",
+      "addItem": "Adicionar Item",
+      "noItems": "Ainda sem itens.",
+      "product": "Produto",
+      "searchProduct": "Pesquisar produto…",
+      "quantity": "Quantidade",
+      "unitPrice": "Preço Unitário",
+      "subtotal": "Subtotal",
+      "editItem": "Editar Item",
+      "deleteItem": "Eliminar este item?"
+    },
+    "orders": {
+      "title": "Encomendas",
+      "id": "ID",
+      "reference": "Referência",
+      "proposal": "Proposta",
+      "searchProposal": "Pesquisar proposta…",
+      "client": "Cliente",
+      "searchClient": "Pesquisar cliente…",
+      "section": "Secção",
+      "searchSection": "Pesquisar secção…",
+      "status": "Estado",
+      "dueDate": "Data de Entrega",
+      "created": "Criado",
+      "items": "Itens",
+      "viewItems": "Ver Itens",
+      "statusPending": "Pendente",
+      "statusInProduction": "Em Produção",
+      "statusCompleted": "Concluído",
+      "statusDelivered": "Entregue",
+      "itemsTitle": "Encomenda #{{id}} — Itens",
+      "addItem": "Adicionar Item",
+      "noItems": "Ainda sem itens.",
+      "product": "Produto",
+      "searchProduct": "Pesquisar produto…",
+      "quantity": "Quantidade",
+      "unitPrice": "Preço Unitário",
+      "subtotal": "Subtotal",
+      "notes": "Notas",
+      "editItem": "Editar Item",
+      "deleteItem": "Eliminar este item?"
+    },
+    "auditLog": {
+      "title": "Registo de Auditoria",
+      "filter": "Filtrar por entidade ou ação…",
+      "noEntries": "Nenhuma entrada de auditoria encontrada.",
+      "id": "ID",
+      "userId": "ID Utilizador",
+      "entity": "Entidade",
+      "entityId": "ID Entidade",
+      "action": "Ação",
+      "oldValue": "Valor Antigo",
+      "newValue": "Valor Novo",
+      "date": "Data"
+    },
+    "calendar": {
+      "title": "Calendário de Propostas",
+      "ordersTitle": "Calendário de Encomendas",
+      "thisWeek": "Esta Semana",
+      "loadingCalendar": "A carregar calendário…",
+      "noSection": "Sem Secção",
+      "more": "mais",
+      "noItems": "Sem itens",
+      "generalInfo": "Informação Geral",
+      "orderLines": "Linhas de Encomenda",
+      "total": "Total",
+      "address": "Morada"
+    }
+  },
+  "status": {
+    "draft": "Rascunho",
+    "pending": "Pendente",
+    "approved": "Aprovado",
+    "rejected": "Rejeitado",
+    "in_production": "Em Produção",
+    "completed": "Concluído",
+    "delivered": "Entregue"
+  }
 }

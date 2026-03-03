@@ -37,7 +37,7 @@ export default function ProposalItemsPage() {
     useEffect(() => {
         let ignore = false;
         Promise.all([
-            api.get<ProposalItem[]>(`/proposals/${id}/items`),
+            api.get<ProposalItem[]>(`/proposal-items?proposal_id=${id}`),
             api.get<Product[]>("/products"),
         ])
             .then(([i, p]) => {
@@ -81,9 +81,9 @@ export default function ProposalItemsPage() {
         setSaving(true);
         try {
             if (editing) {
-                await api.put(`/proposals/items/${editing.id}`, formData);
+                await api.put(`/proposal-items/${editing.id}`, formData);
             } else {
-                await api.post(`/proposals/${id}/items`, formData);
+                await api.post(`/proposal-items?proposal_id=${id}`, formData);
             }
             setModalOpen(false);
             load();
@@ -95,7 +95,7 @@ export default function ProposalItemsPage() {
 
     const handleDelete = async () => {
         if (deleteId == null) return;
-        await api.del(`/proposals/items/${deleteId}`);
+        await api.del(`/proposal-items/${deleteId}`);
         setDeleteId(null);
         load();
     };

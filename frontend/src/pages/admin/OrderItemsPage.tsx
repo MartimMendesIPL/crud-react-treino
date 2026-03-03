@@ -37,7 +37,7 @@ export default function OrderItemsPage() {
     useEffect(() => {
         let ignore = false;
         Promise.all([
-            api.get<OrderItem[]>(`/orders/${id}/items`),
+            api.get<OrderItem[]>(`/order-items?order_id=${id}`),
             api.get<Product[]>("/products"),
         ])
             .then(([i, p]) => {
@@ -80,8 +80,8 @@ export default function OrderItemsPage() {
     const handleSave = async () => {
         setSaving(true);
         try {
-            if (editing) await api.put(`/orders/items/${editing.id}`, formData);
-            else await api.post(`/orders/${id}/items`, formData);
+            if (editing) await api.put(`/order-items/${editing.id}`, formData);
+            else await api.post(`/order-items?order_id=${id}`, formData);
             setModalOpen(false);
             load();
         } catch {
@@ -92,7 +92,7 @@ export default function OrderItemsPage() {
 
     const handleDelete = async () => {
         if (deleteId == null) return;
-        await api.del(`/orders/items/${deleteId}`);
+        await api.del(`/order-items/${deleteId}`);
         setDeleteId(null);
         load();
     };

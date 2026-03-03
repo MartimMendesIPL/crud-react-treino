@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"aura-erp/backend/config"
 	"aura-erp/backend/models"
 )
@@ -30,6 +32,37 @@ func GetAllProposals() ([]models.Proposal, error) {
 	}
 
 	return proposals, nil
+}
+
+func SearchProposals(q string, limit int) ([]models.ProposalSearchResult, error) {
+	if limit <= 0 || limit > 100 {
+		limit = 25
+	}
+	query := `
+		SELECT id, reference
+		FROM proposals
+		WHERE reference ILIKE $1
+		ORDER BY id DESC
+		LIMIT $2
+	`
+	rows, err := config.DB.Query(query, fmt.Sprintf("%%%s%%", q), limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var results []models.ProposalSearchResult
+	for rows.Next() {
+		var r models.ProposalSearchResult
+		if err := rows.Scan(&r.ID, &r.Reference); err != nil {
+			return nil, err
+		}
+		results = append(results, r)
+	}
+	if results == nil {
+		results = []models.ProposalSearchResult{}
+	}
+	return results, nil
 }
 
 func GetProposalByID(id string) (*models.Proposal, error) {

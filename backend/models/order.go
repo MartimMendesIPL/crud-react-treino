@@ -21,7 +21,7 @@ type Order struct {
 type OrderCreate struct {
 	Reference  string    `json:"reference" binding:"required"`
 	ProposalID NullInt64 `json:"proposal_id"`
-	ClientID   int       `json:"client_id" binding:"required"`
+	ClientID   FlexInt   `json:"client_id" binding:"required"`
 	SectionID  NullInt64 `json:"section_id"`
 	Status     string    `json:"status"`
 	DueDate    NullTime  `json:"due_date"`
@@ -30,7 +30,7 @@ type OrderCreate struct {
 type OrderUpdate struct {
 	Reference  string    `json:"reference" binding:"required"`
 	ProposalID NullInt64 `json:"proposal_id"`
-	ClientID   int       `json:"client_id" binding:"required"`
+	ClientID   FlexInt   `json:"client_id" binding:"required"`
 	SectionID  NullInt64 `json:"section_id"`
 	Status     string    `json:"status" binding:"required"`
 	DueDate    NullTime  `json:"due_date"`
@@ -48,14 +48,14 @@ type OrderItem struct {
 }
 
 type OrderItemCreate struct {
-	ProductID int     `json:"product_id" binding:"required"`
+	ProductID FlexInt `json:"product_id" binding:"required"`
 	Quantity  float64 `json:"quantity" binding:"required"`
 	UnitPrice float64 `json:"unit_price" binding:"required"`
 	Notes     *string `json:"notes"`
 }
 
 type OrderItemUpdate struct {
-	ProductID int     `json:"product_id" binding:"required"`
+	ProductID FlexInt `json:"product_id" binding:"required"`
 	Quantity  float64 `json:"quantity" binding:"required"`
 	UnitPrice float64 `json:"unit_price" binding:"required"`
 	Notes     *string `json:"notes"`

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { api } from "../../services/api";
@@ -20,40 +20,53 @@ interface Proposal {
     updated_at: string;
 }
 
-interface Client {
-    id: number;
-    name: string;
-}
-interface Section {
-    id: number;
-    name: string;
-}
-
 /* ── Proposals list page ── */
 
 export default function ProposalsPage() {
     const { t } = useTranslation();
-    const [clients, setClients] = useState<Client[]>([]);
-    const [sections, setSections] = useState<Section[]>([]);
 
-    useEffect(() => {
-        api.get<Client[]>("/clients")
-            .then(setClients)
-            .catch(() => {});
-        api.get<Section[]>("/sections")
-            .then(setSections)
-            .catch(() => {});
+    const loadClients = useCallback(async (inputValue: string) => {
+        const params = new URLSearchParams({ q: inputValue, limit: "25" });
+        const results = await api.get<{ id: number; name: string }[]>(
+            `/clients/search?${params}`,
+        );
+        return results.map((c) => ({ value: String(c.id), label: c.name }));
+    }, []);
+
+    const loadSingleClient = useCallback(async (value: string) => {
+        try {
+            const c = await api.get<{ id: number; name: string }>(
+                `/clients/${value}`,
+            );
+            return { value: String(c.id), label: c.name };
+        } catch {
+            return null;
+        }
+    }, []);
+
+    const loadSections = useCallback(async (inputValue: string) => {
+        const params = new URLSearchParams({ q: inputValue, limit: "25" });
+        const results = await api.get<{ id: number; name: string }[]>(
+            `/sections/search?${params}`,
+        );
+        return results.map((s) => ({ value: String(s.id), label: s.name }));
+    }, []);
+
+    const loadSingleSection = useCallback(async (value: string) => {
+        try {
+            const s = await api.get<{ id: number; name: string }>(
+                `/sections/${value}`,
+            );
+            return { value: String(s.id), label: s.name };
+        } catch {
+            return null;
+        }
     }, []);
 
     const columns: Column<Proposal>[] = [
         { key: "id", label: t("admin.proposals.id") },
         { key: "reference", label: t("admin.proposals.reference") },
-        {
-            key: "client_id",
-            label: t("admin.proposals.client"),
-            render: (v) =>
-                clients.find((c) => c.id === Number(v))?.name ?? String(v),
-        },
+        { key: "client_id", label: t("admin.proposals.client") },
         {
             key: "status",
             label: t("admin.proposals.status"),
@@ -84,21 +97,19 @@ export default function ProposalsPage() {
         {
             name: "client_id",
             label: t("admin.proposals.client"),
-            type: "select",
+            type: "async-select",
             required: true,
-            options: clients.map((c) => ({
-                value: String(c.id),
-                label: c.name,
-            })),
+            placeholder: t("admin.proposals.searchClient"),
+            loadOptions: loadClients,
+            loadSingleOption: loadSingleClient,
         },
         {
             name: "section_id",
             label: t("admin.proposals.section"),
-            type: "select",
-            options: sections.map((s) => ({
-                value: String(s.id),
-                label: s.name,
-            })),
+            type: "async-select",
+            placeholder: t("admin.proposals.searchSection"),
+            loadOptions: loadSections,
+            loadSingleOption: loadSingleSection,
         },
         {
             name: "status",

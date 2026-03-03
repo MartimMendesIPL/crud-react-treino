@@ -2,6 +2,11 @@ package models
 
 import "time"
 
+type SectionSearchResult struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 type Section struct {
 	ID          int       `json:"id"`
 	Name        string    `json:"name"`

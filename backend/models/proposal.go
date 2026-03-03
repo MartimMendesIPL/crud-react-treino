@@ -2,6 +2,11 @@ package models
 
 import "time"
 
+type ProposalSearchResult struct {
+	ID        int    `json:"id"`
+	Reference string `json:"reference"`
+}
+
 type Proposal struct {
 	ID          int            `json:"id"`
 	Reference   string         `json:"reference"`
@@ -18,7 +23,7 @@ type Proposal struct {
 
 type ProposalCreate struct {
 	Reference string    `json:"reference" binding:"required"`
-	ClientID  int       `json:"client_id" binding:"required"`
+	ClientID  FlexInt   `json:"client_id" binding:"required"`
 	SectionID NullInt64 `json:"section_id"`
 	Status    string    `json:"status"`
 	Notes     *string   `json:"notes"`
@@ -26,7 +31,7 @@ type ProposalCreate struct {
 
 type ProposalUpdate struct {
 	Reference string    `json:"reference" binding:"required"`
-	ClientID  int       `json:"client_id" binding:"required"`
+	ClientID  FlexInt   `json:"client_id" binding:"required"`
 	SectionID NullInt64 `json:"section_id"`
 	Status    string    `json:"status" binding:"required"`
 	Notes     *string   `json:"notes"`
@@ -44,14 +49,14 @@ type ProposalItem struct {
 }
 
 type ProposalItemCreate struct {
-	ProductID int     `json:"product_id" binding:"required"`
+	ProductID FlexInt `json:"product_id" binding:"required"`
 	Quantity  float64 `json:"quantity" binding:"required"`
 	UnitPrice float64 `json:"unit_price" binding:"required"`
 	Notes     *string `json:"notes"`
 }
 
 type ProposalItemUpdate struct {
-	ProductID int     `json:"product_id" binding:"required"`
+	ProductID FlexInt `json:"product_id" binding:"required"`
 	Quantity  float64 `json:"quantity" binding:"required"`
 	UnitPrice float64 `json:"unit_price" binding:"required"`
 	Notes     *string `json:"notes"`

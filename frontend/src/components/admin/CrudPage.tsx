@@ -8,6 +8,8 @@ import {
 import { useTranslation } from "react-i18next";
 import ReactSelect from "react-select";
 import { sileo } from "sileo";
+import AsyncSelect from "react-select/async";
+import type { SingleValue, StylesConfig, GroupBase } from "react-select";
 import {
   Pencil,
   Trash2,
@@ -27,93 +29,109 @@ export interface Column<T> {
   render?: (value: T[keyof T], row: T) => ReactNode;
 }
 
+type SelectOption = { value: string; label: string };
+
 export interface FieldDef {
-  name: string;
-  label: string;
-  type?: "text" | "number" | "email" | "select" | "textarea" | "date";
-  required?: boolean;
-  options?: { value: string; label: string }[];
-  placeholder?: string;
+    name: string;
+    label: string;
+    type?:
+        | "text"
+        | "number"
+        | "email"
+        | "select"
+        | "async-select"
+        | "textarea"
+        | "date";
+    required?: boolean;
+    options?: SelectOption[];
+    loadOptions?: (inputValue: string) => Promise<SelectOption[]>;
+    loadSingleOption?: (value: string) => Promise<SelectOption | null>;
+    placeholder?: string;
 }
 
-const selectStyles: React.ComponentProps<typeof ReactSelect>["styles"] = {
-  control: (base, state) => ({
-    ...base,
-    backgroundColor: "var(--admin-bg)",
-    borderColor: state.isFocused
-      ? "var(--admin-accent)"
-      : "var(--admin-border)",
-    boxShadow: state.isFocused
-      ? "0 0 0 3px var(--admin-accent-rgb-15)"
-      : "none",
-    borderRadius: "var(--admin-radius)",
-    minHeight: "36px",
-    fontSize: "13px",
-    fontFamily: "inherit",
-    cursor: "pointer",
-    "&:hover": { borderColor: "var(--admin-accent)" },
-  }),
-  menu: (base) => ({
-    ...base,
-    backgroundColor: "var(--admin-surface)",
-    border: "1px solid var(--admin-border)",
-    borderRadius: "var(--admin-radius)",
-    boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
-    zIndex: 9999,
-  }),
-  menuList: (base) => ({
-    ...base,
-    padding: "4px",
-    maxHeight: "220px",
-  }),
-  option: (base, state) => ({
-    ...base,
-    backgroundColor: state.isSelected
-      ? "var(--admin-accent)"
-      : state.isFocused
-        ? "var(--admin-surface-hover)"
-        : "transparent",
-    color: state.isSelected ? "#fff" : "var(--admin-text)",
-    borderRadius: "6px",
-    fontSize: "13px",
-    fontFamily: "inherit",
-    padding: "7px 10px",
-    cursor: "pointer",
-    "&:active": { backgroundColor: "var(--admin-accent-rgb-15)" },
-  }),
-  singleValue: (base) => ({
-    ...base,
-    color: "var(--admin-text)",
-    fontSize: "13px",
-  }),
-  placeholder: (base) => ({
-    ...base,
-    color: "var(--admin-text-muted)",
-    fontSize: "13px",
-  }),
-  input: (base) => ({
-    ...base,
-    color: "var(--admin-text)",
-    fontSize: "13px",
-    fontFamily: "inherit",
-  }),
-  indicatorSeparator: () => ({ display: "none" }),
-  dropdownIndicator: (base) => ({
-    ...base,
-    color: "var(--admin-text-muted)",
-    padding: "0 8px",
-    "&:hover": { color: "var(--admin-text)" },
-  }),
-  clearIndicator: (base) => ({
-    ...base,
-    color: "var(--admin-text-muted)",
-    "&:hover": { color: "var(--admin-danger)" },
-  }),
-  noOptionsMessage: (base) => ({
-    ...base,
-    color: "var(--admin-text-muted)",
-    fontSize: "13px",
-  }),
+const selectStyles: StylesConfig<
+    SelectOption,
+    false,
+    GroupBase<SelectOption>
+> = {
+    control: (base, state) => ({
+        ...base,
+        backgroundColor: "var(--admin-bg)",
+        borderColor: state.isFocused
+            ? "var(--admin-accent)"
+            : "var(--admin-border)",
+        boxShadow: state.isFocused
+            ? "0 0 0 3px var(--admin-accent-rgb-15)"
+            : "none",
+        borderRadius: "var(--admin-radius)",
+        minHeight: "36px",
+        fontSize: "13px",
+        fontFamily: "inherit",
+        cursor: "pointer",
+        "&:hover": { borderColor: "var(--admin-accent)" },
+    }),
+    menu: (base) => ({
+        ...base,
+        backgroundColor: "var(--admin-surface)",
+        border: "1px solid var(--admin-border)",
+        borderRadius: "var(--admin-radius)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+        zIndex: 9999,
+    }),
+    menuList: (base) => ({
+        ...base,
+        padding: "4px",
+        maxHeight: "220px",
+    }),
+    option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isSelected
+            ? "var(--admin-accent)"
+            : state.isFocused
+              ? "var(--admin-surface-hover)"
+              : "transparent",
+        color: state.isSelected ? "#fff" : "var(--admin-text)",
+        borderRadius: "6px",
+        fontSize: "13px",
+        fontFamily: "inherit",
+        padding: "7px 10px",
+        cursor: "pointer",
+        "&:active": { backgroundColor: "var(--admin-accent-rgb-15)" },
+    }),
+    singleValue: (base) => ({
+        ...base,
+        color: "var(--admin-text)",
+        fontSize: "13px",
+    }),
+    placeholder: (base) => ({
+        ...base,
+        color: "var(--admin-text-muted)",
+        fontSize: "13px",
+    }),
+    input: (base) => ({
+        ...base,
+        color: "var(--admin-text)",
+        fontSize: "13px",
+        fontFamily: "inherit",
+    }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+    indicatorSeparator: () => ({ display: "none" }),
+    dropdownIndicator: (base) => ({
+        ...base,
+        color: "var(--admin-text-muted)",
+        padding: "0 8px",
+        "&:hover": { color: "var(--admin-text)" },
+    }),
+    clearIndicator: (base) => ({
+        ...base,
+        color: "var(--admin-text-muted)",
+        "&:hover": { color: "var(--admin-danger)" },
+    }),
+    noOptionsMessage: (base) => ({
+        ...base,
+        color: "var(--admin-text-muted)",
+        fontSize: "13px",
+    }),
 };
 
 interface CrudPageProps<T extends { id: number | string }> {
@@ -204,17 +222,170 @@ export default function CrudPage<T extends { id: number | string }>({
     }, 280);
   }, []);
 
-  const openCreate = () => {
-    setEditing(null);
-    setFormData({});
-    openPanel();
-  };
+    const openEdit = (row: T) => {
+        setEditing(row);
+        const data: Record<string, unknown> = {};
+        for (const f of fields) {
+            data[f.name] = (row as Record<string, unknown>)[f.name] ?? "";
+        }
+        setFormData(data);
+        openPanel();
 
-  const openEdit = (row: T) => {
-    setEditing(row);
-    const data: Record<string, unknown> = {};
-    for (const f of fields) {
-      data[f.name] = (row as Record<string, unknown>)[f.name] ?? "";
+        // Resolve labels for async-select fields so the control shows a
+        // human-readable value instead of a raw ID while editing.
+        for (const f of fields) {
+            if (f.type === "async-select" && f.loadSingleOption) {
+                const rawVal = (row as Record<string, unknown>)[f.name];
+                if (rawVal != null && rawVal !== "") {
+                    f.loadSingleOption(String(rawVal)).then((opt) => {
+                        if (opt) {
+                            setFormData((prev) => ({
+                                ...prev,
+                                [`${f.name}__label`]: opt.label,
+                            }));
+                        }
+                    });
+                }
+            }
+        }
+    };
+
+    /* ── Delete panel ── */
+
+    const openDelete = (id: string | number) => {
+        setDeleteClosing(false);
+        setDeleteId(id);
+    };
+
+    const closeDelete = useCallback(() => {
+        setDeleteClosing(true);
+        setTimeout(() => {
+            setDeleteId(null);
+            setDeleteClosing(false);
+        }, 280);
+    }, []);
+
+    /* ── CRUD actions ── */
+
+    const handleSave = async () => {
+        setSaving(true);
+        // Strip __label shadow keys used by async-select before sending to API
+        const cleanData = Object.fromEntries(
+            Object.entries(formData).filter(([k]) => !k.endsWith("__label")),
+        );
+        try {
+            if (editing) {
+                await onUpdate(editing.id, cleanData);
+            } else {
+                await onCreate(cleanData);
+            }
+            closePanel();
+            load();
+        } catch (e: unknown) {
+            setError(
+                e instanceof Error ? e.message : t("admin.crud.saveFailed"),
+            );
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (deleteId == null) return;
+        try {
+            await onDelete(deleteId);
+            closeDelete();
+            load();
+        } catch (e: unknown) {
+            setError(
+                e instanceof Error ? e.message : t("admin.crud.deleteFailed"),
+            );
+        }
+    };
+
+    /* ── Click outside / Escape ── */
+
+    useEffect(() => {
+        function handleClick(e: MouseEvent) {
+            const target = e.target as Node;
+            // Ignore clicks inside react-select's portalled menu (teleported to <body>)
+            if (
+                (target as Element).closest?.(
+                    ".react-select__menu-portal, .react-select__menu",
+                )
+            ) {
+                return;
+            }
+            if (
+                panelOpen &&
+                !panelClosing &&
+                panelRef.current &&
+                !panelRef.current.contains(target)
+            ) {
+                closePanel();
+            }
+        }
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, [panelOpen, panelClosing, closePanel]);
+
+    useEffect(() => {
+        function handleClick(e: MouseEvent) {
+            if (
+                deleteId != null &&
+                !deleteClosing &&
+                deleteRef.current &&
+                !deleteRef.current.contains(e.target as Node)
+            ) {
+                closeDelete();
+            }
+        }
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, [deleteId, deleteClosing, closeDelete]);
+
+    useEffect(() => {
+        function handleKey(e: KeyboardEvent) {
+            if (e.key === "Escape") {
+                if (deleteId != null) closeDelete();
+                else if (panelOpen) closePanel();
+            }
+        }
+        document.addEventListener("keydown", handleKey);
+        return () => document.removeEventListener("keydown", handleKey);
+    }, [panelOpen, deleteId, closePanel, closeDelete]);
+
+    /* ── Filter + Pagination ── */
+
+    const filtered = rows.filter((row) => {
+        if (!search) return true;
+        const s = search.toLowerCase();
+        return columns.some((c) => {
+            const v = (row as Record<string, unknown>)[c.key];
+            return v != null && String(v).toLowerCase().includes(s);
+        });
+    });
+
+    // Reset to page 1 whenever search or underlying data changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, rows]);
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+    const safePage = Math.min(currentPage, totalPages);
+    const paginated = filtered.slice(
+        (safePage - 1) * pageSize,
+        safePage * pageSize,
+    );
+
+    // Build the page-number button list with ellipsis gaps
+    const pageButtons: (number | "…")[] = [];
+    for (let p = 1; p <= totalPages; p++) {
+        if (p === 1 || p === totalPages || Math.abs(p - safePage) <= 1) {
+            pageButtons.push(p);
+        } else if (pageButtons[pageButtons.length - 1] !== "…") {
+            pageButtons.push("…");
+        }
     }
     setFormData(data);
     openPanel();
@@ -235,7 +406,120 @@ export default function CrudPage<T extends { id: number | string }>({
     }, 280);
   }, []);
 
-  /* ── CRUD actions ── */
+            {/* Table */}
+            <div className="crud-table-wrap">
+                {loading ? (
+                    <div className="crud-loading">
+                        <Loader2 size={24} className="crud-spin" />{" "}
+                        {t("common.loading")}
+                    </div>
+                ) : filtered.length === 0 ? (
+                    <div className="crud-empty">
+                        {t("admin.crud.noRecords")}
+                    </div>
+                ) : (
+                    <table className="crud-table">
+                        <thead>
+                            <tr>
+                                {columns.map((c) => (
+                                    <th key={c.key}>{c.label}</th>
+                                ))}
+                                {!readOnly && (
+                                    <th className="crud-th-actions">Actions</th>
+                                )}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {paginated.map((row) => (
+                                <tr key={row.id}>
+                                    {columns.map((c) => (
+                                        <td key={c.key}>
+                                            {c.render
+                                                ? c.render(row[c.key], row)
+                                                : String(row[c.key] ?? "—")}
+                                        </td>
+                                    ))}
+                                    {!readOnly && (
+                                        <td className="crud-td-actions">
+                                            <button
+                                                className="crud-icon-btn crud-icon-edit"
+                                                onClick={() => openEdit(row)}
+                                                title={t("common.edit")}
+                                            >
+                                                <Pencil size={15} />
+                                            </button>
+                                            <button
+                                                className="crud-icon-btn crud-icon-delete"
+                                                onClick={() =>
+                                                    openDelete(row.id)
+                                                }
+                                                title={t("common.delete")}
+                                            >
+                                                <Trash2 size={15} />
+                                            </button>
+                                        </td>
+                                    )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+
+            {/* ── Pagination ── */}
+            {!loading && totalPages > 1 && (
+                <div className="crud-pagination">
+                    <span className="crud-pagination-info">
+                        {t("admin.crud.paginationInfo", {
+                            from: (safePage - 1) * pageSize + 1,
+                            to: Math.min(safePage * pageSize, filtered.length),
+                            total: filtered.length,
+                        })}
+                    </span>
+                    <div className="crud-pagination-controls">
+                        <button
+                            className="crud-pagination-btn"
+                            onClick={() =>
+                                setCurrentPage((p) => Math.max(1, p - 1))
+                            }
+                            disabled={safePage === 1}
+                            aria-label={t("admin.crud.prevPage")}
+                        >
+                            <ChevronLeft size={15} />
+                        </button>
+                        {pageButtons.map((btn, i) =>
+                            btn === "…" ? (
+                                <span
+                                    key={`ellipsis-${i}`}
+                                    className="crud-pagination-ellipsis"
+                                >
+                                    …
+                                </span>
+                            ) : (
+                                <button
+                                    key={btn}
+                                    className={`crud-pagination-btn${btn === safePage ? " crud-pagination-btn-active" : ""}`}
+                                    onClick={() => setCurrentPage(btn)}
+                                >
+                                    {btn}
+                                </button>
+                            ),
+                        )}
+                        <button
+                            className="crud-pagination-btn"
+                            onClick={() =>
+                                setCurrentPage((p) =>
+                                    Math.min(totalPages, p + 1),
+                                )
+                            }
+                            disabled={safePage === totalPages}
+                            aria-label={t("admin.crud.nextPage")}
+                        >
+                            <ChevronRight size={15} />
+                        </button>
+                    </div>
+                </div>
+            )}
 
   const handleSave = async () => {
     setSaving(true);
@@ -263,22 +547,136 @@ export default function CrudPage<T extends { id: number | string }>({
     }
   };
 
-  const handleDelete = async () => {
-    if (deleteId == null) return;
-    try {
-      await onDelete(deleteId);
-      closeDelete();
-      load();
-      sileo.success({
-        title: t("admin.crud.deleteSuccess"),
-      });
-    } catch (e: unknown) {
-      sileo.error({
-        title: t("admin.crud.deleteFailed"),
-        description: e instanceof Error ? e.message : undefined,
-      });
-    }
-  };
+                        {/* Body */}
+                        <div className="crud-panel-body">
+                            {fields.map((f) => (
+                                <div className="crud-field" key={f.name}>
+                                    <label className="crud-label">
+                                        {f.label}
+                                        {f.required && (
+                                            <span className="crud-required">
+                                                *
+                                            </span>
+                                        )}
+                                    </label>
+                                    {f.type === "async-select" ? (
+                                        <AsyncSelect<SelectOption>
+                                            classNamePrefix="react-select"
+                                            styles={selectStyles}
+                                            loadOptions={f.loadOptions}
+                                            defaultOptions
+                                            cacheOptions
+                                            value={
+                                                formData[f.name]
+                                                    ? {
+                                                          value: String(
+                                                              formData[f.name],
+                                                          ),
+                                                          label: String(
+                                                              formData[
+                                                                  `${f.name}__label`
+                                                              ] ??
+                                                                  formData[
+                                                                      f.name
+                                                                  ],
+                                                          ),
+                                                      }
+                                                    : null
+                                            }
+                                            onChange={(
+                                                opt: SingleValue<SelectOption>,
+                                            ) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]: opt?.value ?? "",
+                                                    [`${f.name}__label`]:
+                                                        opt?.label ?? "",
+                                                })
+                                            }
+                                            placeholder={
+                                                f.placeholder ?? "Search…"
+                                            }
+                                            isClearable
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
+                                            noOptionsMessage={({
+                                                inputValue,
+                                            }) =>
+                                                inputValue
+                                                    ? "No results"
+                                                    : "Type to search…"
+                                            }
+                                        />
+                                    ) : f.type === "select" ? (
+                                        <ReactSelect
+                                            classNamePrefix="react-select"
+                                            styles={selectStyles}
+                                            options={f.options}
+                                            value={
+                                                f.options?.find(
+                                                    (o) =>
+                                                        o.value ===
+                                                        String(
+                                                            formData[f.name] ??
+                                                                "",
+                                                        ),
+                                                ) ?? null
+                                            }
+                                            onChange={(
+                                                opt: SingleValue<SelectOption>,
+                                            ) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]: opt?.value ?? "",
+                                                })
+                                            }
+                                            placeholder="Select…"
+                                            isClearable
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
+                                        />
+                                    ) : f.type === "textarea" ? (
+                                        <textarea
+                                            className="crud-input crud-textarea"
+                                            placeholder={f.placeholder}
+                                            value={String(
+                                                formData[f.name] ?? "",
+                                            )}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    ) : (
+                                        <input
+                                            className="crud-input"
+                                            type={f.type ?? "text"}
+                                            placeholder={f.placeholder}
+                                            value={String(
+                                                formData[f.name] ?? "",
+                                            )}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]:
+                                                        f.type === "number"
+                                                            ? e.target.value ===
+                                                              ""
+                                                                ? ""
+                                                                : Number(
+                                                                      e.target
+                                                                          .value,
+                                                                  )
+                                                            : e.target.value,
+                                                })
+                                            }
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
 
   /* ── Click outside / Escape ── */
 

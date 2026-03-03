@@ -31,9 +31,7 @@ interface Section {
 interface Proposal {
     id: number;
     reference: string;
-}
-
-/* ── Orders list page ── */
+} /* ── Orders list page ── */
 
 export default function OrdersPage() {
     const { t } = useTranslation();

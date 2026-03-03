@@ -72,6 +72,7 @@ func SetupRoutes(router *gin.Engine) {
 		proposals := api.Group("/proposals")
 		{
 			proposals.GET("", controllers.GetAllProposals)
+			proposals.GET("/search", controllers.SearchProposals)
 			proposals.GET("/:id", controllers.GetProposalByID)
 			proposals.POST("", controllers.CreateProposal)
 			proposals.PUT("/:id", controllers.UpdateProposal)

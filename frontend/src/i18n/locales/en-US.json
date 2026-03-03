@@ -280,6 +280,7 @@
             "id": "ID",
             "reference": "Reference",
             "proposal": "Proposal",
+            "searchProposal": "Search proposal…",
             "client": "Client",
             "section": "Section",
             "status": "Status",

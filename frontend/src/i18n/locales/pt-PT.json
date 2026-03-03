@@ -280,6 +280,7 @@
             "id": "ID",
             "reference": "Referência",
             "proposal": "Proposta",
+            "searchProposal": "Pesquisar proposta…",
             "client": "Cliente",
             "section": "Secção",
             "status": "Estado",

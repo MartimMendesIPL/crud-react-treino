@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { api } from "../../services/api";
@@ -28,26 +28,18 @@ interface Section {
     id: number;
     name: string;
 }
-interface Proposal {
-    id: number;
-    reference: string;
-} /* ── Orders list page ── */
+/* ── Orders list page ── */
 
 export default function OrdersPage() {
     const { t } = useTranslation();
     const [clients, setClients] = useState<Client[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
-    const [proposals, setProposals] = useState<Proposal[]>([]);
-
     useEffect(() => {
         api.get<Client[]>("/clients")
             .then(setClients)
             .catch(() => {});
         api.get<Section[]>("/sections")
             .then(setSections)
-            .catch(() => {});
-        api.get<Proposal[]>("/proposals")
-            .then(setProposals)
             .catch(() => {});
     }, []);
 
@@ -90,11 +82,31 @@ export default function OrdersPage() {
         {
             name: "proposal_id",
             label: t("admin.orders.proposal"),
-            type: "select",
-            options: proposals.map((p) => ({
-                value: String(p.id),
-                label: p.reference,
-            })),
+            type: "async-select",
+            placeholder: t("admin.orders.searchProposal"),
+            loadOptions: useCallback(async (inputValue: string) => {
+                const params = new URLSearchParams({
+                    q: inputValue,
+                    limit: "25",
+                });
+                const results = await api.get<
+                    { id: number; reference: string }[]
+                >(`/proposals/search?${params}`);
+                return results.map((p) => ({
+                    value: String(p.id),
+                    label: p.reference,
+                }));
+            }, []),
+            loadSingleOption: useCallback(async (value: string) => {
+                try {
+                    const p = await api.get<{ id: number; reference: string }>(
+                        `/proposals/${value}`,
+                    );
+                    return { value: String(p.id), label: p.reference };
+                } catch {
+                    return null;
+                }
+            }, []),
         },
         {
             name: "client_id",

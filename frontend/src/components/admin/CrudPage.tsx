@@ -7,6 +7,8 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import ReactSelect from "react-select";
+import AsyncSelect from "react-select/async";
+import type { SingleValue, StylesConfig, GroupBase } from "react-select";
 import {
     Pencil,
     Trash2,
@@ -26,16 +28,31 @@ export interface Column<T> {
     render?: (value: T[keyof T], row: T) => ReactNode;
 }
 
+type SelectOption = { value: string; label: string };
+
 export interface FieldDef {
     name: string;
     label: string;
-    type?: "text" | "number" | "email" | "select" | "textarea" | "date";
+    type?:
+        | "text"
+        | "number"
+        | "email"
+        | "select"
+        | "async-select"
+        | "textarea"
+        | "date";
     required?: boolean;
-    options?: { value: string; label: string }[];
+    options?: SelectOption[];
+    loadOptions?: (inputValue: string) => Promise<SelectOption[]>;
+    loadSingleOption?: (value: string) => Promise<SelectOption | null>;
     placeholder?: string;
 }
 
-const selectStyles: React.ComponentProps<typeof ReactSelect>["styles"] = {
+const selectStyles: StylesConfig<
+    SelectOption,
+    false,
+    GroupBase<SelectOption>
+> = {
     control: (base, state) => ({
         ...base,
         backgroundColor: "var(--admin-bg)",
@@ -96,6 +113,7 @@ const selectStyles: React.ComponentProps<typeof ReactSelect>["styles"] = {
         fontSize: "13px",
         fontFamily: "inherit",
     }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
     indicatorSeparator: () => ({ display: "none" }),
     dropdownIndicator: (base) => ({
         ...base,
@@ -223,6 +241,24 @@ export default function CrudPage<T extends { id: number | string }>({
         }
         setFormData(data);
         openPanel();
+
+        // Resolve labels for async-select fields so the control shows a
+        // human-readable value instead of a raw ID while editing.
+        for (const f of fields) {
+            if (f.type === "async-select" && f.loadSingleOption) {
+                const rawVal = (row as Record<string, unknown>)[f.name];
+                if (rawVal != null && rawVal !== "") {
+                    f.loadSingleOption(String(rawVal)).then((opt) => {
+                        if (opt) {
+                            setFormData((prev) => ({
+                                ...prev,
+                                [`${f.name}__label`]: opt.label,
+                            }));
+                        }
+                    });
+                }
+            }
+        }
     };
 
     /* ── Delete panel ── */
@@ -244,11 +280,15 @@ export default function CrudPage<T extends { id: number | string }>({
 
     const handleSave = async () => {
         setSaving(true);
+        // Strip __label shadow keys used by async-select before sending to API
+        const cleanData = Object.fromEntries(
+            Object.entries(formData).filter(([k]) => !k.endsWith("__label")),
+        );
         try {
             if (editing) {
-                await onUpdate(editing.id, formData);
+                await onUpdate(editing.id, cleanData);
             } else {
-                await onCreate(formData);
+                await onCreate(cleanData);
             }
             closePanel();
             load();
@@ -278,11 +318,20 @@ export default function CrudPage<T extends { id: number | string }>({
 
     useEffect(() => {
         function handleClick(e: MouseEvent) {
+            const target = e.target as Node;
+            // Ignore clicks inside react-select's portalled menu (teleported to <body>)
+            if (
+                (target as Element).closest?.(
+                    ".react-select__menu-portal, .react-select__menu",
+                )
+            ) {
+                return;
+            }
             if (
                 panelOpen &&
                 !panelClosing &&
                 panelRef.current &&
-                !panelRef.current.contains(e.target as Node)
+                !panelRef.current.contains(target)
             ) {
                 closePanel();
             }
@@ -437,6 +486,7 @@ export default function CrudPage<T extends { id: number | string }>({
                     </table>
                 )}
             </div>
+
             {/* ── Pagination ── */}
             {!loading && totalPages > 1 && (
                 <div className="crud-pagination">
@@ -533,33 +583,82 @@ export default function CrudPage<T extends { id: number | string }>({
                                             </span>
                                         )}
                                     </label>
-                                    {f.type === "select" ? (
-                                            <ReactSelect
-                                                styles={selectStyles}
-                                                options={f.options}
-                                                value={
-                                                    f.options?.find(
-                                                        (o) =>
-                                                            o.value ===
-                                                            String(
-                                                                formData[
-                                                                    f.name
-                                                                ] ?? "",
-                                                            ),
-                                                    ) ?? null
-                                                }
-                                                onChange={(opt) =>
-                                                    setFormData({
-                                                        ...formData,
-                                                        [f.name]:
-                                                            opt?.value ?? "",
-                                                    })
-                                                }
-                                                placeholder="Select…"
-                                                isClearable
-                                                menuPortalTarget={document.body}
-                                                menuPosition="fixed"
-                                            />
+                                    {f.type === "async-select" ? (
+                                        <AsyncSelect<SelectOption>
+                                            classNamePrefix="react-select"
+                                            styles={selectStyles}
+                                            loadOptions={f.loadOptions}
+                                            defaultOptions
+                                            cacheOptions
+                                            value={
+                                                formData[f.name]
+                                                    ? {
+                                                          value: String(
+                                                              formData[f.name],
+                                                          ),
+                                                          label: String(
+                                                              formData[
+                                                                  `${f.name}__label`
+                                                              ] ??
+                                                                  formData[
+                                                                      f.name
+                                                                  ],
+                                                          ),
+                                                      }
+                                                    : null
+                                            }
+                                            onChange={(
+                                                opt: SingleValue<SelectOption>,
+                                            ) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]: opt?.value ?? "",
+                                                    [`${f.name}__label`]:
+                                                        opt?.label ?? "",
+                                                })
+                                            }
+                                            placeholder={
+                                                f.placeholder ?? "Search…"
+                                            }
+                                            isClearable
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
+                                            noOptionsMessage={({
+                                                inputValue,
+                                            }) =>
+                                                inputValue
+                                                    ? "No results"
+                                                    : "Type to search…"
+                                            }
+                                        />
+                                    ) : f.type === "select" ? (
+                                        <ReactSelect
+                                            classNamePrefix="react-select"
+                                            styles={selectStyles}
+                                            options={f.options}
+                                            value={
+                                                f.options?.find(
+                                                    (o) =>
+                                                        o.value ===
+                                                        String(
+                                                            formData[f.name] ??
+                                                                "",
+                                                        ),
+                                                ) ?? null
+                                            }
+                                            onChange={(
+                                                opt: SingleValue<SelectOption>,
+                                            ) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    [f.name]: opt?.value ?? "",
+                                                })
+                                            }
+                                            placeholder="Select…"
+                                            isClearable
+                                            menuPortalTarget={document.body}
+                                            menuPosition="fixed"
+                                        />
                                     ) : f.type === "textarea" ? (
                                         <textarea
                                             className="crud-input crud-textarea"

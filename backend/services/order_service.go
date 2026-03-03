@@ -115,6 +115,36 @@ func DeleteOrder(id string) error {
 
 // ── Order Items ───────────────────────────────
 
+// GetAllOrderItems returns every order_item row across all orders in a single
+// query. Used by the calendar page to bulk-hydrate cards without N+1 requests.
+func GetAllOrderItems() ([]models.OrderItem, error) {
+	query := `
+		SELECT oi.id, oi.order_id, oi.product_id, oi.quantity, oi.unit_price, oi.notes,
+		       pr.name, pr.unit
+		FROM order_items oi
+		LEFT JOIN products pr ON oi.product_id = pr.id
+		ORDER BY oi.order_id ASC, oi.id ASC
+	`
+	rows, err := config.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var items []models.OrderItem
+	for rows.Next() {
+		var item models.OrderItem
+		if err := rows.Scan(&item.ID, &item.OrderID, &item.ProductID, &item.Quantity, &item.UnitPrice, &item.Notes, &item.ProductName, &item.Unit); err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	if items == nil {
+		items = []models.OrderItem{}
+	}
+	return items, nil
+}
+
 func GetOrderItems(orderID string) ([]models.OrderItem, error) {
 	query := `
 		SELECT oi.id, oi.order_id, oi.product_id, oi.quantity, oi.unit_price, oi.notes,

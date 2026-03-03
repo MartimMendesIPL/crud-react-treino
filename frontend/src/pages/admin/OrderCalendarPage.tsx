@@ -195,32 +195,34 @@ export default function OrderCalendarPage() {
 
     useEffect(() => {
         let ignore = false;
+        // Fetch all base data + all order items in 5 parallel requests (no N+1)
         Promise.all([
             api.get<Order[]>("/orders"),
             api.get<Client[]>("/clients"),
             api.get<Section[]>("/sections"),
             api.get<Product[]>("/products"),
+            api.get<OrderItem[]>("/order-items"),
         ])
-            .then(async ([o, c, s, p]) => {
+            .then(([o, c, s, p, allItems]) => {
                 if (ignore) return;
                 setClients(c);
                 setSections(s);
                 setProducts(p);
 
-                // Fetch items for every order so cards can show product lines
-                const withItems = await Promise.all(
-                    o.map(async (order) => {
-                        try {
-                            const items = await api.get<OrderItem[]>(
-                                `/order-items?order_id=${order.id}`,
-                            );
-                            return { ...order, items };
-                        } catch {
-                            return { ...order, items: [] };
-                        }
-                    }),
-                );
-                if (!ignore) setOrders(withItems);
+                // Group all items by order_id in a single JS pass
+                const itemsByOrder = new Map<number, OrderItem[]>();
+                for (const item of allItems) {
+                    if (!itemsByOrder.has(item.order_id)) {
+                        itemsByOrder.set(item.order_id, []);
+                    }
+                    itemsByOrder.get(item.order_id)!.push(item);
+                }
+
+                const withItems = o.map((order) => ({
+                    ...order,
+                    items: itemsByOrder.get(order.id) ?? [],
+                }));
+                setOrders(withItems);
             })
             .catch(console.error)
             .finally(() => {

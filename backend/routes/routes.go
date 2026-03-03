@@ -114,6 +114,9 @@ func SetupRoutes(router *gin.Engine) {
 			orderItems.DELETE("/:id", controllers.DeleteOrderItem)
 		}
 
+		// Statistics route
+		api.GET("/statistics", controllers.GetStatistics)
+
 		// Audit log routes
 		auditLog := api.Group("/audit-log")
 		{

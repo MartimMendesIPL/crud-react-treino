@@ -3,11 +3,12 @@ import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import AuraLogo from "../components/AuraLogo";
+import { Toaster, sileo } from "sileo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
@@ -15,14 +16,16 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
       await login(email, password);
       navigate("/admin");
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Invalid credentials");
+      sileo.error({
+        title: "Authentication failed",
+        description: err instanceof Error ? err.message : "Invalid credentials",
+      });
     } finally {
       setLoading(false);
     }
@@ -30,6 +33,7 @@ export default function LoginPage() {
 
   return (
     <>
+      <Toaster position="top-right" theme="light" />
       <div className="login-page">
         {/* Left decorative panel */}
         <div className="login-left">
@@ -92,27 +96,6 @@ export default function LoginPage() {
               <h1 className="login-title">Welcome back</h1>
               <p className="login-subtitle">Sign in to access your dashboard</p>
             </div>
-
-            {/* Error */}
-            {error && (
-              <div className="login-error">
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="15" y1="9" x2="9" y2="15" />
-                  <line x1="9" y1="9" x2="15" y2="15" />
-                </svg>
-                {error}
-              </div>
-            )}
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="login-form">
@@ -435,19 +418,7 @@ export default function LoginPage() {
           margin: 0;
         }
 
-        /* ── Error ── */
-        .login-error {
-          background: #fef2f2;
-          border: 1px solid #fecaca;
-          color: #dc2626;
-          padding: 10px 14px;
-          border-radius: 10px;
-          font-size: 13px;
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
+
 
         /* ── Form ── */
         .login-form {

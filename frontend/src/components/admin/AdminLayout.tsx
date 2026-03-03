@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Toaster } from "sileo";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -281,6 +282,11 @@ export default function AdminLayout() {
 
   /* ── Render ── */
 
+  const toasterOptions = useMemo(
+    () => ({ fill: theme === "dark" ? "#141926" : "#ffffff" }),
+    [theme],
+  );
+
   return (
     <div className="admin-layout">
       {/* Mobile overlay */}
@@ -513,6 +519,12 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content */}
+      <Toaster
+        position="bottom-right"
+        theme={theme === "dark" ? "dark" : "light"}
+        options={toasterOptions}
+      />
+
       <div className="admin-main">
         <header className="admin-topbar">
           <button

@@ -204,8 +204,16 @@
       "editTitle": "Edit {{resource}}",
       "newTitle": "New {{resource}}",
       "saveFailed": "Save failed",
+      "createFailed": "Failed to create record",
+      "updateFailed": "Failed to update record",
       "deleteFailed": "Delete failed",
-      "loadFailed": "Failed to load data"
+      "loadFailed": "Failed to load data",
+      "createSuccess": "{{resource}} created",
+      "createSuccessDesc": "The record was successfully created.",
+      "updateSuccess": "{{resource}} updated",
+      "updateSuccessDesc": "The record was successfully updated.",
+      "deleteSuccess": "{{resource}} deleted",
+      "deleteSuccessDesc": "The record was permanently deleted."
     },
     "users": {
       "title": "Users",

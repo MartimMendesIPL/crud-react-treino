@@ -204,8 +204,16 @@
       "editTitle": "Editar {{resource}}",
       "newTitle": "Novo {{resource}}",
       "saveFailed": "Falha ao guardar",
+      "createFailed": "Falha ao criar registo",
+      "updateFailed": "Falha ao atualizar registo",
       "deleteFailed": "Falha ao eliminar",
-      "loadFailed": "Falha ao carregar dados"
+      "loadFailed": "Falha ao carregar dados",
+      "createSuccess": "{{resource}} criado",
+      "createSuccessDesc": "O registo foi criado com sucesso.",
+      "updateSuccess": "{{resource}} atualizado",
+      "updateSuccessDesc": "O registo foi atualizado com sucesso.",
+      "deleteSuccess": "{{resource}} eliminado",
+      "deleteSuccessDesc": "O registo foi eliminado permanentemente."
     },
     "users": {
       "title": "Utilizadores",

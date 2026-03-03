@@ -1958,3 +1958,32 @@ select.crud-input {
         font-size: 22px;
     }
 }
+
+/* ══════════════════════════════════════════════════════
+   Sileo Toast Overrides
+   ══════════════════════════════════════════════════════ */
+
+/* Accent-colored crisp border via stacked drop-shadows on the SVG canvas.
+   drop-shadow follows the exact gooey pill shape — no blur = hard outline. */
+[data-sileo-viewport] [data-sileo-canvas] {
+    filter: drop-shadow(0 1px 0 var(--admin-accent))
+        drop-shadow(0 -1px 0 var(--admin-accent))
+        drop-shadow(1px 0 0 var(--admin-accent))
+        drop-shadow(-1px 0 0 var(--admin-accent));
+}
+
+/* Badge: subtle accent ring */
+[data-sileo-viewport] [data-sileo-badge] {
+    outline: 1.5px solid var(--admin-accent);
+    outline-offset: 1px;
+}
+
+/* ── Title: always use the admin theme text color (overrides Sileo's currentColor) ── */
+[data-sileo-viewport] [data-sileo-toast] {
+    color: var(--admin-text) !important;
+}
+
+/* ── Description: always use admin muted color (overrides Sileo's hardcoded rgba) ── */
+[data-sileo-viewport] [data-sileo-description] {
+    color: var(--admin-text-muted) !important;
+}

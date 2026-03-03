@@ -7,6 +7,7 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { Pencil, Trash2, Plus, X, Loader2, AlertTriangle } from "lucide-react";
+import { sileo } from "sileo";
 
 /* ────────────────────────────── types ────────────────────────────── */
 
@@ -60,6 +61,7 @@ export default function CrudPage<T extends { id: number | string }>({
   const [deleteId, setDeleteId] = useState<string | number | null>(null);
   const [deleteClosing, setDeleteClosing] = useState(false);
   const [search, setSearch] = useState("");
+  const [deleteError, setDeleteError] = useState("");
 
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -76,8 +78,12 @@ export default function CrudPage<T extends { id: number | string }>({
         }
       })
       .catch((e: unknown) => {
-        if (!ignore)
-          setError(e instanceof Error ? e.message : t("admin.crud.loadFailed"));
+        if (!ignore) {
+          const msg =
+            e instanceof Error ? e.message : t("admin.crud.loadFailed");
+          setError(msg);
+          sileo.error({ title: t("admin.crud.loadFailed"), description: msg });
+        }
       })
       .finally(() => {
         if (!ignore) setLoading(false);
@@ -144,16 +150,31 @@ export default function CrudPage<T extends { id: number | string }>({
 
   const handleSave = async () => {
     setSaving(true);
+    const isEditing = !!editing;
     try {
-      if (editing) {
-        await onUpdate(editing.id, formData);
+      if (isEditing) {
+        await onUpdate(editing!.id, formData);
+        sileo.success({
+          title: t("admin.crud.updateSuccess", { resource: title }),
+          description: t("admin.crud.updateSuccessDesc", { resource: title }),
+        });
       } else {
         await onCreate(formData);
+        sileo.success({
+          title: t("admin.crud.createSuccess", { resource: title }),
+          description: t("admin.crud.createSuccessDesc", { resource: title }),
+        });
       }
       closePanel();
       load();
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : t("admin.crud.saveFailed"));
+      const msg = e instanceof Error ? e.message : t("admin.crud.saveFailed");
+      sileo.error({
+        title: isEditing
+          ? t("admin.crud.updateFailed")
+          : t("admin.crud.createFailed"),
+        description: msg,
+      });
     } finally {
       setSaving(false);
     }
@@ -161,12 +182,22 @@ export default function CrudPage<T extends { id: number | string }>({
 
   const handleDelete = async () => {
     if (deleteId == null) return;
+    setDeleteError("");
     try {
       await onDelete(deleteId);
+      sileo.success({
+        title: t("admin.crud.deleteSuccess", { resource: title }),
+        description: t("admin.crud.deleteSuccessDesc", { resource: title }),
+      });
       closeDelete();
       load();
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : t("admin.crud.deleteFailed"));
+      const msg = e instanceof Error ? e.message : t("admin.crud.deleteFailed");
+      setDeleteError(msg);
+      sileo.error({
+        title: t("admin.crud.deleteFailed"),
+        description: msg,
+      });
     }
   };
 
@@ -438,6 +469,14 @@ export default function CrudPage<T extends { id: number | string }>({
               <p className="crud-delete-message">
                 {t("admin.crud.deleteMessage")}
               </p>
+              {deleteError && (
+                <p
+                  className="crud-error"
+                  style={{ marginTop: "0.75rem", textAlign: "center" }}
+                >
+                  {deleteError}
+                </p>
+              )}
             </div>
 
             {/* Footer */}

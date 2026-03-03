@@ -520,7 +520,7 @@ export default function AdminLayout() {
 
       {/* Main content */}
       <Toaster
-        position="bottom-right"
+        position="top-center"
         theme={theme === "dark" ? "dark" : "light"}
         options={toasterOptions}
       />

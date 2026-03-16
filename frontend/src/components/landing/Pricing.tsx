@@ -1,7 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 
-function PricingCard({ plan, isPopular }: { plan: any; isPopular: boolean }) {
+interface Plan {
+    name: string;
+    price: string;
+    period: string;
+    description: string;
+    features: string[];
+    cta: string;
+    isPopular?: boolean;
+}
+
+function PricingCard({ plan, isPopular }: { plan: Plan; isPopular?: boolean }) {
     return (
         <div className={`relative flex flex-col p-8 brutal-border bg-black h-full ${isPopular ? "scale-105 z-10" : "scale-100 opacity-80 hover:opacity-100"}`}>
             {isPopular && (
@@ -66,7 +76,7 @@ export function Pricing() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-center">
-                    {PLANS.map((plan: any, i) => (
+                    {PLANS.map((plan: Plan, i) => (
                         <PricingCard key={i} plan={plan} isPopular={plan.isPopular} />
                     ))}
                 </div>

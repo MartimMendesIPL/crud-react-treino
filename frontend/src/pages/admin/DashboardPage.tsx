@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ElementType } from "react";
 import { useTranslation } from "react-i18next";
 import { api } from "../../services/api";
 import {
@@ -13,7 +13,7 @@ import {
 interface CountCard {
   label: string;
   count: number;
-  icon: any;
+  icon: ElementType;
   color: string;
 }
 export default function DashboardPage() {

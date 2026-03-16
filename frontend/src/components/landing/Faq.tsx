@@ -97,8 +97,7 @@ export function Faq() {
 
   return (
     <section id="faq" className="relative bg-black py-32 border-b-2 border-white/10">
-      {/* Background Grid */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_10%,#000_90%,transparent_100%)] pointer-events-none" />
+
 
       <div className="max-w-5xl mx-auto relative z-10 w-full px-6 md:px-0">
         <div className="mb-20">

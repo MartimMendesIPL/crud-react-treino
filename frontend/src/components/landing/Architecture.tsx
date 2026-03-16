@@ -117,10 +117,8 @@ export function Architecture() {
       id="architecture"
       className="relative min-h-screen bg-black py-32 border-y-2 border-white/10 overflow-hidden flex flex-col justify-center"
     >
-      <div className="absolute inset-0 z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
 
-      {/* Sharp Brutalist Grid Background */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_20%,#000_80%,transparent_100%)] pointer-events-none" />
+
 
       <div className="max-w-7xl mx-auto relative z-10 px-6 w-full">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">

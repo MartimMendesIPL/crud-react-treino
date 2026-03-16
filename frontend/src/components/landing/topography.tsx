@@ -21,7 +21,7 @@ export function TopographyBackground({
   children,
   lineCount = 20,
   lineColor = "rgba(120, 120, 120, 0.3)",
-  backgroundColor = "#0a0a0f",
+  backgroundColor = "#000000",
   speed = 1,
   strokeWidth = 1,
 }: TopographyBackgroundProps) {
@@ -128,7 +128,7 @@ export function TopographyBackground({
   return (
     <div
       ref={containerRef}
-      className={cn("fixed inset-0 overflow-hidden", className)}
+      className={cn("absolute inset-0 overflow-hidden", className)}
       style={{ backgroundColor }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />

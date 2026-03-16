@@ -1,11 +1,12 @@
 import { motion } from "motion/react";
 import { Terminal, ArrowRight } from "lucide-react";
+import { DecryptedText } from "../ui/decrypted-text";
 
 export function Cta() {
   return (
-    <section className="relative w-full min-h-[80vh] flex flex-col justify-center bg-black border-t-2 border-white/10 overflow-hidden py-32">
-
-
+    <section 
+      className="relative w-full min-h-[80vh] flex flex-col justify-center bg-black border-t-2 border-white/10 overflow-hidden py-32"
+    >
       <div className="max-w-7xl mx-auto w-full px-6 relative z-10 flex flex-col items-center">
         
         {/* Massive Headline */}
@@ -14,20 +15,38 @@ export function Cta() {
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true }}
-            className="w-[2px] h-24 bg-black/50 mb-8 origin-top"
+            transition={{ duration: 0.8, ease: "circOut" }}
+            className="w-[2px] h-24 bg-cyan-500/30 mb-8 origin-top"
           />
           <h2 className="text-[15vw] md:text-[12vw] xl:text-[14rem] font-editorial italic text-white leading-[0.8] tracking-tighter">
             Stop the
             <br />
-            <span className="not-italic font-bold lg:uppercase text-cyan-500 tracking-tight ml-4 lg:ml-24">
-              Chaos.
-            </span>
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="not-italic font-bold lg:uppercase text-cyan-500 tracking-tight flex justify-center mt-4"
+            >
+              <DecryptedText 
+                text="Chaos." 
+                animateOn="view"
+                revealDirection="center"
+                speed={40}
+                maxIterations={15}
+                className="text-cyan-500"
+              />
+            </motion.span>
           </h2>
         </div>
 
         {/* Brutalist Action Panel */}
-        <div className="w-full bg-black text-white p-6 md:p-12 lg:p-16 border border-black/20 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] lg:shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 group transition-transform duration-500 hover:translate-x-[-5px] hover:translate-y-[-5px]">
-          
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          className="w-full bg-black text-white p-6 md:p-12 lg:p-16 border border-white/10 shadow-[10px_10px_0px_0px_rgba(6,182,212,0.1)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 group transition-transform duration-500 hover:translate-x-[-5px] hover:translate-y-[-5px]"
+        >
           <div className="max-w-2xl relative z-10">
             <div className="flex items-center gap-4 mb-6 md:mb-8">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/10 bg-white/5 transition-colors group-hover:bg-cyan-500/20 group-hover:border-cyan-500/50">
@@ -59,7 +78,7 @@ export function Cta() {
               <ArrowRight strokeWidth={1} size={28} />
             </div>
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,56 +1,15 @@
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial } from "@react-three/drei";
-import * as THREE from "three";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import RotatingText from "../RotatingText";
-
-function Starfield() {
-  const ref = useRef<THREE.Points>(null);
-  const count = 5000;
-
-  const positions = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-    }
-    return positions;
-  }, []);
-
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
-    }
-  });
-
-  return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial
-          transparent
-          color="#06b6d4"
-          size={0.015}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
-  );
-}
+import RotatingText from "./RotatingText";
+import TopographyBackground from "./topography";
 
 export function Hero() {
   const { t } = useTranslation();
 
   return (
     <section className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
-      <div className="absolute inset-0 z-0 opacity-40">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <Starfield />
-        </Canvas>
+      <div className="absolute inset-0 z-0">
+        <TopographyBackground />
       </div>
 
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-transparent to-transparent" />

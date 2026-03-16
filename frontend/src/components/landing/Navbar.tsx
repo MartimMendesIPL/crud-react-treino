@@ -28,7 +28,7 @@ export function Navbar() {
         >
             <div className="flex items-center justify-between px-6 py-4 bg-black/80 backdrop-blur-md brutal-border rounded-none shadow-[0_0_20px_rgba(0,255,255,0.1)]">
                 <Link to="/" className="text-xl font-editorial italic tracking-wider flex items-center gap-2">
-                  <img src="../public/aura-logo.svg" alt="AURA Logo" width={32} height={32} />
+                  <img src="/aura-logo.svg" alt="AURA Logo" width={32} height={32} />
                   <p className="font-bold pl-2">AURA</p>
                 </Link>
 

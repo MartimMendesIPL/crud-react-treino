@@ -13,7 +13,7 @@ export function LogosMarquee() {
   ];
 
   return (
-    <section className="w-full py-6 overflow-hidden flex items-center relative z-20">
+    <section className="w-full py-6 overflow-hidden flex items-center relative z-20 bg-black">
       <div className="flex whitespace-nowrap overflow-hidden w-full relative">
         <motion.div
           initial={{ x: 0 }}

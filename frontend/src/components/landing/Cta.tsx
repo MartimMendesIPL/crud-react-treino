@@ -3,10 +3,8 @@ import { Terminal, ArrowRight } from "lucide-react";
 
 export function Cta() {
   return (
-    <section className="relative w-full min-h-[80vh] flex flex-col justify-center bg-cyan-500 border-t-2 border-white/10 overflow-hidden py-32">
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 mix-blend-overlay pointer-events-none" />
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+    <section className="relative w-full min-h-[80vh] flex flex-col justify-center bg-black border-t-2 border-white/10 overflow-hidden py-32">
+
 
       <div className="max-w-7xl mx-auto w-full px-6 relative z-10 flex flex-col items-center">
         
@@ -18,10 +16,10 @@ export function Cta() {
             viewport={{ once: true }}
             className="w-[2px] h-24 bg-black/50 mb-8 origin-top"
           />
-          <h2 className="text-[15vw] md:text-[12vw] xl:text-[14rem] font-editorial italic text-black leading-[0.8] tracking-tighter mix-blend-color-burn">
+          <h2 className="text-[15vw] md:text-[12vw] xl:text-[14rem] font-editorial italic text-white leading-[0.8] tracking-tighter">
             Stop the
             <br />
-            <span className="not-italic font-bold lg:uppercase text-white mix-blend-normal drop-shadow-[5px_5px_0px_#000] lg:drop-shadow-[10px_10px_0px_#000] tracking-tight ml-4 lg:ml-24">
+            <span className="not-italic font-bold lg:uppercase text-cyan-500 tracking-tight ml-4 lg:ml-24">
               Chaos.
             </span>
           </h2>

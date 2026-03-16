@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
@@ -10,15 +10,15 @@ function Starfield() {
   const ref = useRef<THREE.Points>(null);
   const count = 5000;
 
-  const positions = useMemo(() => {
-    const positions = new Float32Array(count * 3);
+  const [positions] = useState(() => {
+    const posArray = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+      posArray[i * 3] = (Math.random() - 0.5) * 10;
+      posArray[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      posArray[i * 3 + 2] = (Math.random() - 0.5) * 10;
     }
-    return positions;
-  }, []);
+    return posArray;
+  });
 
   useFrame((_, delta) => {
     if (ref.current) {

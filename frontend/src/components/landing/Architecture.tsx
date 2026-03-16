@@ -47,7 +47,10 @@ const STACK = [
 
 function TechCard({ item, index }: { item: typeof STACK[0]; index: number }) {
   return (
-    <CardContainer containerClassName={`h-full ${item.className || ""}`}>
+    <CardContainer 
+      containerClassName={`h-full ${item.className || ""}`}
+      className="w-full h-full"
+    >
       <CardBody className="group/card relative flex h-full w-full flex-col justify-between border border-white/10 bg-black p-6 md:p-8 transition-colors duration-500 hover:border-cyan-500/50 hover:bg-white/[0.02] [transform-style:preserve-3d]">
         
         {/* Everything inside here needs to preserve 3D */}
@@ -83,9 +86,9 @@ function TechCard({ item, index }: { item: typeof STACK[0]; index: number }) {
           </div>
         </div>
 
-        {/* Massive Popping Index */}
+        {/* Background Index (Static) */}
         <CardItem 
-          translateZ="200" 
+          translateZ="0" 
           className="pointer-events-none absolute bottom-0 right-0 p-4 opacity-5 transition-all duration-700 group-hover/card:opacity-30 font-tech text-7xl md:text-9xl font-black text-white leading-none select-none z-0"
         >
           0{index + 1}

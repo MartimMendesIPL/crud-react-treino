@@ -23,33 +23,43 @@ export const CardContainer = ({
   containerClassName?: string;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const sensingRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const { left, top, width, height } =
-      containerRef.current.getBoundingClientRect();
+    if (!containerRef.current || !sensingRef.current) return;
+    
+    // Calculate mouse position relative to the static sensing layer
+    // This prevents the "jitter" caused by moving the hit-area under the cursor
+    const { left, top, width, height } = sensingRef.current.getBoundingClientRect();
+    
     const x = (e.clientX - left - width / 2) / 20;
     const y = (e.clientY - top - height / 2) / 20;
+    
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
   };
 
   const handleMouseEnter = (_e: React.MouseEvent<HTMLDivElement>) => {
     setIsMouseEntered(true);
-    if (!containerRef.current) return;
   };
 
   const handleMouseLeave = (_e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
     setIsMouseEntered(false);
-    containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    if (containerRef.current) {
+      // Smoothly reset the transform when leaving
+      containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    }
   };
 
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
+        ref={sensingRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         className={cn(
-          "flex items-center justify-center",
+          "relative", // Sense area stays flat
           containerClassName
         )}
         style={{
@@ -58,11 +68,8 @@ export const CardContainer = ({
       >
         <div
           ref={containerRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
           className={cn(
-            "flex items-center justify-center relative transition-all duration-200 ease-linear",
+            "h-full w-full relative transition-transform duration-200 ease-out will-change-transform",
             className
           )}
           style={{
@@ -86,7 +93,7 @@ export const CardBody = ({
   return (
     <div
       className={cn(
-        "[transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
+        "h-full w-full [transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
         className
       )}
     >
@@ -137,7 +144,7 @@ export const CardItem = ({
   return (
     <Tag
       ref={ref}
-      className={cn("w-fit transition duration-200 ease-linear", className)}
+      className={cn("w-fit transition-transform duration-300 ease-out will-change-transform", className)}
       {...rest}
     >
       {children}

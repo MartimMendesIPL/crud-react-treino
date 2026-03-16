@@ -11,7 +11,10 @@ function FeatureCard({
   icon: string;
 }) {
   return (
-    <CardContainer containerClassName="w-full">
+    <CardContainer 
+      containerClassName="w-full"
+      className="w-full h-full"
+    >
       <CardBody className="bg-black relative group/card brutal-border w-full h-auto min-h-[350px] p-8 flex flex-col justify-between transition-colors duration-500 hover:bg-white/[0.02]">
         <div>
           <CardItem

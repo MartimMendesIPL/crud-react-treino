@@ -16,8 +16,11 @@ const LOGOS = [
 ];
 
 export function LogosMarquee() {
+<<<<<<< Updated upstream
 =======
 export function LogosMarquee() {
+=======
+>>>>>>> Stashed changes
   const publicClientId = import.meta.env.VITE_BRAND_DEV_PUBLIC_CLIENT_ID;
   
   const logos = [
@@ -34,6 +37,9 @@ export function LogosMarquee() {
   const getLogoUrl = (domain: string) => 
     `https://logos.brand.dev/?publicClientId=${publicClientId}&domain=${domain}&type=logo&theme=dark`;
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   return (
     <section className="w-full py-16 overflow-hidden flex items-center relative z-20 bg-black">
@@ -73,9 +79,13 @@ export function LogosMarquee() {
           {LOGOS.map((logo, idx) => (
             <div key={`set2-${idx}`} className="flex items-center justify-center shrink-0 px-10 md:px-16">
               <img
-                src={logo.url}
+                src={getLogoUrl(logo.domain)}
                 alt={logo.name}
+<<<<<<< Updated upstream
                 className="h-8 md:h-10 w-auto max-w-[180px] object-contain opacity-40 brightness-0 invert"
+=======
+                className="h-24 w-auto min-w-[120px] object-contain mx-20 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700"
+>>>>>>> Stashed changes
               />
             </div>
           ))}

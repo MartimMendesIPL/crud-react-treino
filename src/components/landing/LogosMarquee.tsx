@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+// No motion imports needed here
 
 const LOGOS = [
   { name: "Sony", url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg" },

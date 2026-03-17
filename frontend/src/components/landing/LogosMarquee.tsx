@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 
+<<<<<<< Updated upstream
 const LOGOS = [
   { name: "Sony", url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg" },
   { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
@@ -15,6 +16,25 @@ const LOGOS = [
 ];
 
 export function LogosMarquee() {
+=======
+export function LogosMarquee() {
+  const publicClientId = import.meta.env.VITE_BRAND_DEV_PUBLIC_CLIENT_ID;
+  
+  const logos = [
+    { name: "Sony", domain: "sony.com" },
+    { name: "Netflix", domain: "netflix.com" },
+    { name: "Uber", domain: "uber.com" },
+    { name: "Slack", domain: "slack.com" },
+    { name: "Airbnb", domain: "airbnb.com" },
+    { name: "Google", domain: "google.com" },
+    { name: "Meta", domain: "meta.com" },
+    { name: "Disney", domain: "disney.com" },
+  ];
+
+  const getLogoUrl = (domain: string) => 
+    `https://logos.brand.dev/?publicClientId=${publicClientId}&domain=${domain}&type=logo&theme=dark`;
+
+>>>>>>> Stashed changes
   return (
     <section className="w-full py-16 overflow-hidden flex items-center relative z-20 bg-black">
       <style>{`
@@ -39,9 +59,13 @@ export function LogosMarquee() {
           {LOGOS.map((logo, idx) => (
             <div key={`set1-${idx}`} className="flex items-center justify-center shrink-0 px-10 md:px-16">
               <img
-                src={logo.url}
+                src={getLogoUrl(logo.domain)}
                 alt={logo.name}
+<<<<<<< Updated upstream
                 className="h-8 md:h-10 w-auto max-w-[180px] object-contain opacity-40 brightness-0 invert"
+=======
+                className="h-24 w-auto min-w-[120px] object-contain mx-20 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700"
+>>>>>>> Stashed changes
               />
             </div>
           ))}

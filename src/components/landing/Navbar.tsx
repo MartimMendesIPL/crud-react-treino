@@ -1,10 +1,8 @@
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
-    const { t } = useTranslation();
     const { scrollYProgress } = useScroll();
     const [visible, setVisible] = useState(true);
 
@@ -39,12 +37,6 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <Link
-                        to="/admin"
-                        className="text-xs font-tech uppercase tracking-widest bg-white text-black px-4 py-2 hover:bg-cyan-400 transition-colors"
-                    >
-                        {t("landing.nav.adminPanel", "Portal")}
-                    </Link>
                 </div>
             </div>
         </motion.div>

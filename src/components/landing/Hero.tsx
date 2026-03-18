@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import RotatingText from "./RotatingText";
 import TopographyBackground from "./topography";
 
@@ -51,15 +50,6 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            to="/admin"
-            className="relative group brutal-border px-8 py-4 overflow-hidden bg-white text-black font-tech font-bold uppercase tracking-widest"
-          >
-            <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-              {t("landing.hero.openDashboard", "Launch Terminal")}
-            </span>
-            <div className="absolute inset-0 bg-cyan-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out z-0" />
-          </Link>
           <a
             href="#features"
             className="brutal-border px-8 py-4 text-white hover:bg-white/5 font-tech uppercase tracking-widest transition-colors"

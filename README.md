@@ -1,115 +1,73 @@
-# Aura — Industrial ERP System
+# React + TypeScript + Vite
 
-A full-stack ERP (Enterprise Resource Planning) application for industrial teams. Manage clients, proposals, production orders, and audit trails — all from a single AdminJS-powered dashboard.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Overview
+Currently, two official plugins are available:
 
-Aura lets you track the full lifecycle of industrial operations: from client proposals through to production orders and delivery. Every change is logged in an audit trail with full traceability.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### Key Features
+## React Compiler
 
-- **Proposal Management** — Create, track, and convert client proposals into production orders with version history
-- **Production Tracking** — Monitor orders across sections (Metalwork, Painting, Assembly) in real-time
-- **Audit Logging** — Every status change, edit, and conversion is recorded with who/what/when
-- **Role-Based Access** — Admin, Sales, Production, and Viewer permission levels
-- **Client Database** — Centralized registry with contact info and VAT details
-- **Product Catalogue** — Manage raw materials and finished goods with units and pricing
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Tech Stack
+## Expanding the ESLint configuration
 
-| Layer         | Technology                                      |
-| ------------- | ----------------------------------------------- |
-| **Frontend**  | React 19 + TypeScript + Vite 7 + Tailwind CSS 4 |
-| **Backend**   | Node.js + Express + TypeScript                  |
-| **Admin**     | AdminJS 7 (at `/admin` on port 5000)            |
-| **Database**  | PostgreSQL 15                                   |
-| **DB GUI**    | pgAdmin 4 (port 5050)                           |
-| **Infra**     | Docker + Docker Compose                         |
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### Frontend Details
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- **UI Library** — React 19 with Motion (Framer Motion) for animations
-- **Styling** — Tailwind CSS v4 + custom CSS with theme variables
-- **Theming** — 6 accent colors (Indigo, Rose, Emerald, Amber, Cyan, Purple) + light/dark mode toggle
-- **Icons** — Font Awesome 6
-- **Font** — Outfit (Google Fonts)
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### Database Schema
-
-| Table            | Purpose                                  |
-| ---------------- | ---------------------------------------- |
-| `users`          | System users with roles                  |
-| `clients`        | Client registry (name, email, VAT, etc.) |
-| `sections`       | Production sections (Metalwork, etc.)    |
-| `products`       | Product/material catalogue               |
-| `proposals`      | Client proposals with status tracking    |
-| `proposal_items` | Line items for each proposal             |
-| `orders`         | Production orders (linked to proposals)  |
-| `order_items`    | Line items for each order                |
-| `audit_log`      | Full audit trail (JSONB old/new values)  |
-
-## Requirements
-
-- [Docker](https://www.docker.com/products/docker-desktop)
-- [Docker Compose](https://docs.docker.com/compose/)
-
-## Getting Started
-
-```bash
-git clone https://github.com/yourusername/aura-erp.git
-cd aura-erp
-docker compose up --build
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-Once running:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-| Service        | URL                          |
-| -------------- | ---------------------------- |
-| Frontend       | http://localhost:5173         |
-| Admin Panel    | http://localhost:5000/admin   |
-| Backend API    | http://localhost:5000         |
-| pgAdmin        | http://localhost:5050         |
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-### Default Credentials
-
-**pgAdmin:**
-- Email: `admin@admin.com`
-- Password: `admin`
-
-**Seed Users (in AdminJS):**
-- `admin@company.com` — Admin role
-- `sales@company.com` — Sales role
-- `production@company.com` — Production role
-
-## Project Structure
-
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-├── docker-compose.yml
-├── init.sql                  # DB schema + seed data
-├── backend/
-│   ├── Dockerfile
-│   ├── src/
-│   │   ├── server.ts
-│   │   ├── app.ts
-│   │   └── config/
-│   │       ├── adminjs.ts    # AdminJS setup
-│   │       ├── database.ts
-│   │       ├── controllers/
-│   │       ├── routes/
-│   │       └── services/
-├── frontend/
-│   ├── Dockerfile
-│   ├── index.html
-│   ├── src/
-│   │   ├── App.tsx           # Main app with theming + all sections
-│   │   ├── index.css         # Tailwind + custom theme CSS
-│   │   └── components/
-│   │       ├── AuraLogo.tsx
-│   │       ├── DashboardDemo.tsx
-│   │       ├── RotatingText.tsx
-│   │       └── SpotlightCard.tsx
-```
-
-## License
-
-MIT
